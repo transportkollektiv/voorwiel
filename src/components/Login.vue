@@ -1,0 +1,53 @@
+<template>
+  <v-dialog v-model="dialog" max-width="400" style="z-index: 9999;">
+    <template v-slot:activator="{ on }">
+      <v-btn text color="red lighten-2" dark v-on="on">
+        <span class="hidden-xs-only">Login</span>
+        <v-icon right>mdi-login</v-icon>
+      </v-btn>
+    </template>
+
+    <v-card>
+      <v-card-title class="headline grey lighten-2" primary-title>
+        Login With
+      </v-card-title>
+
+      <v-card-actions>
+        <v-list width="100%">
+          <v-list-item v-for="provider in providers" :key="provider.id">
+            <v-list-item-content>
+              <v-btn :color="provider.color" block @click.native="authenticate(provider.id)">
+                {{ provider.label }}
+                <v-icon right dark>{{ provider.icon }}</v-icon>
+              </v-btn>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+  export default {
+    data: () => ({
+      dialog: false,
+      providers: [{
+        label: 'Sign in with GitHub',
+        id: 'github',
+        icon: 'mdi-github-circle',
+        color: '#f5f5f5'
+      }, {
+        label: 'Sign in with StackOverflow',
+        id: 'stackoverflow',
+        icon: 'mdi-stack-overflow',
+        color: '#f48024'
+      }]
+    }),
+    methods: {
+      authenticate(provider) {
+        console.log(provider);
+      }
+    }
+  };
+</script>
