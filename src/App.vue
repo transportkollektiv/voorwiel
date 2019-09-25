@@ -12,7 +12,20 @@
             <v-toolbar-items>
                 <About />
                 <Login v-if="!user" />
-                <span v-show="user">{{user}}</span>
+                <v-menu left bottom v-if="user">
+                  <template v-slot:activator="{ on }">
+                    <v-btn text v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                      {{user.username}}
+                    </v-btn>
+                  </template>
+
+                  <v-list>
+                    <v-list-item @click="logout()">
+                      <v-list-item-title>Logout</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
             </v-toolbar-items>
         </v-app-bar>
 
@@ -50,8 +63,8 @@
       }
     },
     methods: {
-      auth() {
-
+      logout() {
+        this.$store.dispatch("LOGOUT");
       }
     },
     mounted () {

@@ -39,6 +39,17 @@ export default new Vuex.Store({
       if (authToken !== null) {
         commit("SET_AUTH_TOKEN", authToken);
       }
+    },
+    LOGOUT: function({ commit }) {
+      localStorage.removeItem("auth");
+      if (location.search) {
+        let params = new URLSearchParams(location.search);
+        if (params.get('token')) {
+          window.location.search = "";
+          return;
+        }
+      }
+      location.reload();
     }
   },
   mutations: {
