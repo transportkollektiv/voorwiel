@@ -57,11 +57,6 @@
     mounted () {
       this.$store.dispatch("LOAD_AUTH_TOKEN");
 
-      if (location.search) {
-        let params = new URLSearchParams(location.search);
-        this.$store.dispatch("SET_AUTH_TOKEN", params.get('token'));
-      }
-
       this.$store.dispatch("GET_USER")
       /*
       this.$nextTick(() => {
