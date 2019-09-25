@@ -11,7 +11,8 @@
 
             <v-toolbar-items>
                 <About />
-                <Login />
+                <Login v-if="!user" />
+                <span v-show="user">{{user}}</span>
             </v-toolbar-items>
         </v-app-bar>
 
@@ -27,6 +28,7 @@
 
 <script>
   import { latLng } from "leaflet";
+  import { mapState } from "vuex";
   import Login from './components/Login';
   import About from './components/About';
 
@@ -42,12 +44,25 @@
         zoomSnap: 0.5
       },
     }),
+    computed: {
+      user () {
+        return this.$store.state.user
+      }
+    },
     methods: {
       auth() {
 
       }
     },
     mounted () {
+      this.$store.dispatch("LOAD_AUTH_TOKEN");
+
+      if (location.search) {
+        let params = new URLSearchParams(location.search);
+        this.$store.dispatch("SET_AUTH_TOKEN", params.get('token'));
+      }
+
+      this.$store.dispatch("GET_USER")
       /*
       this.$nextTick(() => {
         // this.$refs.myMap.mapObject.ANY_LEAFLET_MAP_METHOD();

@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
+import store from './store'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 
@@ -7,6 +9,8 @@ import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 import appConfig from '../config/config.default';
+
+Vue.use(Vuex)
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -26,5 +30,6 @@ Vue.prototype.$appConfig = appConfig;
 
 new Vue({
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')
