@@ -16,9 +16,9 @@
         <v-list width="100%">
           <v-list-item v-for="provider in providers" :key="provider.id">
             <v-list-item-content>
-              <v-btn :color="provider.color" block @click.native="authenticate(provider.id)">
+              <v-btn :color="provider.color" block @click.native="authenticate(provider)">
                 {{ provider.label }}
-                <v-icon right dark>{{ provider.icon }}</v-icon>
+                <v-icon v-if="provider.icon" right dark>{{ provider.icon }}</v-icon>
               </v-btn>
             </v-list-item-content>
           </v-list-item>
@@ -30,23 +30,22 @@
 
 <script>
   export default {
-    data: () => ({
-      dialog: false,
-      providers: [{
-        label: 'Sign in with GitHub',
-        id: 'github',
-        icon: 'mdi-github-circle',
-        color: '#f5f5f5'
-      }, {
-        label: 'Sign in with StackOverflow',
-        id: 'stackoverflow',
-        icon: 'mdi-stack-overflow',
-        color: '#f48024'
-      }]
-    }),
+    data() {
+      return {
+        dialog: false,
+        providers: this.$appConfig.AUTH_PROVIDER.map((el) => {
+          return {
+            label: el.name,
+            id: el.id,
+            icon: el.icon,
+          }
+        })
+      }
+    },
     methods: {
       authenticate(provider) {
-        console.log(provider);
+        let url = this.$appConfig.AUTH_LOGIN.replace(/\{provider\}/, provider.id);
+        location.href = url;
       }
     }
   };
