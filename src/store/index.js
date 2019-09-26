@@ -5,6 +5,13 @@ import appConfig from '../../config/config.default';
 
 Vue.use(Vuex);
 
+const removeSearchFromUrl = (url) => {
+  let a = document.createElement('a');
+  a.href = url;
+  a.search = '';
+  return a.href;
+};
+
 export default new Vuex.Store({
   state: {
     authToken: null,
@@ -31,6 +38,7 @@ export default new Vuex.Store({
         let params = new URLSearchParams(location.search);
         if (params.get('token')) {
           commit("SET_AUTH_TOKEN", params.get('token'));
+          history.replaceState({}, '', removeSearchFromUrl(location.href));
           return;
         }
       }
