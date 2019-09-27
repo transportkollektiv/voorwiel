@@ -30,32 +30,21 @@
         </v-app-bar>
 
         <v-content>
-            <l-map >
-                <l-tile-layer :url="url" :attribution="attribution" />
-            </l-map>
-
             <gbfs-view url="" />
         </v-content>
     </v-app>
 </template>
 
 <script>
-  import { latLng } from "leaflet";
   import { mapState } from "vuex";
   import Login from './components/Login';
   import About from './components/About';
+  import GbfsView from './components/GbfsView';
 
   export default {
     name: 'App',
-    components: {About, Login},
+    components: {About, Login, GbfsView},
     data: () => ({
-      zoom: 16,
-      center: latLng(53.03134, 13.30776),
-      url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      mapOptions: {
-        zoomSnap: 0.5
-      },
     }),
     computed: {
       user () {
