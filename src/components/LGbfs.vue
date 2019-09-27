@@ -61,3 +61,34 @@
     },
   };
 </script>
+
+<style>
+  .bike-icon {
+    background-image: url('../assets/bike_icon.png');
+  }
+
+  .station-icon-inner {
+    background: white;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    position: relative;
+    top: 3px;
+    left: 3px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+  }
+
+  .station-icon-ring {
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+  }
+
+  .station-icon-empty {
+    background: white;
+    color: silver;
+  }
+</style>
