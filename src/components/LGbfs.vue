@@ -7,9 +7,7 @@
 <script>
   import L from 'leaflet';
   import 'leaflet-gbfs';
-  import { findRealParent, propsBinder } from 'vue2-leaflet';
-
-  // L.GBFS = GBFS;
+  import { findRealParent } from 'vue2-leaflet';
 
   const props = {
     gbfsURL: {
@@ -51,7 +49,6 @@
     }),
     mounted() {
       this.mapObject = new L.GBFS(this.$props);
-      //L.DomEvent.on(this.mapObject, this.$listeners);
       this.ready = true;
       this.parentContainer = findRealParent(this.$parent);
       this.parentContainer.addLayer(this);

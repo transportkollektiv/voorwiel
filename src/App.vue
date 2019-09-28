@@ -36,7 +36,6 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
   import Login from './components/Login';
   import About from './components/About';
   import GbfsView from './components/GbfsView';
