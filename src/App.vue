@@ -31,6 +31,7 @@
 
         <v-content>
             <gbfs-view url="" />
+            <Rent v-if="user" />
         </v-content>
     </v-app>
 </template>
@@ -39,10 +40,11 @@
   import Login from './components/Login';
   import About from './components/About';
   import GbfsView from './components/GbfsView';
+  import Rent from './components/Rent';
 
   export default {
     name: 'App',
-    components: {About, Login, GbfsView},
+    components: {About, Login, GbfsView, Rent},
     data: () => ({
     }),
     computed: {
