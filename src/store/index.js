@@ -75,7 +75,7 @@ export default new Vuex.Store({
           .then(
             response => {
               dispatch("UPDATE_RENTS")
-              resolve()
+              resolve(response.data)
             },
             err => {
               reject(err)
@@ -87,7 +87,7 @@ export default new Vuex.Store({
       axiosWithAuth(state)
         .get(appConfig.API_ROOT + '/rent/current')
         .then(response => {
-          commit('SET_RENTS', response)
+          commit('SET_RENTS', response.data)
         })
     }
   },
