@@ -1,12 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="400" style="z-index: 9999;">
-    <template v-slot:activator="{ on }">
-      <v-btn text color="red lighten-2" dark v-on="on">
-        <span class="hidden-xs-only">Login</span>
-        <v-icon right>mdi-login</v-icon>
-      </v-btn>
-    </template>
-
+  <v-dialog v-model="show" max-width="400" style="z-index: 9999;">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         Login With
@@ -32,7 +25,7 @@
   export default {
     data() {
       return {
-        dialog: false,
+        show: false,
         providers: this.$appConfig.AUTH_PROVIDER.map((el) => {
           return {
             label: el.name,
@@ -47,6 +40,11 @@
         let url = this.$appConfig.AUTH_LOGIN.replace(/\{provider\}/, provider.id);
         location.href = url;
       }
+    },
+    mounted() {
+      this.$root.$on('showLogin', () => {
+        this.show = true;
+      })
     }
   };
 </script>

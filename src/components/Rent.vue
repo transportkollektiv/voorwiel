@@ -1,17 +1,14 @@
 <template>
   <v-dialog v-model="dialog" max-width="400" style="display:none;">
     <template v-slot:activator="{ on }">
-      <div class="rent-buttonarea">
-        <v-btn
-          rounded
-          x-large
-          color="success"
-          class="v-btn--example"
-          v-on="on"
-        >
-          <v-icon>mdi-bike</v-icon>&nbsp;<span>{{ buttonText }}</span>
-        </v-btn>
-      </div>
+      <v-btn
+        rounded
+        x-large
+        color="success"
+        v-on="on"
+      >
+        <v-icon>mdi-bike</v-icon>&nbsp;<span>{{ buttonText }}</span>
+      </v-btn>
     </template>
 
     <v-card>
@@ -98,16 +95,3 @@
     }
   };
 </script>
-
-<style>
-  .rent-buttonarea {
-    position: fixed;
-    bottom: 2rem;
-    text-align: center;
-    z-index: 200;
-    width: 100%;
-  }
-  .rent-button {
-    position: static;
-  }
-</style>

@@ -11,7 +11,12 @@
 
             <v-toolbar-items>
                 <About />
-                <Login v-if="!user" />
+
+                <v-btn text color="red lighten-2" dark v-if="!user" @click.stop="showLogin">
+                  <span class="hidden-xs-only">Login</span>
+                  <v-icon right>mdi-login</v-icon>
+                </v-btn>
+
                 <v-menu left bottom v-if="user">
                   <template v-slot:activator="{ on }">
                     <v-btn text v-on="on">
@@ -31,7 +36,19 @@
 
         <v-content>
             <gbfs-view url="" />
-            <Rent v-if="user" />
+            <Login v-if="!user" />
+            <div class="rent-buttonarea">
+              <v-btn
+                rounded
+                x-large
+                color="success"
+                v-if="!user"
+                @click.stop="showLogin"
+              >
+                <v-icon>mdi-login</v-icon>&nbsp;<span>Login</span>
+              </v-btn>
+              <Rent v-if="user" />
+            </div>
         </v-content>
     </v-app>
 </template>
@@ -55,6 +72,9 @@
     methods: {
       logout() {
         this.$store.dispatch("LOGOUT");
+      },
+      showLogin() {
+        this.$root.$emit('showLogin');
       }
     },
     mounted () {
@@ -69,3 +89,17 @@
     }
   };
 </script>
+
+
+<style>
+  .rent-buttonarea {
+    position: fixed;
+    bottom: 2rem;
+    text-align: center;
+    z-index: 200;
+    width: 100%;
+  }
+  .rent-button {
+    position: static;
+  }
+</style>
