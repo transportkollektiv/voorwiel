@@ -9,7 +9,7 @@
           class="v-btn--example"
           v-on="on"
         >
-          <v-icon>mdi-bike</v-icon>&nbsp;<span>Rent bike</span>
+          <v-icon>mdi-bike</v-icon>&nbsp;<span>{{ buttonText }}</span>
         </v-btn>
       </div>
     </template>
@@ -62,6 +62,11 @@
             return pattern.test(value) || 'Please only numbers'
           },
         ],
+      }
+    },
+    computed: {
+      buttonText() {
+        return this.$store.state.rents.length === 0 ? 'Rent bike' : 'Rent or Return bike';
       }
     },
     methods: {

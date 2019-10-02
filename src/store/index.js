@@ -83,6 +83,7 @@ export default new Vuex.Store({
       })
     },
     UPDATE_RENTS: function({ commit, state }) {
+      if (!state.authToken) { return; }
       axiosWithAuth(state)
         .get(appConfig.API_ROOT + '/rent/current')
         .then(response => {

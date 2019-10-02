@@ -59,8 +59,8 @@
     },
     mounted () {
       this.$store.dispatch("LOAD_AUTH_TOKEN");
-
-      this.$store.dispatch("GET_USER")
+      this.$store.dispatch("GET_USER");
+      this.$store.dispatch("UPDATE_RENTS");
       /*
       this.$nextTick(() => {
         // this.$refs.myMap.mapObject.ANY_LEAFLET_MAP_METHOD();
