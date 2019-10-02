@@ -24,6 +24,7 @@ export default new Vuex.Store({
   state: {
     authToken: null,
     user: undefined,
+    rents: []
   },
   actions: {
     GET_USER: function({ commit, state }) {
@@ -66,6 +67,27 @@ export default new Vuex.Store({
         }
       }
       location.reload();
+    },
+    START_RENT: function({ dispatch, state }, bikeNumber) {
+      return new Promise((resolve, reject) => {
+        axiosWithAuth(state)
+          .post(appConfig.API_ROOT + '/rent/start', {bike_number: bikeNumber})
+          .then(
+            response => {
+              dispatch("UPDATE_RENTS")
+              resolve()
+            },
+            err => {
+              reject(err)
+            });
+      })
+    },
+    UPDATE_RENTS: function({ commit, state }) {
+      axiosWithAuth(state)
+        .get(appConfig.API_ROOT + '/rent/current')
+        .then(response => {
+          commit('SET_RENTS', response)
+        })
     }
   },
   mutations: {
@@ -78,6 +100,9 @@ export default new Vuex.Store({
     SET_AUTH_TOKEN: (state, authToken) => {
       state.authToken = authToken;
       localStorage.setItem(LS_AUTH_TOKEN_KEY, authToken);
+    },
+    SET_RENTS: (state, rents) => {
+      state.rents = rents;
     }
   },
   getters: {},

@@ -20,7 +20,28 @@
       </v-card-title>
 
       <v-card-text>
-        <span>...</span>
+
+        <v-form v-model="valid" ref="rentBikeForm">
+          <v-container>
+            <v-row>
+              <v-col cols="8" md="8">
+                <v-text-field
+                    type="number"
+                    label="Bike Number"
+                    v-model="bikenumber"
+                    outlined
+                    required
+                    :rules="bikenumberrules"
+                  ></v-text-field>
+              </v-col>
+              <v-col cols="4" md="4">
+                <v-btn color="success" v-bind:disabled="!valid" @click="startRent">
+                  Unlock
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -31,9 +52,25 @@
     data() {
       return {
         dialog: false,
+        valid: false,
+        bikenumber: '',
+
+        bikenumberrules: [
+          value => !!value || 'Required.',
+          value => {
+            const pattern = /\d+$/
+            return pattern.test(value) || 'Please only numbers'
+          },
+        ],
       }
     },
     methods: {
+      startRent() {
+        // FIXME: error handling
+        this.$store.dispatch("START_RENT", this.bikenumber).then(() => {
+          this.$refs.rentBikeForm.reset()
+        });
+      }
     }
   };
 </script>
