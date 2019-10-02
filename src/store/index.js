@@ -20,10 +20,10 @@ export default new Vuex.Store({
     user: undefined,
   },
   actions: {
-    GET_USER: function({ commit }) {
-      if (!this.state.authToken) { return; }
+    GET_USER: function({ commit, state }) {
+      if (!state.authToken) { return; }
       axios
-        .get(appConfig.AUTH_USER, { headers: { 'Authorization': `Token ${this.state.authToken}` }})
+        .get(appConfig.AUTH_USER, { headers: { 'Authorization': `Token ${state.authToken}` }})
         .then(
           response => {
             commit("SET_USER", { user: response.data });
