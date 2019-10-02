@@ -12,6 +12,12 @@ const removeSearchFromUrl = (url) => {
   return a.href;
 };
 
+const axiosWithAuth = (state) => {
+  return axios.create({
+    headers: { 'Authorization': `Token ${state.authToken}` }
+  })
+}
+
 const LS_AUTH_TOKEN_KEY = 'authToken';
 
 export default new Vuex.Store({
@@ -22,8 +28,8 @@ export default new Vuex.Store({
   actions: {
     GET_USER: function({ commit, state }) {
       if (!state.authToken) { return; }
-      axios
-        .get(appConfig.AUTH_USER, { headers: { 'Authorization': `Token ${state.authToken}` }})
+      axiosWithAuth(state)
+        .get(appConfig.AUTH_USER)
         .then(
           response => {
             commit("SET_USER", { user: response.data });
