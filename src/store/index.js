@@ -12,6 +12,8 @@ const removeSearchFromUrl = (url) => {
   return a.href;
 };
 
+const LS_AUTH_TOKEN_KEY = 'authToken';
+
 export default new Vuex.Store({
   state: {
     authToken: null,
@@ -43,13 +45,13 @@ export default new Vuex.Store({
         }
       }
 
-      let authToken = localStorage.getItem("auth");
+      let authToken = localStorage.getItem(LS_AUTH_TOKEN_KEY);
       if (authToken !== null) {
         commit("SET_AUTH_TOKEN", authToken);
       }
     },
     LOGOUT: function() {
-      localStorage.removeItem("auth");
+      localStorage.removeItem(LS_AUTH_TOKEN_KEY);
       if (location.search) {
         let params = new URLSearchParams(location.search);
         if (params.get('token')) {
@@ -66,7 +68,7 @@ export default new Vuex.Store({
     },
     SET_AUTH_TOKEN: (state, authToken) => {
       state.authToken = authToken;
-      localStorage.setItem("authToken", authToken);
+      localStorage.setItem(LS_AUTH_TOKEN_KEY, authToken);
     }
   },
   getters: {},
