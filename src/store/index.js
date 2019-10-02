@@ -30,7 +30,7 @@ export default new Vuex.Store({
           },
           err => {
             if (err.response && err.response.status == 401) {
-              commit("SET_USER", { user: {} });
+              commit("CLEAR_USER");
             }
           }
         )
@@ -63,6 +63,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    CLEAR_USER: (state) => {
+      state.user = {};
+    },
     SET_USER: (state, { user }) => {
       state.user = user;
     },
