@@ -82,6 +82,20 @@ export default new Vuex.Store({
             });
       })
     },
+    END_RENT: function({ dispatch, state }, rentId) {
+      return new Promise((resolve, reject) => {
+        axiosWithAuth(state)
+          .post(appConfig.API_ROOT + '/rent/finish', {rent_id: rentId})
+          .then(
+            response => {
+              dispatch("UPDATE_RENTS")
+              resolve(response.data)
+            },
+            err => {
+              reject(err)
+            });
+      })
+    },
     UPDATE_RENTS: function({ commit, state }) {
       if (!state.authToken) { return; }
       axiosWithAuth(state)
