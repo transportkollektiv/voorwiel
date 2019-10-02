@@ -85,7 +85,7 @@
     position: fixed;
     bottom: 2rem;
     text-align: center;
-    z-index: 500; /* leaflet-pane has 400 */
+    z-index: 200;
     width: 100%;
   }
   .rent-button {
