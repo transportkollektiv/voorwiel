@@ -57,8 +57,9 @@ export default new Vuex.Store({
         commit("SET_AUTH_TOKEN", authToken);
       }
     },
-    LOGOUT: function() {
+    LOGOUT: function({ commit }) {
       localStorage.removeItem(LS_AUTH_TOKEN_KEY);
+      commit("CLEAR_USER");
       if (location.search) {
         let params = new URLSearchParams(location.search);
         if (params.get('token')) {
@@ -66,7 +67,6 @@ export default new Vuex.Store({
           return;
         }
       }
-      location.reload();
     },
     START_RENT: function({ dispatch, state }, bikeNumber) {
       return new Promise((resolve, reject) => {
@@ -92,7 +92,9 @@ export default new Vuex.Store({
   },
   mutations: {
     CLEAR_USER: (state) => {
-      state.user = {};
+      state.authToken = null;
+      state.user = undefined;
+      state.rents = [];
     },
     SET_USER: (state, { user }) => {
       state.user = user;
