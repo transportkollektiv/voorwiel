@@ -91,7 +91,7 @@
     },
     computed: {
       buttonText() {
-        return this.$store.state.rents.length === 0 ? 'Rent bike' : 'Rent or Return bike';
+        return this.rents.length === 0 ? 'Rent bike' : 'Rent or Return bike';
       },
 
       ...mapState(['rents'])
