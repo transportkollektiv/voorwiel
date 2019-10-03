@@ -95,6 +95,9 @@ export default new Vuex.Store({
               resolve(response.data)
             },
             err => {
+              if (err.response && err.response.data && err.response.data.error) {
+                return reject(err.response.data.error);
+              }
               reject(err)
             });
       })

@@ -97,7 +97,6 @@
     },
     methods: {
       startRent() {
-        // FIXME: error handling
         this.rentError = '';
         this.$store.dispatch("START_RENT", this.bikenumber).then(() => {
           this.$refs.rentBikeForm.reset()
@@ -106,7 +105,10 @@
         });
       },
       endRent(rentId) {
-        this.$store.dispatch("END_RENT", rentId);
+        this.rentError = '';
+        this.$store.dispatch("END_RENT", rentId).catch(err => {
+          this.rentError = err;
+        });
       }
     },
     watch: {
