@@ -12,7 +12,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title>
+      <v-card-title class="title" primary-title>
         Rent
       </v-card-title>
       <v-form v-model="valid" ref="rentBikeForm" @submit.prevent="startRent">
@@ -59,7 +59,7 @@
         <v-list-item-content>
           <v-list-item-title>Bike {{rent.bike.bike_number}}</v-list-item-title>
           <v-list-item-subtitle v-if="rent.bike.lock">Code: {{rent.bike.lock.unlock_key}}</v-list-item-subtitle>
-          <v-list-item-subtitle>Start: {{rent.rent_start}}</v-list-item-subtitle>
+          <v-list-item-subtitle>Renting for <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <v-btn color="success" @click="endRent(rent.id)">Finish Rent</v-btn>
@@ -70,9 +70,11 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState } from 'vuex';
+  import TickingTime from "./TickingTime.vue";
 
   export default {
+    components: {TickingTime},
     data() {
       return {
         dialog: false,
