@@ -5,7 +5,7 @@
                 <img src="@/assets/logo.png" height="48" />
             </v-app-bar-nav-icon>
 
-            <v-toolbar-title class="d-none d-md-flex">dev.bike</v-toolbar-title>
+            <v-toolbar-title class="d-none d-sm-flex">dev.bike</v-toolbar-title>
 
             <div class="flex-grow-1"></div>
 
