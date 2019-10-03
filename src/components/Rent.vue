@@ -37,6 +37,7 @@
                   v-model="bikenumber"
                   outlined
                   required
+                  autofocus
                   :rules="bikenumberrules"
                 ></v-text-field>
             </v-col>
@@ -113,7 +114,9 @@
     },
     watch: {
       dialog() {
-        this.$refs.rentBikeForm.reset()
+        if (this.$refs.rentBikeForm) {
+          this.$refs.rentBikeForm.reset();
+        }
         this.rentError = '';
       }
     }
