@@ -81,6 +81,9 @@ export default new Vuex.Store({
               if (err.response && err.response.data && err.response.data.error) {
                 return reject(err.response.data.error);
               }
+              if (err.response && err.response.data && err.response.data.detail) {
+                return reject(err.response.data.detail);
+              }
               reject(err)
             });
       })
@@ -97,6 +100,9 @@ export default new Vuex.Store({
             err => {
               if (err.response && err.response.data && err.response.data.error) {
                 return reject(err.response.data.error);
+              }
+              if (err.response && err.response.data && err.response.data.detail) {
+                return reject(err.response.data.detail);
               }
               reject(err)
             });
