@@ -18,6 +18,15 @@ const axiosWithAuth = (state) => {
   })
 }
 
+const getCurrentPosition = (options) => {
+  if (navigator.geolocation) {
+    return new Promise(
+      (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    )
+  }
+  return new Promise(resolve => resolve({}))
+}
+
 const LS_AUTH_TOKEN_KEY = 'authToken';
 
 export default new Vuex.Store({
@@ -68,10 +77,26 @@ export default new Vuex.Store({
         }
       }
     },
-    START_RENT: function({ dispatch, state }, bikeNumber) {
+    START_RENT: function({ dispatch }, bikeNumber) {
+      return getCurrentPosition({
+          timeout: 3000,
+          enableHighAccuracy: true,
+          maximumAge: 20000
+        }).then((location) => {
+        return dispatch("START_RENT_INTERNAL", bikeNumber, location);
+      }).catch(() => {
+        return dispatch("START_RENT_INTERNAL", bikeNumber);
+      });
+    },
+    START_RENT_INTERNAL: function({ dispatch, state }, bikeNumber, location) {
       return new Promise((resolve, reject) => {
+        let data = {bike_number: bikeNumber};
+        if (location && location.coords && location.coords.accuracy < 20) {
+          data['lat'] = location.coords.latitude;
+          data['lng'] = location.coords.longitude;
+        }
         axiosWithAuth(state)
-          .post(appConfig.API_ROOT + '/rent/start', {bike_number: bikeNumber})
+          .post(appConfig.API_ROOT + '/rent/start', data)
           .then(
             response => {
               dispatch("UPDATE_RENTS")
@@ -86,12 +111,28 @@ export default new Vuex.Store({
               }
               reject(err)
             });
-      })
+      });
     },
-    END_RENT: function({ dispatch, state }, rentId) {
+    END_RENT: function({ dispatch }, rentId) {
+      return getCurrentPosition({
+          timeout: 3000,
+          enableHighAccuracy: true,
+          maximumAge: 20000
+        }).then((location) => {
+        return dispatch("END_RENT_INTERNAL", rentId, location);
+      }).catch(() => {
+        return dispatch("END_RENT_INTERNAL", rentId);
+      });
+    },
+    END_RENT_INTERNAL: function({ dispatch, state }, rentId, location) {
       return new Promise((resolve, reject) => {
+        let data = {rent_id: rentId};
+        if (location && location.coords && location.coords.accuracy < 20) {
+          data['lat'] = location.coords.latitude;
+          data['lng'] = location.coords.longitude;
+        }
         axiosWithAuth(state)
-          .post(appConfig.API_ROOT + '/rent/finish', {rent_id: rentId})
+          .post(appConfig.API_ROOT + '/rent/finish', data)
           .then(
             response => {
               dispatch("UPDATE_RENTS")
