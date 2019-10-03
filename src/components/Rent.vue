@@ -42,7 +42,7 @@
                 ></v-text-field>
             </v-col>
             <v-col cols="4" md="4" class="text-center">
-              <v-btn class="mt-2" color="success" v-bind:disabled="!valid" @click="startRent">
+              <v-btn class="mt-2" color="success" v-bind:disabled="!valid" :loading="loading" @click="startRent">
                 Unlock
               </v-btn>
             </v-col>
@@ -79,6 +79,7 @@
       return {
         dialog: false,
         valid: false,
+        loading: false,
         bikenumber: '',
         rentError: '',
 
@@ -100,11 +101,14 @@
     },
     methods: {
       startRent() {
+        this.loading = true;
         this.rentError = '';
         this.$store.dispatch("START_RENT", this.bikenumber).then(() => {
           this.$refs.rentBikeForm.reset()
+          this.loading = false;
         }).catch((err) => {
           this.rentError = err;
+          this.loading = false;
         });
       },
       endRent(rentId) {
