@@ -2,6 +2,7 @@
   <l-map :zoom="zoom" :center="center" style="z-index: 0;">
     <l-tile-layer :url="url" :attribution="attribution" />
     <l-gbfs :gbfsURL="gbfsURL" ref="gbfsLayer" />
+    <v-locatecontrol />
   </l-map>
 </template>
 
@@ -9,10 +10,15 @@
   import { mapState } from 'vuex';
   import { latLng } from "leaflet";
   import LGbfs from "./LGbfs.vue";
+  import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
+
 
   export default {
     name: 'gbfs-view',
-    components: {LGbfs},
+    components: {
+      'l-gbfs': LGbfs,
+      'v-locatecontrol': Vue2LeafletLocatecontrol,
+    },
     computed: {
       ...mapState(['rents'])
     },
@@ -27,7 +33,9 @@
     },
     watch: {
       rents() {
-        this.$refs.gbfsLayer.update();
+        if (this.$refs.gbfsLayer) {
+          this.$refs.gbfsLayer.update();
+        }
       }
     }
   };
