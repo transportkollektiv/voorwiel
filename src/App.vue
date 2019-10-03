@@ -1,56 +1,56 @@
 <template>
-    <v-app>
-        <v-app-bar app dark>
-            <v-app-bar-nav-icon>
-                <img src="@/assets/logo.png" height="48" />
-            </v-app-bar-nav-icon>
+  <v-app>
+    <v-app-bar app dark>
+      <v-app-bar-nav-icon>
+        <img src="@/assets/logo.png" height="48" />
+      </v-app-bar-nav-icon>
 
-            <v-toolbar-title class="d-none d-sm-flex">dev.bike</v-toolbar-title>
+      <v-toolbar-title class="d-none d-sm-flex">dev.bike</v-toolbar-title>
 
-            <div class="flex-grow-1"></div>
+      <div class="flex-grow-1"></div>
 
-            <v-toolbar-items>
-                <About />
+      <v-toolbar-items>
+        <About />
 
-                <v-btn text color="red lighten-2" dark v-if="!user" @click.stop="showLogin">
-                  <span class="hidden-xs-only">Login</span>
-                  <v-icon right>mdi-login</v-icon>
-                </v-btn>
+        <v-btn text color="red lighten-2" dark v-if="!user" @click.stop="showLogin">
+          <span class="hidden-xs-only">Login</span>
+          <v-icon right>mdi-login</v-icon>
+        </v-btn>
 
-                <v-menu left bottom v-if="user">
-                  <template v-slot:activator="{ on }">
-                    <v-btn text v-on="on">
-                      <v-icon>mdi-dots-vertical</v-icon>
-                      {{user.username}}
-                    </v-btn>
-                  </template>
+        <v-menu left bottom v-if="user">
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+              {{user.username}}
+            </v-btn>
+          </template>
 
-                  <v-list>
-                    <v-list-item @click="logout()">
-                      <v-list-item-title>Logout</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-            </v-toolbar-items>
-        </v-app-bar>
+          <v-list>
+            <v-list-item @click="logout()">
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
+    </v-app-bar>
 
-        <v-content>
-            <gbfs-view url="" />
-            <Login v-if="!user" />
-            <div class="rent-buttonarea">
-              <v-btn
-                rounded
-                x-large
-                color="success"
-                v-if="!user"
-                @click.stop="showLogin"
-              >
-                <v-icon>mdi-login</v-icon>&nbsp;<span>Login</span>
-              </v-btn>
-              <Rent v-if="user" />
-            </div>
-        </v-content>
-    </v-app>
+    <v-content>
+      <gbfs-view url="" />
+      <Login v-if="!user" />
+      <div class="rent-buttonarea">
+        <v-btn
+          rounded
+          x-large
+          color="success"
+          v-if="!user"
+          @click.stop="showLogin"
+        >
+          <v-icon>mdi-login</v-icon>&nbsp;<span>Login</span>
+        </v-btn>
+        <Rent v-if="user" />
+      </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -81,11 +81,6 @@
       this.$store.dispatch("LOAD_AUTH_TOKEN");
       this.$store.dispatch("GET_USER");
       this.$store.dispatch("UPDATE_RENTS");
-      /*
-      this.$nextTick(() => {
-        // this.$refs.myMap.mapObject.ANY_LEAFLET_MAP_METHOD();
-      });
-       */
     }
   };
 </script>
