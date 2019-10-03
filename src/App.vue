@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dark>
+    <v-app-bar app dark flat>
       <v-app-bar-nav-icon>
         <img src="@/assets/logo.png" height="48" />
       </v-app-bar-nav-icon>
@@ -35,6 +35,17 @@
     </v-app-bar>
 
     <v-content>
+      <v-alert
+        v-if="user && !user.can_rent_bike"
+        border="bottom"
+        colored-border
+        type="warning"
+        dense
+        class="mb-0"
+      >
+        You can't rent bikes because you haven't been validated yet. Please contact us so you can start riding a bike right away.
+      </v-alert>
+
       <gbfs-view url="" />
       <Login v-if="!user" />
       <div class="rent-buttonarea">
