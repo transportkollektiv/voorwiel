@@ -15,8 +15,20 @@
       <v-card-title class="headline grey lighten-2" primary-title>
         Rent
       </v-card-title>
-      <v-form v-model="valid" ref="rentBikeForm">
-        <v-container>
+      <v-form v-model="valid" ref="rentBikeForm" @submit.prevent="startRent">
+        <v-container class="py-0">
+          <v-row v-if="rentError">
+            <v-col col="12" md="12">
+             <v-alert
+                dense
+                outlined
+                type="error"
+                class="my-0"
+              >
+                {{rentError}}
+              </v-alert>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col cols="8" md="8">
               <v-text-field
@@ -28,8 +40,8 @@
                   :rules="bikenumberrules"
                 ></v-text-field>
             </v-col>
-            <v-col cols="4" md="4">
-              <v-btn color="success" v-bind:disabled="!valid" @click="startRent">
+            <v-col cols="4" md="4" class="text-center">
+              <v-btn class="mt-2" color="success" v-bind:disabled="!valid" @click="startRent">
                 Unlock
               </v-btn>
             </v-col>
@@ -65,6 +77,7 @@
         dialog: false,
         valid: false,
         bikenumber: '',
+        rentError: '',
 
         bikenumberrules: [
           value => {
@@ -85,12 +98,21 @@
     methods: {
       startRent() {
         // FIXME: error handling
+        this.rentError = '';
         this.$store.dispatch("START_RENT", this.bikenumber).then(() => {
           this.$refs.rentBikeForm.reset()
+        }).catch((err) => {
+          this.rentError = err;
         });
       },
       endRent(rentId) {
         this.$store.dispatch("END_RENT", rentId);
+      }
+    },
+    watch: {
+      dialog() {
+        this.$refs.rentBikeForm.reset()
+        this.rentError = '';
       }
     }
   };
