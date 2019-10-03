@@ -66,5 +66,10 @@
     beforeDestroy() {
       this.parentContainer.removeLayer(this);
     },
+    methods: {
+      update() {
+        this.mapObject.update();
+      }
+    }
   };
 </script>
