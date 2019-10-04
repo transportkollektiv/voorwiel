@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" max-width="400" style="z-index: 9999;">
+  <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
         Login With
@@ -35,7 +35,7 @@
       }
     },
     watch: {
-      show(current, old) {
+      show(current) {
         if (current === false) {
           this.$router.push('/');
         }

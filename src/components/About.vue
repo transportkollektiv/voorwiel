@@ -6,7 +6,7 @@
       Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.
     </div>
 
-    <v-dialog v-model="dialog" max-width="400" style="z-index: 9999;" class="d-flex d-sm-flex d-md-none">
+    <v-dialog v-model="dialog" max-width="400" class="d-flex d-sm-flex d-md-none">
       <template v-slot:activator="{ on }">
         <v-btn text color="red lighten-2" dark v-on="on" class="about-toolbar-btn d-flex d-sm-flex d-md-none">
           <span class="hidden-xs-only">About</span>
