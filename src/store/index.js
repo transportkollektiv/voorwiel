@@ -37,19 +37,12 @@ export default new Vuex.Store({
     rents: []
   },
   actions: {
-    IS_AUTHENTICATED: function({ dispatch, state, getters }) {
-      return new Promise((resolve, reject) => {
-        if (!getters.isAuthenticated) {
-          dispatch("LOAD_AUTH_TOKEN")
-            .then(() => {
-              return dispatch("GET_USER")
-            })
-            .then(resolve)
-            .catch(reject);
-          return;
-        }
-        resolve(true);
-      });
+    IS_AUTHENTICATED: function({ dispatch, getters }) {
+      if (!getters.isAuthenticated) {
+        return dispatch("LOAD_AUTH_TOKEN")
+          .then(() => dispatch("GET_USER"));
+      }
+      return Promise.resolve();
     },
     GET_USER: function({ commit, state, getters }) {
       return new Promise((resolve, reject) => {

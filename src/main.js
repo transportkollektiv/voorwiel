@@ -52,8 +52,8 @@ router.beforeEach((to, from, next) => {
   }
 
   store.dispatch("IS_AUTHENTICATED")
-    .then(() => { next(); })
-    .catch(() => { next({ path: '/login' }); });
+    .then(() => next())
+    .catch(() => next({ path: '/login' }));
 });
 
 new Vue({
