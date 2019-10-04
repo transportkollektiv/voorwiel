@@ -1,6 +1,6 @@
-var TITLE = "dev.bike - rent a bike on the #cccamp19, a radforschung.org project";
-var SYSTEM_URL = "http://lvh.me:8000";
-var NAME = "dev.bike";
+var TITLE = "openbike.ulm.dev - bikesharing for employees of the City of Ulm";
+var NAME = "OpenBike";
+var SYSTEM_URL = "https://api.dev.bike";
 var API_ROOT = SYSTEM_URL + "/api";
 var GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json";
 

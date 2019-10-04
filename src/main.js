@@ -7,7 +7,7 @@ import vuetify from './plugins/vuetify';
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-import appConfig from '../config/config.default';
+var appConfig = require(`../config/config.${process.env.NODE_ENV}.js`).default;
 
 Vue.use(Vuex)
 Vue.use(VueRouter);
