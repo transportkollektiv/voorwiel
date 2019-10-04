@@ -52,7 +52,7 @@
         <v-btn rounded x-large color="success" v-if="!user" to="login">
           <v-icon>mdi-login</v-icon>&nbsp;<span>Login</span>
         </v-btn>
-        <Rent v-if="user" />
+        <RentButton v-if="user" />
       </div>
     </v-content>
   </v-app>
@@ -61,11 +61,11 @@
 <script>
   import About from './components/About';
   import GbfsView from './components/GbfsView';
-  import Rent from './components/Rent';
+  import RentButton from './components/RentButton';
 
   export default {
     name: 'App',
-    components: {About, GbfsView, Rent},
+    components: {About, GbfsView, RentButton},
     data: function() {
       return {
         name: this.$appConfig.NAME

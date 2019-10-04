@@ -1,16 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="400" style="display:none;">
-    <template v-slot:activator="{ on }">
-      <v-btn
-        rounded
-        x-large
-        color="success"
-        v-on="on"
-      >
-        <v-icon>mdi-bike</v-icon>&nbsp;<span>{{ buttonText }}</span>
-      </v-btn>
-    </template>
-
+  <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-card-title class="title" primary-title>
         Rent
@@ -77,7 +66,7 @@
     components: {TickingTime},
     data() {
       return {
-        dialog: false,
+        show: true,
         valid: false,
         loading: false,
         bikenumber: '',
@@ -119,7 +108,10 @@
       }
     },
     watch: {
-      dialog() {
+      show(current) {
+        if (current === false) {
+          this.$router.push('/');
+        }
         if (this.$refs.rentBikeForm) {
           this.$refs.rentBikeForm.reset();
         }

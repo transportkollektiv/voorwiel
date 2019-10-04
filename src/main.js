@@ -26,14 +26,14 @@ Vue.config.productionTip = false;
 Vue.prototype.$appConfig = appConfig;
 
 import Login from './components/Login';
-
-const routes = [
-  { path: '/login', component: Login },
-]
+import Rent from './components/Rent';
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes: [
+    { path: '/login', component: Login },
+    { path: '/rent', component: Rent },
+  ],
 })
 
 new Vue({
