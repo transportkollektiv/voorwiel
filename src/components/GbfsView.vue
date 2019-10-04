@@ -10,7 +10,7 @@
   import { mapState } from 'vuex';
   import { latLng } from "leaflet";
   import LGbfs from "./LGbfs.vue";
-  import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol'
+  import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol/Vue2LeafletLocatecontrol'
 
 
   export default {
