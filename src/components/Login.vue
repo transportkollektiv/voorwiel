@@ -10,7 +10,7 @@
           <v-list-item v-for="provider in providers" :key="provider.id">
             <v-list-item-content>
               <v-btn :color="provider.color" block @click.native="authenticate(provider)">
-                {{ provider.label }}
+                {{ provider.name }}
                 <v-icon v-if="provider.icon" right dark>{{ provider.icon }}</v-icon>
               </v-btn>
             </v-list-item-content>
@@ -26,19 +26,12 @@
     data() {
       return {
         show: false,
-        providers: this.$appConfig.AUTH_PROVIDER.map((el) => {
-          return {
-            label: el.name,
-            id: el.id,
-            icon: el.icon,
-          }
-        })
+        providers: this.$appConfig.AUTH_PROVIDER
       }
     },
     methods: {
       authenticate(provider) {
-        let url = this.$appConfig.AUTH_LOGIN.replace(/\{provider\}/, provider.id);
-        location.href = url;
+        location.href = provider.url;
       }
     },
     mounted() {

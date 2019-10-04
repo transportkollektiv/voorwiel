@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import appConfig from '../../config/config.default';
 
 Vue.use(Vuex);
 
@@ -12,8 +11,10 @@ const removeSearchFromUrl = (url) => {
   return a.href;
 };
 
-const axiosWithAuth = (state) => {
+const axiosWithAuth = function (state) {
+  let appConfig = this._vm.$appConfig;
   return axios.create({
+    baseURL: appConfig.API_ROOT,
     headers: { 'Authorization': `Token ${state.authToken}` }
   })
 }
@@ -38,8 +39,8 @@ export default new Vuex.Store({
   actions: {
     GET_USER: function({ commit, state }) {
       if (!state.authToken) { return; }
-      axiosWithAuth(state)
-        .get(appConfig.AUTH_USER)
+      axiosWithAuth.call(this, state)
+        .get('/user')
         .then(
           response => {
             commit("SET_USER", { user: response.data });
@@ -95,8 +96,8 @@ export default new Vuex.Store({
           data['lat'] = location.coords.latitude;
           data['lng'] = location.coords.longitude;
         }
-        axiosWithAuth(state)
-          .post(appConfig.API_ROOT + '/rent/start', data)
+        axiosWithAuth.call(this, state)
+          .post('/rent/start', data)
           .then(
             response => {
               dispatch("UPDATE_RENTS")
@@ -131,8 +132,8 @@ export default new Vuex.Store({
           data['lat'] = location.coords.latitude;
           data['lng'] = location.coords.longitude;
         }
-        axiosWithAuth(state)
-          .post(appConfig.API_ROOT + '/rent/finish', data)
+        axiosWithAuth.call(this, state)
+          .post('/rent/finish', data)
           .then(
             response => {
               dispatch("UPDATE_RENTS")
@@ -151,8 +152,8 @@ export default new Vuex.Store({
     },
     UPDATE_RENTS: function({ commit, state }) {
       if (!state.authToken) { return; }
-      axiosWithAuth(state)
-        .get(appConfig.API_ROOT + '/rent/current')
+      axiosWithAuth.call(this, state)
+        .get('/rent/current')
         .then(response => {
           commit('SET_RENTS', response.data)
         })
