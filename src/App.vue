@@ -12,7 +12,7 @@
       <v-toolbar-items>
         <About />
 
-        <v-btn text color="red lighten-2" dark v-if="!user" @click.stop="showLogin">
+        <v-btn text color="red lighten-2" dark v-if="!user" to="login">
           <span class="hidden-xs-only">Login</span>
           <v-icon right>mdi-login</v-icon>
         </v-btn>
@@ -47,15 +47,9 @@
       </v-alert>
 
       <gbfs-view url="" />
-      <Login v-if="!user" />
+      <router-view></router-view>
       <div class="rent-buttonarea">
-        <v-btn
-          rounded
-          x-large
-          color="success"
-          v-if="!user"
-          @click.stop="showLogin"
-        >
+        <v-btn rounded x-large color="success" v-if="!user" to="login">
           <v-icon>mdi-login</v-icon>&nbsp;<span>Login</span>
         </v-btn>
         <Rent v-if="user" />
@@ -65,14 +59,13 @@
 </template>
 
 <script>
-  import Login from './components/Login';
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import Rent from './components/Rent';
 
   export default {
     name: 'App',
-    components: {About, Login, GbfsView, Rent},
+    components: {About, GbfsView, Rent},
     data: function() {
       return {
         name: this.$appConfig.NAME
@@ -86,9 +79,6 @@
     methods: {
       logout() {
         this.$store.dispatch("LOGOUT");
-      },
-      showLogin() {
-        this.$root.$emit('showLogin');
       }
     },
     mounted () {

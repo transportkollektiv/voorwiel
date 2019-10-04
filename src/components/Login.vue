@@ -25,7 +25,7 @@
   export default {
     data() {
       return {
-        show: false,
+        show: true,
         providers: this.$appConfig.AUTH_PROVIDER
       }
     },
@@ -34,10 +34,12 @@
         location.href = provider.url;
       }
     },
-    mounted() {
-      this.$root.$on('showLogin', () => {
-        this.show = true;
-      })
+    watch: {
+      show(current, old) {
+        if (current === false) {
+          this.$router.push('/');
+        }
+      }
     }
   };
 </script>
