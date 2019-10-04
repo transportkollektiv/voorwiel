@@ -64,6 +64,7 @@
 
   export default {
     components: {TickingTime},
+    props: ['bikeId'],
     data() {
       return {
         show: true,
@@ -107,15 +108,18 @@
         });
       }
     },
+    mounted() {
+      this.bikenumber = this.bikeId;
+    },
     watch: {
       show(current) {
         if (current === false) {
           this.$router.push('/');
+          if (this.$refs.rentBikeForm) {
+            this.$refs.rentBikeForm.reset();
+          }
+          this.rentError = '';
         }
-        if (this.$refs.rentBikeForm) {
-          this.$refs.rentBikeForm.reset();
-        }
-        this.rentError = '';
       }
     }
   };

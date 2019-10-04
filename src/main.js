@@ -32,7 +32,16 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/login', component: Login },
-    { path: '/rent', component: Rent, meta: { requiresAuth: true }},
+    { path: '/rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
+      if (route.query && route.query.id) {
+        return { bikeId: route.query.id }
+      }
+      return {};
+    }},
+    { path: '/b/:id', redirect: to => {
+      const { params } = to;
+      return { path: '/rent', query: { id: params.id } };
+    }},
   ],
 });
 
