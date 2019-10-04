@@ -45,23 +45,19 @@ export default new Vuex.Store({
       return Promise.resolve();
     },
     GET_USER: function({ commit, state, getters }) {
-      return new Promise((resolve, reject) => {
-        if (!getters.isAuthenticated) { reject(); return; }
-        axiosWithAuth.call(this, state)
-          .get('/user')
-          .then(
-            response => {
-              commit("SET_USER", { user: response.data });
-              resolve();
-            },
-            err => {
-              if (err.response && err.response.status == 401) {
-                commit("CLEAR_USER");
-              }
-              reject();
+      if (!getters.isAuthenticated) { return Promise.reject(); }
+      return axiosWithAuth.call(this, state)
+        .get('/user')
+        .then(
+          response => {
+            commit("SET_USER", { user: response.data });
+          },
+          err => {
+            if (err.response && err.response.status == 401) {
+              commit("CLEAR_USER");
             }
-          )
-      });
+          }
+        );
     },
     LOAD_AUTH_TOKEN: function({ commit }) {
       return new Promise((resolve, reject) => {
@@ -101,72 +97,67 @@ export default new Vuex.Store({
           timeout: 3000,
           enableHighAccuracy: true,
           maximumAge: 20000
-        }).then((location) => {
-        return dispatch("START_RENT_INTERNAL", bikeNumber, location);
-      }).catch(() => {
-        return dispatch("START_RENT_INTERNAL", bikeNumber);
-      });
+        }).then(
+          (location) => dispatch("START_RENT_INTERNAL", bikeNumber, location),
+          () => dispatch("START_RENT_INTERNAL", bikeNumber)
+        );
     },
     START_RENT_INTERNAL: function({ dispatch, state }, bikeNumber, location) {
-      return new Promise((resolve, reject) => {
-        let data = {bike_number: bikeNumber};
-        if (location && location.coords && location.coords.accuracy < 20) {
-          data['lat'] = location.coords.latitude;
-          data['lng'] = location.coords.longitude;
-        }
-        axiosWithAuth.call(this, state)
-          .post('/rent/start', data)
-          .then(
-            response => {
-              dispatch("UPDATE_RENTS")
-              resolve(response.data)
-            },
-            err => {
-              if (err.response && err.response.data && err.response.data.error) {
-                return reject(err.response.data.error);
-              }
-              if (err.response && err.response.data && err.response.data.detail) {
-                return reject(err.response.data.detail);
-              }
-              reject(err)
-            });
-      });
+      let data = {bike_number: bikeNumber};
+      if (location && location.coords && location.coords.accuracy < 20) {
+        data['lat'] = location.coords.latitude;
+        data['lng'] = location.coords.longitude;
+      }
+      return axiosWithAuth.call(this, state)
+        .post('/rent/start', data)
+        .then(
+          response => {
+            dispatch("UPDATE_RENTS")
+            return response.data;
+          },
+          err => {
+            if (err.response && err.response.data && err.response.data.error) {
+              throw err.response.data.error;
+            }
+            if (err.response && err.response.data && err.response.data.detail) {
+              throw err.response.data.detail;
+            }
+            throw err;
+          });
     },
     END_RENT: function({ dispatch }, rentId) {
       return getCurrentPosition({
           timeout: 3000,
           enableHighAccuracy: true,
           maximumAge: 20000
-        }).then((location) => {
-        return dispatch("END_RENT_INTERNAL", rentId, location);
-      }).catch(() => {
-        return dispatch("END_RENT_INTERNAL", rentId);
-      });
+        }).then(
+          (location) => dispatch("END_RENT_INTERNAL", rentId, location),
+          () => dispatch("END_RENT_INTERNAL", rentId)
+        );
     },
     END_RENT_INTERNAL: function({ dispatch, state }, rentId, location) {
-      return new Promise((resolve, reject) => {
-        let data = {rent_id: rentId};
-        if (location && location.coords && location.coords.accuracy < 20) {
-          data['lat'] = location.coords.latitude;
-          data['lng'] = location.coords.longitude;
-        }
-        axiosWithAuth.call(this, state)
-          .post('/rent/finish', data)
-          .then(
-            response => {
-              dispatch("UPDATE_RENTS")
-              resolve(response.data)
-            },
-            err => {
-              if (err.response && err.response.data && err.response.data.error) {
-                return reject(err.response.data.error);
-              }
-              if (err.response && err.response.data && err.response.data.detail) {
-                return reject(err.response.data.detail);
-              }
-              reject(err)
-            });
-      })
+      let data = {rent_id: rentId};
+      if (location && location.coords && location.coords.accuracy < 20) {
+        data['lat'] = location.coords.latitude;
+        data['lng'] = location.coords.longitude;
+      }
+      return axiosWithAuth.call(this, state)
+        .post('/rent/finish', data)
+        .then(
+          response => {
+            dispatch("UPDATE_RENTS")
+            return response.data;
+          },
+          err => {
+            if (err.response && err.response.data && err.response.data.error) {
+              throw err.response.data.error;
+            }
+            if (err.response && err.response.data && err.response.data.detail) {
+              throw err.response.data.detail;
+            }
+            throw err;
+          });
+
     },
     UPDATE_RENTS: function({ commit, state, getters }) {
       if (!getters.isAuthenticated) { return; }
