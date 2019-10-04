@@ -37,35 +37,60 @@ export default new Vuex.Store({
     rents: []
   },
   actions: {
-    GET_USER: function({ commit, state, getters }) {
-      if (!getters.isAuthenticated) { return; }
-      axiosWithAuth.call(this, state)
-        .get('/user')
-        .then(
-          response => {
-            commit("SET_USER", { user: response.data });
-          },
-          err => {
-            if (err.response && err.response.status == 401) {
-              commit("CLEAR_USER");
-            }
-          }
-        )
-    },
-    LOAD_AUTH_TOKEN: function({ commit }) {
-      if (location.search) {
-        let params = new URLSearchParams(location.search);
-        if (params.get('token')) {
-          commit("SET_AUTH_TOKEN", params.get('token'));
-          history.replaceState({}, '', removeSearchFromUrl(location.href));
+    IS_AUTHENTICATED: function({ dispatch, state, getters }) {
+      return new Promise((resolve, reject) => {
+        if (!getters.isAuthenticated) {
+          dispatch("LOAD_AUTH_TOKEN")
+            .then(() => {
+              return dispatch("GET_USER")
+            })
+            .then(resolve)
+            .catch(reject);
           return;
         }
-      }
+        resolve(true);
+      });
+    },
+    GET_USER: function({ commit, state, getters }) {
+      return new Promise((resolve, reject) => {
+        if (!getters.isAuthenticated) { reject(); return; }
+        axiosWithAuth.call(this, state)
+          .get('/user')
+          .then(
+            response => {
+              commit("SET_USER", { user: response.data });
+              resolve();
+            },
+            err => {
+              if (err.response && err.response.status == 401) {
+                commit("CLEAR_USER");
+              }
+              reject();
+            }
+          )
+      });
+    },
+    LOAD_AUTH_TOKEN: function({ commit }) {
+      return new Promise((resolve, reject) => {
+        if (location.search) {
+          let params = new URLSearchParams(location.search);
+          if (params.get('token')) {
+            commit("SET_AUTH_TOKEN", params.get('token'));
+            history.replaceState({}, '', removeSearchFromUrl(location.href));
+            resolve();
+            return;
+          }
+        }
 
-      let authToken = localStorage.getItem(LS_AUTH_TOKEN_KEY);
-      if (authToken !== null) {
-        commit("SET_AUTH_TOKEN", authToken);
-      }
+        let authToken = localStorage.getItem(LS_AUTH_TOKEN_KEY);
+        if (authToken !== null) {
+          commit("SET_AUTH_TOKEN", authToken);
+          resolve();
+          return;
+        }
+
+        reject();
+      });
     },
     LOGOUT: function({ commit }) {
       localStorage.removeItem(LS_AUTH_TOKEN_KEY);

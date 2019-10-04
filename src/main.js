@@ -46,18 +46,14 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.isAuthenticated) {
-      next({
-        path: '/login',
-        // query: { redirect: to.fullPath } // TODO
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
+  if (!to.meta.requiresAuth) {
+    next();
+    return;
   }
+
+  store.dispatch("IS_AUTHENTICATED")
+    .then(() => { next(); })
+    .catch(() => { next({ path: '/login' }); });
 });
 
 new Vue({

@@ -82,9 +82,9 @@
       }
     },
     mounted () {
-      this.$store.dispatch("LOAD_AUTH_TOKEN");
-      this.$store.dispatch("GET_USER");
-      this.$store.dispatch("UPDATE_RENTS");
+      this.$store.dispatch("IS_AUTHENTICATED").then(() => {
+        this.$store.dispatch("UPDATE_RENTS");
+      }).catch(() => {});
     }
   };
 </script>
