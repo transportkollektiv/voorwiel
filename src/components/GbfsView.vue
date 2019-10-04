@@ -9,13 +9,15 @@
 <script>
   import { mapState } from 'vuex';
   import { latLng } from "leaflet";
+  import { LMap, LTileLayer } from 'vue2-leaflet';
   import LGbfs from "./LGbfs.vue";
   import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol/Vue2LeafletLocatecontrol'
-
 
   export default {
     name: 'gbfs-view',
     components: {
+      'l-map': LMap,
+      'l-tile-layer': LTileLayer,
       'l-gbfs': LGbfs,
       'v-locatecontrol': Vue2LeafletLocatecontrol,
     },
