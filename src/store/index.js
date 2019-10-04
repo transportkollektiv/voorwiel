@@ -28,6 +28,16 @@ const getCurrentPosition = (options) => {
   return new Promise(resolve => resolve({}))
 }
 
+const unpackErrorMessage = (err) => {
+  if (err.response && err.response.data && err.response.data.error) {
+    throw err.response.data.error;
+  }
+  if (err.response && err.response.data && err.response.data.detail) {
+    throw err.response.data.detail;
+  }
+  throw err;
+};
+
 const LS_AUTH_TOKEN_KEY = 'authToken';
 
 export default new Vuex.Store({
@@ -115,15 +125,8 @@ export default new Vuex.Store({
             dispatch("UPDATE_RENTS")
             return response.data;
           },
-          err => {
-            if (err.response && err.response.data && err.response.data.error) {
-              throw err.response.data.error;
-            }
-            if (err.response && err.response.data && err.response.data.detail) {
-              throw err.response.data.detail;
-            }
-            throw err;
-          });
+          err => unpackErrorMessage(err)
+        );
     },
     END_RENT: function({ dispatch }, rentId) {
       return getCurrentPosition({
@@ -148,16 +151,8 @@ export default new Vuex.Store({
             dispatch("UPDATE_RENTS")
             return response.data;
           },
-          err => {
-            if (err.response && err.response.data && err.response.data.error) {
-              throw err.response.data.error;
-            }
-            if (err.response && err.response.data && err.response.data.detail) {
-              throw err.response.data.detail;
-            }
-            throw err;
-          });
-
+          err => unpackErrorMessage(err)
+        );
     },
     UPDATE_RENTS: function({ commit, state, getters }) {
       if (!getters.isAuthenticated) { return; }
