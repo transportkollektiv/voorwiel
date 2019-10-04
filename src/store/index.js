@@ -37,8 +37,8 @@ export default new Vuex.Store({
     rents: []
   },
   actions: {
-    GET_USER: function({ commit, state }) {
-      if (!state.authToken) { return; }
+    GET_USER: function({ commit, state, getters }) {
+      if (!getters.isAuthenticated) { return; }
       axiosWithAuth.call(this, state)
         .get('/user')
         .then(
@@ -150,8 +150,8 @@ export default new Vuex.Store({
             });
       })
     },
-    UPDATE_RENTS: function({ commit, state }) {
-      if (!state.authToken) { return; }
+    UPDATE_RENTS: function({ commit, state, getters }) {
+      if (!getters.isAuthenticated) { return; }
       axiosWithAuth.call(this, state)
         .get('/rent/current')
         .then(response => {
@@ -176,6 +176,10 @@ export default new Vuex.Store({
       state.rents = rents;
     }
   },
-  getters: {},
+  getters: {
+    isAuthenticated(state) {
+      return !!state.authToken;
+    }
+  },
   modules: {},
 });

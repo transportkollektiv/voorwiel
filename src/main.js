@@ -32,9 +32,24 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/login', component: Login },
-    { path: '/rent', component: Rent },
+    { path: '/rent', component: Rent, meta: { requiresAuth: true }},
   ],
-})
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isAuthenticated) {
+      next({
+        path: '/login',
+        // query: { redirect: to.fullPath } // TODO
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+});
 
 new Vue({
   vuetify,
