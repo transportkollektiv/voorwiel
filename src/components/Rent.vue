@@ -51,7 +51,7 @@
           <v-list-item-subtitle>Renting for <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn color="success" @click="endRent(rent.id)">Finish Rent</v-btn>
+          <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">Finish Rent</v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-card>
@@ -72,6 +72,7 @@
         loading: false,
         bikenumber: '',
         rentError: '',
+        loadingRents: [],
 
         bikenumberrules: [
           value => {
@@ -103,8 +104,13 @@
       },
       endRent(rentId) {
         this.rentError = '';
+        this.loadingRents.push(rentId);
         this.$store.dispatch("END_RENT", rentId).catch(err => {
           this.rentError = err;
+          let index = this.loadingRents.indexOf(rentId);
+          if (index >= 0) {
+            this.loadingRents.splice(index, 1);
+          }
         });
       }
     },
