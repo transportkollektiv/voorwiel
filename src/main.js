@@ -9,8 +9,7 @@ import 'leaflet/dist/leaflet.css'
 
 var appConfig = require(`../config/config.${process.env.NODE_ENV}.js`).default;
 
-Vue.use(Vuex)
-Vue.use(VueRouter);
+Vue.use(Vuex);
 
 delete Icon.Default.prototype._getIconUrl;
 
@@ -28,4 +27,4 @@ new Vue({
   vuetify,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
