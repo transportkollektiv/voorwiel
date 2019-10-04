@@ -5,7 +5,7 @@
         <img src="@/assets/logo.png" height="48" />
       </v-app-bar-nav-icon>
 
-      <v-toolbar-title class="d-none d-sm-flex">dev.bike</v-toolbar-title>
+      <v-toolbar-title class="d-none d-sm-flex">{{name}}</v-toolbar-title>
 
       <div class="flex-grow-1"></div>
 
@@ -73,10 +73,13 @@
   export default {
     name: 'App',
     components: {About, Login, GbfsView, Rent},
-    data: () => ({
-    }),
+    data: function() {
+      return {
+        name: this.$appConfig.NAME
+      }
+    },
     computed: {
-      user () {
+      user() {
         return this.$store.state.user
       }
     },
