@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueI18n from 'vue-i18n'
 import VueRouter from 'vue-router'
 import store from './store'
 import App from './App.vue'
@@ -12,6 +13,7 @@ var appConfig = require(`../config/config.${process.env.NODE_ENV}.js`).default;
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
+Vue.use(VueI18n)
 
 delete Icon.Default.prototype._getIconUrl;
 
@@ -56,9 +58,34 @@ router.beforeEach((to, from, next) => {
     .catch(() => next({ path: '/login' }));
 });
 
+const messages = {
+  'en': {
+    message: {
+      rent: {
+        'unlockcode': 'Unlock Code'
+      },
+    }
+  },
+  'de': {
+    message: {
+      rent: {
+        'unlockcode': 'Entsperrcode'
+      },
+    }
+  }
+}
+
+const i18n = new VueI18n({
+  locale: 'de', // TODO: get browser locale 
+  messages,
+  fallbackLocale: 'en',
+})
+
+
 new Vue({
   vuetify,
   store,
   router,
+  i18n,
   render: h => h(App)
 }).$mount('#app');
