@@ -13,7 +13,7 @@
         <About />
 
         <v-btn text color="red lighten-2" dark v-if="!user" to="login">
-          <span class="hidden-xs-only">Login</span>
+          <span class="hidden-xs-only">{{ $t('message.app.login') }}</span>
           <v-icon right>mdi-login</v-icon>
         </v-btn>
 
@@ -27,7 +27,7 @@
 
           <v-list>
             <v-list-item @click="logout()">
-              <v-list-item-title>Logout</v-list-item-title>
+              <v-list-item-title>{{ $t('message.app.logout') }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>

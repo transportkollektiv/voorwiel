@@ -61,6 +61,10 @@ router.beforeEach((to, from, next) => {
 const messages = {
   'en': {
     message: {
+      app: {
+        'login': 'Login',
+        'logout': 'Logout',
+      },
       rent: {
         'unlockcode': 'Unlock Code',
         'unlock': 'Unlock',
@@ -73,10 +77,17 @@ const messages = {
         'rent-bike': 'Rent Bike',
         'rent-or-return-bike': 'Rent or Return Bike'
       },
+      login: {
+        'login-with': 'Login with'
+      },
     }
   },
   'de': {
     message: {
+      app:{
+        'login': 'Einloggen',
+        'logout': 'Ausloggen',
+      },
       rent: {
         'unlockcode': 'Entsperrcode',
         'unlock': 'Entsperren',
@@ -88,6 +99,9 @@ const messages = {
       rentbutton: {
         'rent-bike': 'Fahrrad ausleihen',
         'rent-or-return-bike': 'Ausleihen oder Zurückgeben'
+      },
+      login: {
+        'login-with': 'Einloggen mit'
       },
     }
   }
