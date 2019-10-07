@@ -19,7 +19,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="8" md="8">
+            <v-col cols="6" md="6">
               <v-text-field
                   type="number"
                   :label="$t('message.rent.bikenumber')"
@@ -30,9 +30,10 @@
                   :rules="bikenumberrules"
                 ></v-text-field>
             </v-col>
-            <v-col cols="4" md="4" class="text-center">
+            <v-col cols="6" md="6" class="text-center">
               <v-btn class="mt-2" color="success" v-bind:disabled="!valid" :loading="loading" @click="startRent">
-                {{ $t('message.rent.unlock') }}
+                <v-icon>mdi-lock-open-variant</v-icon>&nbsp;
+                <span>{{ $t('message.rent.unlock') }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -48,10 +49,13 @@
         <v-list-item-content>
           <v-list-item-title>{{ $t('message.rent.bikenumber') }}: {{rent.bike.bike_number}}</v-list-item-title>
           <v-list-item-subtitle v-if="rent.bike.lock">{{ $t('message.rent.unlockcode') }}: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
-          <v-list-item-subtitle>Renting for <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
+          <v-list-item-subtitle>{{ $t('message.rent.renting-for') }} <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">{{ $t('message.rent.finish-rent') }}</v-btn>
+          <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
+            <v-icon>mdi-lock</v-icon>&nbsp;
+            <span>{{ $t('message.rent.finish-rent') }}</span>
+          </v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-card>

@@ -67,6 +67,7 @@ const messages = {
         'bikenumber': 'Bike number',
         'finish-rent': 'Finish Rent',
         'rent': 'Rent',
+        'renting-for': 'Renting for',
       },
     }
   },
@@ -78,6 +79,7 @@ const messages = {
         'bikenumber': 'Radnummer',
         'finish-rent': 'Ausleihe Beenden',
         'rent': 'Ausleihe',
+        'renting-for': 'Ausleihe läuft',
       },
     }
   }
