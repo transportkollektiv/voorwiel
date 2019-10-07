@@ -47,7 +47,7 @@
       >
         <v-list-item-content>
           <v-list-item-title>Bike {{rent.bike.bike_number}}</v-list-item-title>
-          <v-list-item-subtitle v-if="rent.bike.lock">Code: {{rent.bike.lock.unlock_key}}</v-list-item-subtitle>
+          <v-list-item-subtitle v-if="rent.bike.lock">Code: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
           <v-list-item-subtitle>Renting for <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
@@ -130,3 +130,11 @@
     }
   };
 </script>
+
+<style>
+  .rent-unlock-key {
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bold;
+  }
+</style>
