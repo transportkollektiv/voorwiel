@@ -18,7 +18,7 @@
     },
     computed: {
       buttonText() {
-        return this.rents.length === 0 ? 'Rent bike' : 'Rent or Return bike';
+        return this.rents.length === 0 ? this.$t('message.rentbutton.rent-bike') : this.$t('message.rentbutton.rent-or-return-bike');
       },
 
       ...mapState(['rents'])

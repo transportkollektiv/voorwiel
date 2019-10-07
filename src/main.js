@@ -69,6 +69,10 @@ const messages = {
         'rent': 'Rent',
         'renting-for': 'Renting for',
       },
+      rentbutton: {
+        'rent-bike': 'Rent Bike',
+        'rent-or-return-bike': 'Rent or Return Bike'
+      },
     }
   },
   'de': {
@@ -80,6 +84,10 @@ const messages = {
         'finish-rent': 'Ausleihe Beenden',
         'rent': 'Ausleihe',
         'renting-for': 'Ausleihe läuft',
+      },
+      rentbutton: {
+        'rent-bike': 'Fahrrad ausleihen',
+        'rent-or-return-bike': 'Ausleihen oder Zurückgeben'
       },
     }
   }
