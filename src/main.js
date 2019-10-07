@@ -62,14 +62,22 @@ const messages = {
   'en': {
     message: {
       rent: {
-        'unlockcode': 'Unlock Code'
+        'unlockcode': 'Unlock Code',
+        'unlock': 'Unlock',
+        'bikenumber': 'Bike number',
+        'finish-rent': 'Finish Rent',
+        'rent': 'Rent',
       },
     }
   },
   'de': {
     message: {
       rent: {
-        'unlockcode': 'Entsperrcode'
+        'unlockcode': 'Entsperrcode',
+        'unlock': 'Entsperren',
+        'bikenumber': 'Radnummer',
+        'finish-rent': 'Ausleihe Beenden',
+        'rent': 'Ausleihe',
       },
     }
   }

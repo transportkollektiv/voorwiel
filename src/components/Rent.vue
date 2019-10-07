@@ -2,7 +2,7 @@
   <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-card-title class="title" primary-title>
-        Rent
+        {{ $t('message.rent.rent')}}
       </v-card-title>
       <v-form v-model="valid" ref="rentBikeForm" @submit.prevent="startRent">
         <v-container class="py-0">
@@ -22,7 +22,7 @@
             <v-col cols="8" md="8">
               <v-text-field
                   type="number"
-                  label="Bike Number"
+                  :label="$t('message.rent.bikenumber')"
                   v-model="bikenumber"
                   outlined
                   required
@@ -32,7 +32,7 @@
             </v-col>
             <v-col cols="4" md="4" class="text-center">
               <v-btn class="mt-2" color="success" v-bind:disabled="!valid" :loading="loading" @click="startRent">
-                Unlock
+                {{ $t('message.rent.unlock') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -46,12 +46,12 @@
         :key="rent.id"
       >
         <v-list-item-content>
-          <v-list-item-title>Bike {{rent.bike.bike_number}}</v-list-item-title>
-          <v-list-item-subtitle v-if="rent.bike.lock">{{ $t('message.rent.unlockcode')}}: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
+          <v-list-item-title>{{ $t('message.rent.bikenumber') }}: {{rent.bike.bike_number}}</v-list-item-title>
+          <v-list-item-subtitle v-if="rent.bike.lock">{{ $t('message.rent.unlockcode') }}: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
           <v-list-item-subtitle>Renting for <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">Finish Rent</v-btn>
+          <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">{{ $t('message.rent.finish-rent') }}</v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-card>
