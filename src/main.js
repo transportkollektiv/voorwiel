@@ -80,6 +80,11 @@ const messages = {
       login: {
         'login-with': 'Login with'
       },
+      app: {
+        'login': 'Login',
+        'logout': 'Logout',
+        'unvalidated-message': 'You can\'t rent bikes because you haven\'t been validated yet. Please contact us so you can start riding a bike right away.'
+      },
     }
   },
   'de': {
@@ -102,6 +107,11 @@ const messages = {
       },
       login: {
         'login-with': 'Einloggen mit'
+      },
+      app: {
+        'login': 'Einloggen',
+        'logout': 'Ausloggen',
+        'unvalidated-message': 'Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte kontaktieren Sie uns, um den Account freischalten zu lassen.'
       },
     }
   }

@@ -43,7 +43,7 @@
         dense
         class="mb-0"
       >
-        You can't rent bikes because you haven't been validated yet. Please contact us so you can start riding a bike right away.
+        {{ $t('message.app.unvalidated-message') }}
       </v-alert>
 
       <gbfs-view url="" />
