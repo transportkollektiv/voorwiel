@@ -45,7 +45,7 @@
       }
     },
     methods: {
-      handleGBFSError(ev) {
+      handleGBFSError() {
         this.$store.commit('SET_APPERROR', this.$t('message.gbfsview.error'));
       }
     }
