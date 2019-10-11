@@ -88,18 +88,18 @@ const messages = {
       app:{
         'login': 'Einloggen',
         'logout': 'Ausloggen',
-        'unvalidated-message': 'Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte kontaktieren Sie uns, um den Account freischalten zu lassen.'
+        'unvalidated-message': 'Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte kontaktieren Sie uns, um sich freischalten zu lassen.'
       },
       rent: {
         'unlockcode': 'Entsperrcode',
         'unlock': 'Entsperren',
         'bikenumber': 'Radnummer',
-        'finish-rent': 'Ausleihe Beenden',
+        'finish-rent': 'Zurückgeben',
         'rent': 'Ausleihe',
         'renting-for': 'Ausleihe läuft',
       },
       rentbutton: {
-        'rent-bike': 'Fahrrad ausleihen',
+        'rent-bike': 'Rad ausleihen',
         'rent-or-return-bike': 'Ausleihen oder Zurückgeben'
       },
       login: {
@@ -110,7 +110,7 @@ const messages = {
 }
 
 const i18n = new VueI18n({
-  locale: 'de', // TODO: get browser locale 
+  locale: 'de', // TODO: get browser locale
   messages,
   fallbackLocale: 'en',
 })
