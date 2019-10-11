@@ -84,9 +84,8 @@ const messages = {
       },
       about: {
         'title': 'About',
-        'html': `An experimental open source bike sharing stack for cccamp19.<br />
-                <b><a href="https://events.ccc.de/camp/2019/wiki/Projects:Bikesharing">Help wanted!</a></b>
-                Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.`
+        'html': `An experimental <a href="https://github.com/stadtulm">open source</a> bikesharing, currently testing with employees of the City of Ulm.<br />
+                <b>Want to take part?</b> Drop us a line &rarr; <a href="mailto:openbike@ulm.dev">openbike@ulm.dev</a>`
       }
     }
   },
@@ -114,9 +113,8 @@ const messages = {
       },
       about: {
         'title': 'Über',
-        'html': `An experimental open source bike sharing stack for cccamp19.<br />
-                <b><a href="https://events.ccc.de/camp/2019/wiki/Projects:Bikesharing">Help wanted!</a></b>
-                Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.`
+        'html': `Ein experimentelles <a href="https://github.com/stadtulm">open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br />
+                <b>Mitmachen?</b> Melde dich &rarr; <a href="mailto:openbike@ulm.dev">openbike@ulm.dev</a>`
       }
     }
   }
