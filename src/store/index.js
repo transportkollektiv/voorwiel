@@ -44,7 +44,8 @@ export default new Vuex.Store({
   state: {
     authToken: null,
     user: undefined,
-    rents: []
+    rents: [],
+    appError: ''
   },
   actions: {
     IS_AUTHENTICATED: function({ dispatch, getters }) {
@@ -178,6 +179,9 @@ export default new Vuex.Store({
     },
     SET_RENTS: (state, rents) => {
       state.rents = rents;
+    },
+    SET_APPERROR: (state, message) => {
+      state.appError = message;
     }
   },
   getters: {

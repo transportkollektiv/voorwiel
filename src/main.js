@@ -86,6 +86,12 @@ const messages = {
         'title': 'About',
         'html': `An experimental <a href="https://github.com/stadtulm">open source</a> bikesharing, currently testing with employees of the City of Ulm.<br />
                 <b>Want to take part?</b> Drop us a line &rarr; <a href="mailto:openbike@ulm.dev">openbike@ulm.dev</a>`
+      },
+      'apperror': {
+        'close': 'Close'
+      },
+      'gbfsview': {
+        'error': 'Cannot load bike positions'
       }
     }
   },
@@ -115,6 +121,12 @@ const messages = {
         'title': 'Über',
         'html': `Ein experimentelles <a href="https://github.com/stadtulm">open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br />
                 <b>Mitmachen?</b> Melde dich &rarr; <a href="mailto:openbike@ulm.dev">openbike@ulm.dev</a>`
+      },
+      'apperror': {
+        'close': 'Schließen'
+      },
+      'gbfsview': {
+        'error': 'Laden der Radpositionen fehlgeschlagen'
       }
     }
   }

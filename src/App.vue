@@ -56,6 +56,7 @@
         </v-btn>
         <RentButton v-if="user" />
       </div>
+      <AppError />
     </v-content>
   </v-app>
 </template>
@@ -64,10 +65,11 @@
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
+  import AppError from './components/AppError';
 
   export default {
     name: 'App',
-    components: {About, GbfsView, RentButton},
+    components: {About, GbfsView, RentButton, AppError},
     data: function() {
       return {
         name: this.$appConfig.NAME

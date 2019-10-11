@@ -62,6 +62,9 @@
       this.ready = true;
       this.parentContainer = findRealParent(this.$parent);
       this.parentContainer.addLayer(this);
+      this.mapObject.on('error', (function(ev) {
+        this.$emit('error', ev);
+      }).bind(this));
     },
     beforeDestroy() {
       this.parentContainer.removeLayer(this);
