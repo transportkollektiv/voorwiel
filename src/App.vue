@@ -52,7 +52,7 @@
       <router-view></router-view>
       <div class="rent-buttonarea">
         <v-btn rounded x-large color="success" v-if="!user" to="login">
-          <v-icon>mdi-login</v-icon>&nbsp;<span>Login</span>
+          <v-icon>mdi-login</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
         <RentButton v-if="user" />
       </div>
