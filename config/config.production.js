@@ -29,12 +29,6 @@ var AUTH_PROVIDER = [
     iconFile: "./src/assets/fds-icon.png",
     url: SYSTEM_URL + "/auth/fragdenstaat/login/",
   },
-  {
-    id: 'eventphone',
-    name: 'Eventphone',
-    iconFile: "./src/assets/ephone.svg",
-    url: SYSTEM_URL + "/auth/eventphone/login/",
-  },
 ];
 
 var DEFAULT_LOCATION = [48.3984, 9.9908];
