@@ -29,6 +29,7 @@ Vue.prototype.$appConfig = appConfig;
 
 import Login from './components/Login';
 import Rent from './components/Rent';
+import './registerServiceWorker';
 
 const router = new VueRouter({
   mode: 'history',
