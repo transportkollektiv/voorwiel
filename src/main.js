@@ -81,6 +81,12 @@ const messages = {
       login: {
         'login-with': 'Login with'
       },
+      about: {
+        'title': 'About',
+        'html': `An experimental open source bike sharing stack for cccamp19.<br />
+                <b><a href="https://events.ccc.de/camp/2019/wiki/Projects:Bikesharing">Help wanted!</a></b>
+                Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.`
+      }
     }
   },
   'de': {
@@ -105,6 +111,12 @@ const messages = {
       login: {
         'login-with': 'Einloggen mit'
       },
+      about: {
+        'title': 'Über',
+        'html': `An experimental open source bike sharing stack for cccamp19.<br />
+                <b><a href="https://events.ccc.de/camp/2019/wiki/Projects:Bikesharing">Help wanted!</a></b>
+                Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.`
+      }
     }
   }
 }

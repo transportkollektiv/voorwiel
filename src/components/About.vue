@@ -1,30 +1,22 @@
 <template>
   <div class="d-flex align-center">
-    <div class="d-none d-sm-none d-md-inline">
-      An experimental open source bike sharing stack for cccamp19.<br />
-      <b><a href="https://events.ccc.de/camp/2019/wiki/Projects:Bikesharing">Help wanted!</a></b>
-      Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.
-    </div>
+    <div class="d-none d-sm-none d-md-inline" v-html="$t('message.about.html')"></div>
 
     <v-dialog v-model="dialog" max-width="400" class="d-flex d-sm-flex d-md-none">
       <template v-slot:activator="{ on }">
         <v-btn text color="red lighten-2" dark v-on="on" class="about-toolbar-btn d-flex d-sm-flex d-md-none">
-          <span class="hidden-xs-only">About</span>
+          <span class="hidden-xs-only">{{ $t('message.about.title') }}</span>
           <v-icon right>mdi-information-outline</v-icon>
         </v-btn>
       </template>
 
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
-          About
+          {{ $t('message.about.title') }}
         </v-card-title>
 
         <v-card-text>
-          <p class="mt-4 mb-0">
-            An experimental open source bike sharing stack for cccamp19.
-            <b><a href="https://events.ccc.de/camp/2019/wiki/Projects:Bikesharing">Help wanted!</a></b>
-            Find and chat with us in the <a href="https://map.events.ccc.de/#19/53.03153/13.30907">Open Village</a> or call <a href="tel:2453">BIKE (2453)</a>.
-          </p>
+          <p class="mt-4 mb-0" v-html="$t('message.about.html')"></p>
         </v-card-text>
       </v-card>
     </v-dialog>
