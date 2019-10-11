@@ -2,7 +2,7 @@
   <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>
-        {{ $t('message.login.login-with') }}
+        {{ $t('message.login.login-with') }}
       </v-card-title>
 
       <v-card-actions>
