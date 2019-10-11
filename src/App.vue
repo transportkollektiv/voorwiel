@@ -1,18 +1,20 @@
 <template>
   <v-app>
     <v-app-bar app dark flat>
-      <v-app-bar-nav-icon>
+      <!--v-app-bar-nav-icon>
         <img src="@/assets/logo.png" height="48" />
-      </v-app-bar-nav-icon>
+      </v-app-bar-nav-icon -->
 
-      <v-toolbar-title class="d-none d-sm-flex">{{name}}</v-toolbar-title>
+      <v-toolbar-title class="d-none">{{name}}</v-toolbar-title>
+
+      <img src="@/assets/logo.png" height="48" />
 
       <div class="flex-grow-1"></div>
 
       <v-toolbar-items>
         <About />
 
-        <v-btn text color="red lighten-2" dark v-if="!user" to="login">
+        <v-btn text dark v-if="!user" to="login" color="success">
           <span class="hidden-xs-only">{{ $t('message.app.login') }}</span>
           <v-icon right>mdi-login</v-icon>
         </v-btn>
