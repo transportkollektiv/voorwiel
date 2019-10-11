@@ -88,10 +88,6 @@
       }
     },
     computed: {
-      buttonText() {
-        return this.rents.length === 0 ? 'Rent bike' : 'Rent or Return bike';
-      },
-
       ...mapState(['rents'])
     },
     methods: {
