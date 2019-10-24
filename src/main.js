@@ -80,7 +80,8 @@ const messages = {
         'rent-or-return-bike': 'Rent or Return Bike'
       },
       login: {
-        'login-with': 'Login with'
+        'login-with': 'Login with',
+        'configerror': 'Cannot load login configuration'
       },
       about: {
         'title': 'About',
@@ -115,7 +116,8 @@ const messages = {
         'rent-or-return-bike': 'Ausleihen oder Zurückgeben'
       },
       login: {
-        'login-with': 'Einloggen mit'
+        'login-with': 'Einloggen mit',
+        'configerror': 'Laden der Login-Konfiguration fehlgeschlagen'
       },
       about: {
         'title': 'Über',

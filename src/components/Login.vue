@@ -46,9 +46,11 @@
         fetch(url)
           .then(r => r.json())
           .then(data => {
-            console.log(data);
             this.providers = data;
             this.loading = false;
+          })
+          .catch(() => {
+            this.$store.commit('SET_APPERROR', this.$t('message.login.configerror'));
           });
       }
     },
