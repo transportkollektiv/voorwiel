@@ -7,11 +7,14 @@
 
       <v-card-actions>
         <v-list width="100%">
+          <div v-if="loading" class="loading">
+            <v-skeleton-loader boilerplate tile type="list-item@3"></v-skeleton-loader>
+          </div>
           <v-list-item v-for="provider in providers" :key="provider.id">
             <v-list-item-content>
               <v-btn :color="provider.color" block @click.native="authenticate(provider)">
                 {{ provider.name }}
-                <v-icon v-if="provider.icon" right dark>{{ provider.icon }}</v-icon>
+                <!-- <v-icon v-if="provider.icon" right dark>{{ provider.icon }}</v-icon> -->
               </v-btn>
             </v-list-item-content>
           </v-list-item>
@@ -26,12 +29,27 @@
     data() {
       return {
         show: true,
-        providers: this.$appConfig.AUTH_PROVIDER
+        loading: false,
+        providers: []
       }
+    },
+    created() {
+      this.fetchProviders();
     },
     methods: {
       authenticate(provider) {
         location.href = provider.url;
+      },
+      fetchProviders() {
+        this.loading = true;
+        let url = this.$appConfig.API_ROOT + '/config/loginproviders';
+        fetch(url)
+          .then(r => r.json())
+          .then(data => {
+            console.log(data);
+            this.providers = data;
+            this.loading = false;
+          });
       }
     },
     watch: {
