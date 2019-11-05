@@ -38,7 +38,7 @@
     },
     methods: {
       authenticate(provider) {
-        location.href = provider.url;
+        location.href = provider.auth_url;
       },
       fetchProviders() {
         this.loading = true;
