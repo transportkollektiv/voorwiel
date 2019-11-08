@@ -1,6 +1,6 @@
-var TITLE = "openbike.ulm.dev - bikesharing for employees of the City of Ulm";
-var NAME = "OpenBike";
-var SYSTEM_URL = "https://api.openbike.ulm.dev";
+var TITLE = "dev.bike - experimental bikesharing with an open source stack";
+var NAME = "dev.bike";
+var SYSTEM_URL = "https://api.dev.bike";
 var API_ROOT = SYSTEM_URL + "/api";
 var GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json";
 

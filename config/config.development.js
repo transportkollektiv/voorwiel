@@ -1,4 +1,4 @@
-var TITLE = "dev.bike - rent a bike on the #cccamp19, a radforschung.org project";
+var TITLE = "dev.bike - experimental bikesharing with an open source stack";
 var NAME = "dev.bike";
 var SYSTEM_URL = "http://lvh.me:8000";
 var API_ROOT = SYSTEM_URL + "/api";
