@@ -6,8 +6,6 @@ import vuetify from './plugins/vuetify';
 
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-Vue.use(Vuex);
-
 delete Icon.Default.prototype._getIconUrl;
 
 Icon.Default.mergeOptions({
@@ -22,9 +20,7 @@ import './registerServiceWorker';
 
 import config from './config';
 import i18n from './i18n';
-import r from './router';
-const router = r(store);
-
+import router from './router';
 
 document.title = config.TITLE;
 
