@@ -9,4 +9,24 @@ var GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json";
 var DEFAULT_LOCATION = [48.3984, 9.9908];
 var DEFAULT_ZOOM = 15;
 
-export default {ENV, TITLE, NAME, API_ROOT, GBFS_URL, DEFAULT_LOCATION, DEFAULT_ZOOM};
+var I18N_MESSAGE_OVERRIDE = {
+  "en": {
+    "message": {
+      "about": {
+        "html": "An experimental <a href='https://github.com/stadtulm'>open source</a> bikesharing, currently testing with employees of the City of Ulm.<br /><b>Want to take part?</b> Drop us a line &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
+      }
+    }
+  },
+  "de": {
+    "message": {
+      "app": {
+        "unvalidated-message": "Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte kontaktieren Sie uns, um sich freischalten zu lassen."
+      },
+      "about": {
+        "html": "Ein experimentelles <a href='https://github.com/stadtulm'>open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br /><b>Mitmachen?</b> Melde dich &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
+      }
+    }
+  }
+};
+
+export default {ENV, TITLE, NAME, API_ROOT, GBFS_URL, DEFAULT_LOCATION, DEFAULT_ZOOM, I18N_MESSAGE_OVERRIDE};
