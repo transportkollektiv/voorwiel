@@ -1,13 +1,9 @@
 <template>
   <v-app>
     <v-app-bar app dark flat>
-      <!--v-app-bar-nav-icon>
-        <img src="@/assets/logo.png" height="48" />
-      </v-app-bar-nav-icon -->
-
       <v-toolbar-title class="d-none">{{name}}</v-toolbar-title>
 
-      <img src="@/assets/logo.png" height="48" />
+      <img :src="logoUrl" height="48" :title="name" />
 
       <div class="flex-grow-1"></div>
 
@@ -78,6 +74,10 @@
     computed: {
       user() {
         return this.$store.state.user
+      },
+      logoUrl() {
+        let env = this.$appConfig.ENV;
+        return require('@/assets/logo' + (env != 'production' ? '.' + env : '') + '.png');
       }
     },
     methods: {
