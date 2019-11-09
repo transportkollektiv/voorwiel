@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueI18n from 'vue-i18n'
-import VueRouter from 'vue-router'
 import store from './store'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
@@ -12,7 +11,6 @@ import 'leaflet/dist/leaflet.css'
 var appConfig = require(`../config/config.${process.env.NODE_ENV}.js`).default;
 
 Vue.use(Vuex);
-Vue.use(VueRouter);
 Vue.use(VueI18n)
 
 delete Icon.Default.prototype._getIconUrl;
@@ -27,48 +25,10 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$appConfig = appConfig;
 
-import Login from './components/Login';
-import LoginReturn from './components/LoginReturn';
-import Rent from './components/Rent';
 import './registerServiceWorker';
 
-const router = new VueRouter({
-  mode: 'history',
-  routes: [
-    { path: '/login', component: Login },
-    { path: '/login/return', component: LoginReturn },
-    { path: '/rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
-      if (route.query && route.query.id) {
-        return { bikeId: route.query.id }
-      }
-      return {};
-    }},
-    { path: '/b/:id', redirect: to => {
-      const { params } = to;
-      return { path: '/rent', query: { id: params.id } };
-    }},
-  ],
-});
-
-router.beforeEach((to, from, next) => {
-  if (!to.meta.requiresAuth) {
-    next();
-    return;
-  }
-
-  store.dispatch("IS_AUTHENTICATED")
-    .then(() => {
-      next()
-    })
-    .catch(() => {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath,
-        }
-      })
-    });
-});
+import r from './router';
+const router = r(store);
 
 const messages = {
   'en': {
