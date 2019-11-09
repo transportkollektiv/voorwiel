@@ -151,6 +151,7 @@ const i18n = new VueI18n({
   fallbackLocale: 'en',
 })
 
+document.title = appConfig.TITLE;
 
 new Vue({
   vuetify,
