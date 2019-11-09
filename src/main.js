@@ -6,9 +6,6 @@ import vuetify from './plugins/vuetify';
 
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-
-var appConfig = require(`../config/config.${process.env.NODE_ENV}.js`).default;
-
 Vue.use(Vuex);
 
 delete Icon.Default.prototype._getIconUrl;
@@ -21,16 +18,15 @@ Icon.Default.mergeOptions({
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$appConfig = appConfig;
-
 import './registerServiceWorker';
 
+import config from './config';
 import i18n from './i18n';
 import r from './router';
 const router = r(store);
 
 
-document.title = appConfig.TITLE;
+document.title = config.TITLE;
 
 new Vue({
   vuetify,
