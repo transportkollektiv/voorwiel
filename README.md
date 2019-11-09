@@ -29,4 +29,5 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference for Vue](https://cli.vuejs.org/config/) and the configuration files at `config/`. The used configuration is set at build time by using `NODE_ENV=production` (or `development`, `staging`).  
+For staging and production you may also set `NPM_CONFIG_PRODUCTION=true`.
