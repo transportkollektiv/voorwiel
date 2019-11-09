@@ -28,6 +28,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$appConfig = appConfig;
 
 import Login from './components/Login';
+import LoginReturn from './components/LoginReturn';
 import Rent from './components/Rent';
 import './registerServiceWorker';
 
@@ -35,6 +36,7 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/login', component: Login },
+    { path: '/login/return', component: LoginReturn },
     { path: '/rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
       if (route.query && route.query.id) {
         return { bikeId: route.query.id }
@@ -55,8 +57,17 @@ router.beforeEach((to, from, next) => {
   }
 
   store.dispatch("IS_AUTHENTICATED")
-    .then(() => next())
-    .catch(() => next({ path: '/login' }));
+    .then(() => {
+      next()
+    })
+    .catch(() => {
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath,
+        }
+      })
+    });
 });
 
 const messages = {

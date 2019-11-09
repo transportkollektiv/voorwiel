@@ -4,13 +4,6 @@ import axios from 'axios';
 
 Vue.use(Vuex);
 
-const removeSearchFromUrl = (url) => {
-  let a = document.createElement('a');
-  a.href = url;
-  a.search = '';
-  return a.href;
-};
-
 const axiosWithAuth = function (state) {
   let appConfig = this._vm.$appConfig;
   return axios.create({
@@ -25,7 +18,7 @@ const getCurrentPosition = (options) => {
       (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options)
     )
   }
-  return new Promise(resolve => resolve({}))
+  return Promise.resolve();
 }
 
 const unpackErrorMessage = (err) => {
@@ -48,6 +41,10 @@ export default new Vuex.Store({
     appError: ''
   },
   actions: {
+    AUTHENTICATE: function({ commit, dispatch }, authToken) {
+      commit("SET_AUTH_TOKEN", authToken);
+      return dispatch("GET_USER");
+    },
     IS_AUTHENTICATED: function({ dispatch, getters }) {
       if (!getters.isAuthenticated) {
         return dispatch("LOAD_AUTH_TOKEN")
@@ -66,22 +63,13 @@ export default new Vuex.Store({
           err => {
             if (err.response && err.response.status == 401) {
               commit("CLEAR_USER");
+              return Promise.reject()
             }
           }
         );
     },
     LOAD_AUTH_TOKEN: function({ commit }) {
       return new Promise((resolve, reject) => {
-        if (location.search) {
-          let params = new URLSearchParams(location.search);
-          if (params.get('token')) {
-            commit("SET_AUTH_TOKEN", params.get('token'));
-            history.replaceState({}, '', removeSearchFromUrl(location.href));
-            resolve();
-            return;
-          }
-        }
-
         let authToken = localStorage.getItem(LS_AUTH_TOKEN_KEY);
         if (authToken !== null) {
           commit("SET_AUTH_TOKEN", authToken);
@@ -95,13 +83,6 @@ export default new Vuex.Store({
     LOGOUT: function({ commit }) {
       localStorage.removeItem(LS_AUTH_TOKEN_KEY);
       commit("CLEAR_USER");
-      if (location.search) {
-        let params = new URLSearchParams(location.search);
-        if (params.get('token')) {
-          window.location.search = "";
-          return;
-        }
-      }
     },
     START_RENT: function({ dispatch }, bikeNumber) {
       return getCurrentPosition({

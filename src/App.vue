@@ -58,6 +58,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
@@ -72,23 +73,21 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user
-      },
       logoUrl() {
         let env = this.$appConfig.ENV;
         return require('@/assets/logo' + (env != 'production' ? '.' + env : '') + '.png');
-      }
+      },
+      ...mapState(['user'])
     },
     methods: {
       logout() {
         this.$store.dispatch("LOGOUT");
       }
     },
-    mounted () {
-      this.$store.dispatch("IS_AUTHENTICATED").then(() => {
+    watch: {
+      user() {
         this.$store.dispatch("UPDATE_RENTS");
-      }).catch(() => {});
+      }
     }
   };
 </script>

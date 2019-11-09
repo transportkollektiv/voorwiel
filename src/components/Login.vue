@@ -38,6 +38,10 @@
     },
     methods: {
       authenticate(provider) {
+        let params = new URLSearchParams(location.search);
+        if (params.get('redirect')) {
+          sessionStorage.setItem('redirect', params.get('redirect'));
+        }
         location.href = provider.auth_url;
       },
       fetchProviders() {
