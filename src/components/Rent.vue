@@ -50,13 +50,11 @@
           <v-list-item-title>{{ $t('message.rent.bikenumber') }}: {{rent.bike.bike_number}}</v-list-item-title>
           <v-list-item-subtitle v-if="rent.bike.lock">{{ $t('message.rent.unlockcode') }}: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
           <v-list-item-subtitle>{{ $t('message.rent.renting-for') }} <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-action>
           <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
             <v-icon>mdi-lock</v-icon>&nbsp;
             <span>{{ $t('message.rent.finish-rent') }}</span>
           </v-btn>
-        </v-list-item-action>
+        </v-list-item-content>
       </v-list-item>
     </v-card>
   </v-dialog>
