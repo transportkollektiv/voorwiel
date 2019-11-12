@@ -10,7 +10,7 @@
         "unlockcode": "Unlock Code",
         "unlock": "Unlock",
         "bikenumber": "Bike number",
-        "finish-rent": "Finish",
+        "finish-rent": "Finish rent",
         "rent": "Rent",
         "renting-for": "Renting for"
       },
@@ -45,7 +45,7 @@
         "unlockcode": "Entsperrcode",
         "unlock": "Entsperren",
         "bikenumber": "Radnummer",
-        "finish-rent": "Ende",
+        "finish-rent": "Leihe beenden",
         "rent": "Ausleihe",
         "renting-for": "Ausleihe läuft"
       },
