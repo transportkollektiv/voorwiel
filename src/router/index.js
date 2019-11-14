@@ -52,7 +52,6 @@ router.beforeEach((to, from, next) => {
 
 router.onReady(() => {
   if (!initialAuthTriggered) {
-    console.log("eh");
     store.dispatch("IS_AUTHENTICATED");
     initialAuthTriggered = true;
   }
