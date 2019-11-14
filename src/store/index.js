@@ -122,7 +122,7 @@ export default new Vuex.Store({
     },
     END_RENT_INTERNAL: function({ dispatch, state }, rentId, location) {
       let data = {rent_id: rentId};
-      if (location && location.coords && location.coords.accuracy < 20) {
+      if (location && location.coords && location.coords.accuracy < 50) {
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
