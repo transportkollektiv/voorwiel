@@ -27,13 +27,16 @@ const router = new VueRouter({
   ],
 });
 
+var initialAuthTriggered = false;
+
 router.beforeEach((to, from, next) => {
   if (!to.meta.requiresAuth) {
     next();
     return;
   }
 
-  store.dispatch("IS_AUTHENTICATED")
+  initialAuthTriggered = true;
+  store.dispatch("IS_AUTHENTICATED") // TODO: muss einmal _immer_ aufgerufen werden.
     .then(() => {
       next()
     })
@@ -45,6 +48,13 @@ router.beforeEach((to, from, next) => {
         }
       })
     });
+});
+
+router.onReady(() => {
+  if (!initialAuthTriggered) {
+    store.dispatch("IS_AUTHENTICATED");
+    initialAuthTriggered = true;
+  }
 });
 
 export default router;

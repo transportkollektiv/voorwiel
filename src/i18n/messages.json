@@ -24,7 +24,7 @@
       },
       "about": {
         "title": "About",
-        "html": "An experimental <a href='https://github.com/stadtulm'>open source</a> bikesharing, currently testing with employees of the City of Ulm.<br /><b>Want to take part?</b> Drop us a line &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
+        "html": "Bikesharing, with an <a href='https://github.com/stadtulm'>open source</a> stack.<br/><a href='https://ulm.dev/projects/openbike/'>Explore more about the project</a>."
       },
       "apperror": {
         "close": "Close"
@@ -59,7 +59,7 @@
       },
       "about": {
         "title": "Über",
-        "html": "Ein experimentelles <a href='https://github.com/stadtulm'>open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br /><b>Mitmachen?</b> Melde dich &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
+        "html": "Bikesharing, basierend auf einem <a href='https://github.com/stadtulm'>open source</a> Stack.<br/><a href='https://ulm.dev/projects/openbike/'>Mehr über das Projekt erfahren</a>."
       },
       "apperror": {
         "close": "Schließen"

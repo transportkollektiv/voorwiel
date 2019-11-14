@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-center">
-    <div class="d-none d-sm-none d-md-inline" v-html="$t('message.about.html')"></div>
+    <div class="d-none d-sm-none d-md-inline px-4" v-html="$t('message.about.html')"></div>
 
     <v-dialog v-model="dialog" max-width="400" class="d-flex d-sm-flex d-md-none">
       <template v-slot:activator="{ on }">
