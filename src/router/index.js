@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
   }
 
   initialAuthTriggered = true;
-  store.dispatch("IS_AUTHENTICATED") // TODO: muss einmal _immer_ aufgerufen werden.
+  store.dispatch("IS_AUTHENTICATED")
     .then(() => {
       next()
     })
@@ -52,7 +52,9 @@ router.beforeEach((to, from, next) => {
 
 router.onReady(() => {
   if (!initialAuthTriggered) {
-    store.dispatch("IS_AUTHENTICATED");
+    try {
+      store.dispatch("IS_AUTHENTICATED");
+    } catch {}
     initialAuthTriggered = true;
   }
 });
