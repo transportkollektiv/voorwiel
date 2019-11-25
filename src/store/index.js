@@ -81,7 +81,6 @@ export default new Vuex.Store({
       });
     },
     LOGOUT: function({ commit }) {
-      localStorage.removeItem(LS_AUTH_TOKEN_KEY);
       commit("CLEAR_USER");
     },
     START_RENT: function({ dispatch }, bikeNumber) {
@@ -150,6 +149,7 @@ export default new Vuex.Store({
       state.authToken = null;
       state.user = undefined;
       state.rents = [];
+      localStorage.removeItem(LS_AUTH_TOKEN_KEY);
     },
     SET_USER: (state, { user }) => {
       state.user = user;
