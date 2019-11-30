@@ -52,9 +52,7 @@ router.beforeEach((to, from, next) => {
 
 router.onReady(() => {
   if (!initialAuthTriggered) {
-    try {
-      store.dispatch("IS_AUTHENTICATED");
-    } catch {}
+    store.dispatch("IS_AUTHENTICATED").catch(() => {});
     initialAuthTriggered = true;
   }
 });
