@@ -47,7 +47,7 @@
       <gbfs-view url="" />
       <router-view></router-view>
       <div class="rent-buttonarea">
-        <v-btn fab dark x-small v-if="hasSupport" to="support" color="red">
+        <v-btn fab dark x-small v-if="hasSupport" to="support" color="red" class="support-button">
           <v-icon>mdi-help-circle-outline</v-icon>
         </v-btn>
         <v-btn rounded x-large color="success" v-if="!user" to="login">
@@ -109,5 +109,9 @@
   }
   .rent-button {
     position: static;
+  }
+  .support-button {
+    position: fixed;
+    left: 1rem;
   }
 </style>
