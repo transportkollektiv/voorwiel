@@ -31,6 +31,9 @@
       },
       "gbfsview": {
         "error": "Cannot load bike positions"
+      },
+      "support": {
+        "title": "Report Problem or Improvement"
       }
     }
   },
@@ -66,6 +69,9 @@
       },
       "gbfsview": {
         "error": "Laden der Radpositionen fehlgeschlagen"
+      },
+      "support": {
+        "title": "Problem oder Verbesserung melden"
       }
     }
   }

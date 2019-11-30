@@ -47,6 +47,9 @@
       <gbfs-view url="" />
       <router-view></router-view>
       <div class="rent-buttonarea">
+        <v-btn fab dark x-small v-if="hasSupport" to="support" color="red">
+          <v-icon>mdi-help-circle-outline</v-icon>
+        </v-btn>
         <v-btn rounded x-large color="success" v-if="!user" to="login">
           <v-icon>mdi-login</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
@@ -64,12 +67,15 @@
   import RentButton from './components/RentButton';
   import AppError from './components/AppError';
 
+  const blank = (v) => !(typeof v !== 'undefined' && v !== '');
+
   export default {
     name: 'App',
     components: {About, GbfsView, RentButton, AppError},
     data: function() {
       return {
-        name: this.$appConfig.NAME
+        name: this.$appConfig.NAME,
+        hasSupport: !blank(this.$appConfig.SUPPORT_URL)
       }
     },
     computed: {

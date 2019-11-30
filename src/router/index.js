@@ -8,6 +8,7 @@ import store from '../store';
 import Login from '../components/Login';
 import LoginReturn from '../components/LoginReturn';
 import Rent from '../components/Rent';
+import Support from '../components/Support';
 
 const router = new VueRouter({
   mode: 'history',
@@ -24,6 +25,7 @@ const router = new VueRouter({
       const { params } = to;
       return { path: '/rent', query: { id: params.id } };
     }},
+    { path: '/support', component: Support },
   ],
 });
 
