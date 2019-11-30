@@ -10,6 +10,8 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
+
   export default {
     name: 'support',
     data: function() {
@@ -19,6 +21,9 @@
         url: this.$appConfig.SUPPORT_URL, // fixme, these should go elsewhere
         iframeEl: null,
       }
+    },
+    computed: {
+      ...mapState(['user'])
     },
     methods: {
       listenForHeight() {
@@ -40,6 +45,8 @@
 
         const iframeDoc = this.iframeEl.contentWindow.document;
         if (this.type === 'zammad') {
+          let username = this.user ? this.user.username.replace(/['"]/g, '') : '';
+
           /* eslint-disable no-useless-escape */
           iframeDoc.open()
           .write(
@@ -57,7 +64,32 @@
                   messageSubmit: 'Abschicken',
                   messageThankYou: 'Vielen Dank für die Meldung (#%s). Wir kümmern uns umgehend!',
                   showTitle: false,
-                  attachmentSupport: true
+                  attachmentSupport: true,
+                  attributes: [
+                    {
+                      display: 'Name',
+                      name: 'name',
+                      tag: 'input',
+                      type: 'text',
+                      placeholder: 'Your Name',
+                      defaultValue: '${username}',
+                    },
+                    {
+                      display: 'Email',
+                      name: 'email',
+                      tag: 'input',
+                      type: 'email',
+                      placeholder: 'Your Email',
+                    },
+                    {
+                      display: 'Message',
+                      name: 'body',
+                      tag: 'textarea',
+                      placeholder: 'Your Message...',
+                      defaultValue: '',
+                      rows: 7,
+                    },
+                  ]
                 });
                 sendHeight();
               <\/script>
