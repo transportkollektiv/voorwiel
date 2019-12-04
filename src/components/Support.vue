@@ -57,7 +57,13 @@
               <script id="zammad_form_script" src="${this.url}/assets/form/form.js"><\/script>
               <script>
                 const delay = (fn) => () => setTimeout(fn, 0);
-                const sendHeight = () => window.parent.postMessage({ type: 'support-height', value: $('body').height() }, '*');
+                const getContentHeight = () => {
+                  const scrollingElement = document.body;
+                  const rect = scrollingElement.getBoundingClientRect();
+                  const style = getComputedStyle(scrollingElement);
+                  return rect.height + parseInt(style.marginTop, 10) + parseInt(style.marginBottom, 10);
+                };
+                const sendHeight = () => window.parent.postMessage({ type: 'support-height', value: getContentHeight() }, '*');
                 new MutationObserver(delay(sendHeight)).observe(document.body, { subtree: true, childList: true });
                 $('#f').ZammadForm({
                   messageTitle: 'Problem oder Verbesserung melden',
@@ -92,6 +98,7 @@
                   ]
                 });
                 sendHeight();
+                setTimeout(() => sendHeight(), 1000);
               <\/script>
             </body>
             `
