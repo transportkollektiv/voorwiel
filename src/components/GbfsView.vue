@@ -28,8 +28,8 @@
       return {
         zoom: this.$appConfig.DEFAULT_ZOOM,
         center: latLng.apply(null, this.$appConfig.DEFAULT_LOCATION),
-        url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        url: "https://osm-demo-{s}.wheregroup.com/tiles/1.0.0/osm/webmercator/{z}/{x}/{y}.png",
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles by <a href="https://wheregroup.com/">WhereGroup</a>',
         gbfsURL: this.$appConfig.GBFS_URL,
         locateOptions: {
           icon: "mdi mdi-near-me",
