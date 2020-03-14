@@ -21,13 +21,15 @@
           <v-row>
             <v-col cols="6" md="6">
               <v-text-field
-                  type="number"
+                  type="text"
                   :label="$t('message.rent.bikenumber')"
                   v-model="bikenumber"
                   outlined
                   required
                   autofocus
                   :rules="bikenumberrules"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                 ></v-text-field>
             </v-col>
             <v-col cols="6" md="6" class="text-center">
