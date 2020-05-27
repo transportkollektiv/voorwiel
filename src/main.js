@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import * as Sentry from '@sentry/browser';
+import { Vue as VueIntegration } from '@sentry/integrations';
+
 import store from './store'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
@@ -23,10 +26,17 @@ import router from './router';
 
 document.title = config.TITLE;
 
-new Vue({
+let vueInstance = new Vue({
   vuetify,
   store,
   router,
   i18n,
   render: h => h(App)
 }).$mount('#app');
+
+if (config.SENTRY_DSN) {
+  Sentry.init({
+    dsn: config.SENTRY_DSN,
+    integrations: [new VueIntegration({vueInstance, attachProps: true, logErrors: true})],
+  });
+}
