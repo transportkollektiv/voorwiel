@@ -17,7 +17,7 @@
     language: {
       type: String,
       custom: true,
-      default: 'en'
+      default: null
     },
     interval: {
       type: Number,
