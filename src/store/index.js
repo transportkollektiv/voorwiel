@@ -28,6 +28,9 @@ const unpackErrorMessage = (err) => {
   if (err.response && err.response.data && err.response.data.detail) {
     throw err.response.data.detail;
   }
+  if (err.response && err.response.data && err.response.data.message) {
+    throw err.response.data.message;
+  }
   throw err;
 };
 
