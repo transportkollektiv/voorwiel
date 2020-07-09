@@ -20,7 +20,7 @@ var I18N_MESSAGE_OVERRIDE = {
   "de": {
     "message": {
       "app": {
-        "unvalidated-message": "Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte <a href='mailto:openbike@ulm.dev'>senden Sie uns</a> Ihren Nutzernamen, um sich freischalten zu lassen."
+        "unvalidated-message": "Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte <a href='mailto:openbike@ulm.dev'>senden Sie uns</a> Ihren rechts oben angezeigten Nutzernamen, um sich freischalten zu lassen."
       },
       "about": {
         "html": "Ein experimentelles <a href='https://github.com/stadtulm'>open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br /><b>Mitmachen?</b> Melde dich &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
