@@ -94,13 +94,13 @@ export default new Vuex.Store({
         );
     },
     START_RENT_INTERNAL: function({ dispatch, state }, bikeNumber, location) {
-      let data = {bike_number: bikeNumber};
+      let data = {bike: bikeNumber};
       if (location && location.coords && location.coords.accuracy < 20) {
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
       return axiosWithAuth.call(this, state)
-        .post('/rent/start', data)
+        .post('/rent', data)
         .then(
           response => {
             dispatch("UPDATE_RENTS")
@@ -120,13 +120,13 @@ export default new Vuex.Store({
         );
     },
     END_RENT_INTERNAL: function({ dispatch, state }, rentId, location) {
-      let data = {rent_id: rentId};
+      let data = {};
       if (location && location.coords && location.coords.accuracy < 50) {
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
       return axiosWithAuth.call(this, state)
-        .post('/rent/finish', data)
+        .post(`/rent/${rentId}/finish`, data)
         .then(
           response => {
             dispatch("UPDATE_RENTS")
@@ -138,7 +138,7 @@ export default new Vuex.Store({
     UPDATE_RENTS: function({ commit, state, getters }) {
       if (!getters.isAuthenticated) { return; }
       axiosWithAuth.call(this, state)
-        .get('/rent/current')
+        .get('/rent')
         .then(response => {
           commit('SET_RENTS', response.data)
         })
