@@ -50,7 +50,7 @@
         <v-btn fab dark x-small v-if="hasSupport" to="support" color="red" class="support-button">
           <v-icon>mdi-help-circle-outline</v-icon>
         </v-btn>
-        <v-btn rounded x-large color="success" v-if="!user" to="login">
+        <v-btn rounded x-large color="success" class="login-button" v-if="!user" to="login">
           <v-icon>mdi-login</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
         <RentButton v-if="user" />
@@ -100,18 +100,21 @@
 
 
 <style>
-  .rent-buttonarea {
+  .support-button,
+  .login-button {
     position: fixed;
     bottom: 2rem;
     text-align: center;
     z-index: 200;
-    width: 100%;
   }
   .rent-button {
     position: static;
   }
+  .login-button {
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .support-button {
-    position: fixed;
     left: 1rem;
   }
 </style>
