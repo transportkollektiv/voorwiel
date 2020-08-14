@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" max-width="400">
     <v-card>
-      <v-card-title class="title" primary-title>
+      <v-card-title class="text-h6" primary-title>
         {{ $t('message.rent.rent')}}
       </v-card-title>
       <v-form v-model="valid" ref="rentBikeForm" @submit.prevent="startRent">

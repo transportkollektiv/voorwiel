@@ -1,7 +1,7 @@
 <template>
   <v-dialog max-width="480" class="d-flex d-sm-flex d-md-none" eager v-model="show">
     <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title>
+      <v-card-title class="text-h5 grey lighten-2" primary-title>
         {{ $t('message.support.title') }}
       </v-card-title>
       <div ref="placeholder"></div>

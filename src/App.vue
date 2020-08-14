@@ -32,7 +32,7 @@
       </v-toolbar-items>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-alert
         v-if="user && !user.can_rent_bike"
         border="bottom"
@@ -56,7 +56,7 @@
         <RentButton v-if="user" />
       </div>
       <AppError />
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
