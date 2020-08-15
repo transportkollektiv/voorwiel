@@ -12,13 +12,13 @@
 
         <v-btn text dark v-if="!user" to="login" color="success">
           <span class="hidden-xs-only">{{ $t('message.app.login') }}</span>
-          <v-icon right>mdi-login</v-icon>
+          <v-icon right>{{ mdi.login }}</v-icon>
         </v-btn>
 
         <v-menu left bottom v-if="user">
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
-              <v-icon>mdi-dots-vertical</v-icon>
+              <v-icon>{{ mdi.dotsVertical }}</v-icon>
               {{user.username}}
             </v-btn>
           </template>
@@ -48,10 +48,10 @@
       <router-view></router-view>
       <div class="rent-buttonarea">
         <v-btn fab dark x-small v-if="hasSupport" to="support" color="red" class="support-button">
-          <v-icon>mdi-help-circle-outline</v-icon>
+          <v-icon>{{ mdi.helpCircleOutline }}</v-icon>
         </v-btn>
         <v-btn rounded x-large color="success" v-if="!user" to="login">
-          <v-icon>mdi-login</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
+          <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
         <RentButton v-if="user" />
       </div>
@@ -62,6 +62,7 @@
 
 <script>
   import { mapState } from 'vuex';
+  import { mdiLogin, mdiDotsVertical, mdiHelpCircleOutline } from '@mdi/js'
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
@@ -75,7 +76,12 @@
     data: function() {
       return {
         name: this.$appConfig.NAME,
-        hasSupport: !blank(this.$appConfig.SUPPORT_URL)
+        hasSupport: !blank(this.$appConfig.SUPPORT_URL),
+        mdi: {
+          login: mdiLogin,
+          dotsVertical: mdiDotsVertical,
+          helpCircleOutline: mdiHelpCircleOutline
+        }
       }
     },
     computed: {

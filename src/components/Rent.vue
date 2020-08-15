@@ -34,7 +34,7 @@
             </v-col>
             <v-col cols="6" md="6" class="text-center">
               <v-btn class="mt-2" color="success" v-bind:disabled="!valid" :loading="loading" @click="startRent">
-                <v-icon>mdi-lock-open-variant</v-icon>&nbsp;
+                <v-icon>{{ mdi.lockOpenVariant }}</v-icon>&nbsp;
                 <span>{{ $t('message.rent.unlock') }}</span>
               </v-btn>
             </v-col>
@@ -53,7 +53,7 @@
           <v-list-item-subtitle v-if="rent.bike.lock">{{ $t('message.rent.unlockcode') }}: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
           <v-list-item-subtitle>{{ $t('message.rent.renting-for') }} <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
           <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
-            <v-icon>mdi-lock</v-icon>&nbsp;
+            <v-icon>{{ mdi.lock }}</v-icon>&nbsp;
             <span>{{ $t('message.rent.finish-rent') }}</span>
           </v-btn>
         </v-list-item-content>
@@ -64,6 +64,7 @@
 
 <script>
   import { mapState } from 'vuex';
+  import { mdiLock, mdiLockOpenVariant } from '@mdi/js'
   import TickingTime from "./TickingTime.vue";
 
   export default {
@@ -85,6 +86,11 @@
             return pattern.test(value) || 'Please only numbers';
           },
         ],
+
+        mdi: {
+          lock: mdiLock,
+          lockOpenVariant: mdiLockOpenVariant
+        }
       }
     },
     computed: {

@@ -24,7 +24,7 @@
     "vuex": "^3.5.1"
   },
   "devDependencies": {
-    "@mdi/font": "^5.5.55",
+    "@mdi/js": "^5.5.55",
     "@types/leaflet": "^1.5.17",
     "@vue/cli-plugin-babel": "^4.5.3",
     "@vue/cli-plugin-eslint": "^4.5.3",
