@@ -21,6 +21,8 @@ Vue.config.productionTip = false;
 import './registerServiceWorker';
 
 import config from './config';
+Vue.prototype.$appConfig = config;
+
 import i18n from './i18n';
 import router from './router';
 
