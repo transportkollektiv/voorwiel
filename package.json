@@ -13,7 +13,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "leaflet": "^1.6.0",
-    "leaflet-gbfs": "github:stadtulm/leaflet-gbfs.git#bb92031",
+    "@stadtulm/leaflet-gbfs": "^1.3.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-i18n": "^8.15.3",

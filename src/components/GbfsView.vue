@@ -53,11 +53,6 @@
 </script>
 
 <style>
-.station-icon-inner {
-  background: var(--v-primary-base);
-  color: #333;
-}
-
 .mdi {  display: inline-block; line-height: 30px; }
 
 .mdi:before {
