@@ -32,6 +32,11 @@ module.exports = {
   },
 
   configureWebpack: {
+    resolve: {
+      alias: {
+        'leaflet$': 'leaflet/dist/leaflet-src.esm.js'
+      }
+    },
     plugins: [
       new FaviconsWebpackPlugin({
         logo: './src/assets/icon.png',
