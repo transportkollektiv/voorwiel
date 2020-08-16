@@ -1,6 +1,4 @@
 import Vue from 'vue'
-import * as Sentry from '@sentry/browser';
-import { Vue as VueIntegration } from '@sentry/integrations';
 
 import store from './store'
 import App from './App.vue'
@@ -28,7 +26,7 @@ import router from './router';
 
 document.title = config.TITLE;
 
-let vueInstance = new Vue({
+new Vue({
   vuetify,
   store,
   router,
@@ -37,8 +35,5 @@ let vueInstance = new Vue({
 }).$mount('#app');
 
 if (config.SENTRY_DSN) {
-  Sentry.init({
-    dsn: config.SENTRY_DSN,
-    integrations: [new VueIntegration({vueInstance, attachProps: true, logErrors: true})],
-  });
+  import(/* webpackChunkName: "sentry" */ './sentry');
 }
