@@ -53,8 +53,43 @@
 </script>
 
 <style>
-.station-icon-inner {
-  background: var(--v-primary-base);
-  color: #333;
+.mdi {  display: inline-block; line-height: 30px; }
+
+.mdi:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  font: normal normal normal 24px/1 sans-serif;
+  font-size: inherit;
+  text-rendering: auto;
+  line-height: inherit;
+  background-size: contain;
 }
+
+/* this is weird and contains our primary color. but it seems that we don't have access to the variable in scss here, so we couln't construct the string */
+/* another method would be to overwrite l.control.locates createButtonCallback and inject the svg there, but, well ¯\_(ツ)_/¯  */
+.mdi-near-me:before {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21,3L3,10.53V11.5L9.84,14.16L12.5,21H13.46L21,3Z' fill='%2399d420' /%3E%3C/svg%3E");
+}
+
+.mdi-near-me:hover:before {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21,3L3,10.53V11.5L9.84,14.16L12.5,21H13.46L21,3Z' fill='black' /%3E%3C/svg%3E");
+}
+
+.leaflet-control-locate.active .mdi-near-me:before {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21,3L3,10.53V11.5L9.84,14.16L12.5,21H13.46L21,3Z' fill='%232074b6' /%3E%3C/svg%3E");
+}
+
+.leaflet-control-locate.active.following .mdi-near-me:before {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M21,3L3,10.53V11.5L9.84,14.16L12.5,21H13.46L21,3Z' fill='%23fc8428' /%3E%3C/svg%3E");
+}
+
+.mdi-loading:before {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z' /%3E%3C/svg%3E");
+}
+
+@-webkit-keyframes mdi-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+@keyframes mdi-spin{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}
+.mdi-spin:before {-webkit-animation:mdi-spin 2s infinite linear;animation:mdi-spin 2s infinite linear}
 </style>

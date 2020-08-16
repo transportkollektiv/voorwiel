@@ -6,12 +6,12 @@
       <template v-slot:activator="{ on }">
         <v-btn text color="red lighten-2" dark v-on="on" class="about-toolbar-btn d-flex d-sm-flex d-md-none">
           <span class="hidden-xs-only">{{ $t('message.about.title') }}</span>
-          <v-icon right>mdi-information-outline</v-icon>
+          <v-icon right>{{ mdi.informationOutline }}</v-icon>
         </v-btn>
       </template>
 
       <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>
+        <v-card-title class="text-h5 grey lighten-2" primary-title>
           {{ $t('message.about.title') }}
         </v-card-title>
 
@@ -25,9 +25,14 @@
 </template>
 
 <script>
+  import { mdiInformationOutline } from '@mdi/js'
+
   export default {
     data: () => ({
-      dialog: false
+      dialog: false,
+      mdi: {
+        informationOutline: mdiInformationOutline
+      }
     })
   };
 </script>

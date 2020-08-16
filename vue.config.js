@@ -1,8 +1,19 @@
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const config = require('./src/config.js');
 
 module.exports = {
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: config.TITLE,
+      config: config
+    },
+  },
+
   pwa: {
-    name: 'openbike',
+    name: config.NAME,
     themeColor: '#99d420',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
@@ -13,6 +24,10 @@ module.exports = {
       appleTouchIcon: 'img/icons/apple-touch-icon-152x152.png',
       // maskIcon: 'img/icons/safari-pinned-tab.svg',
       msTileImage: 'img/icons/mstile-144x144.png'
+    },
+    workboxOptions: {
+      skipWaiting: true,
+      clientsClaim: true
     }
   },
 
