@@ -51,7 +51,7 @@
   };
 
   export default {
-    name: 'l-gbfs',
+    name: 'LGbfs',
     props,
     data: () => ({
       ready: false

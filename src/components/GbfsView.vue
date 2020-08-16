@@ -14,11 +14,11 @@
   import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol/Vue2LeafletLocatecontrol'
 
   export default {
-    name: 'gbfs-view',
+    name: 'GbfsView',
     components: {
-      'l-map': LMap,
-      'l-tile-layer': LTileLayer,
-      'l-gbfs': LGbfs,
+      LMap,
+      LTileLayer,
+      LGbfs,
       'v-locatecontrol': Vue2LeafletLocatecontrol,
     },
     computed: {
