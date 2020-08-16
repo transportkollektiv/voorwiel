@@ -77,24 +77,10 @@
 </script>
 
 <style>
+@import "~@stadtulm/leaflet-gbfs/dist/L.GBFS.css";
+
 .station-icon-inner {
   background: var(--v-primary-base);
   color: #333;
-  width: 26px;
-  height: 26px;
-  text-align: center;
-  line-height: 26px;
-  border-radius: 13px;
-  font-weight: bold;
-  position: relative;
-  top: 3px;
-  left: 3px;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
-}
-
-.station-icon-ring {
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
 }
 </style>
