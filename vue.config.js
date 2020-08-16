@@ -1,8 +1,18 @@
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const config = require('./src/config.js');
 
 module.exports = {
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: config.TITLE,
+    },
+  },
+
   pwa: {
-    name: 'openbike',
+    name: config.NAME,
     themeColor: '#99d420',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
