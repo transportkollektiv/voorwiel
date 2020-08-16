@@ -51,7 +51,7 @@
         <v-btn rounded x-large color="success" class="login-button" v-if="!user" to="login">
           <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
-        <RentButton v-if="user" />
+        <RentButton v-if="user" class="rent-button" />
       </div>
       <AppError />
     </v-main>
@@ -105,15 +105,14 @@
 
 <style>
   .support-button,
+  .rent-button,
   .login-button {
     position: fixed;
     bottom: 2rem;
     text-align: center;
     z-index: 200;
   }
-  .rent-button {
-    position: static;
-  }
+  .rent-button,
   .login-button {
     left: 50%;
     transform: translateX(-50%);
