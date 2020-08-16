@@ -40,10 +40,8 @@
         type="warning"
         dense
         class="mb-0"
-      >
-        {{ $t('message.app.unvalidated-message') }}
-      </v-alert>
-
+        v-html="$t('message.app.unvalidated-message')"
+      />
       <gbfs-view url="" />
       <router-view></router-view>
       <div class="rent-buttonarea">
