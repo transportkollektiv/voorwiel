@@ -19,7 +19,7 @@
     "vue-i18n": "^8.15.3",
     "vue-router": "^3.4.3",
     "vue2-leaflet": "^2.4.3",
-    "vue2-leaflet-locatecontrol": "^1.0.1",
+    "vue2-leaflet-locatecontrol": "github:stadtulm/vue2-leaflet-locatecontrol#9caae3c",
     "vuetify": "^2.3.8",
     "vuex": "^3.5.1"
   },

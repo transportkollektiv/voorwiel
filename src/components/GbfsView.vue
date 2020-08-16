@@ -2,7 +2,7 @@
   <l-map :zoom="zoom" :center="center" style="z-index: 0;">
     <l-tile-layer :url="url" :attribution="attribution" />
     <l-gbfs :gbfsURL="gbfsURL" :bikeMarkerColor="this.$vuetify.theme.currentTheme.primary" ref="gbfsLayer" v-on:error="handleGBFSError" />
-    <v-locatecontrol :options="locateOptions" />
+    <l-locate-control :options="locateOptions" />
   </l-map>
 </template>
 
@@ -11,7 +11,7 @@
   import { latLng } from "leaflet";
   import { LMap, LTileLayer } from 'vue2-leaflet';
   import LGbfs from "./LGbfs.vue";
-  import Vue2LeafletLocatecontrol from 'vue2-leaflet-locatecontrol/Vue2LeafletLocatecontrol'
+  import LLocateControl from 'vue2-leaflet-locatecontrol'
 
   export default {
     name: 'GbfsView',
@@ -19,7 +19,7 @@
       LMap,
       LTileLayer,
       LGbfs,
-      'v-locatecontrol': Vue2LeafletLocatecontrol,
+      LLocateControl,
     },
     computed: {
       ...mapState(['rents'])
