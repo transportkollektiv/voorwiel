@@ -10,9 +10,15 @@ import LoginReturn from '../components/LoginReturn';
 import Rent from '../components/Rent';
 import Support from '../components/Support';
 
+const NoOpComponent = Vue.component('no-op', {
+  functional: true,
+  render () { return null; }
+});
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    { path: '/', component: NoOpComponent },
     { path: '/login', component: Login },
     { path: '/login/return', component: LoginReturn },
     { path: '/rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
@@ -26,6 +32,7 @@ const router = new VueRouter({
       return { path: '/rent', query: { id: params.id } };
     }},
     { path: '/support', component: Support },
+    { path: '*', redirect: '/' }
   ],
 });
 
