@@ -2,7 +2,7 @@ var ENV = 'development';
 
 var TITLE = "dev.bike - experimental bikesharing with an open source stack";
 var NAME = "dev.bike";
-var SYSTEM_URL = "http://lvh.me:8000";
+var SYSTEM_URL = "http://localhost:8000";
 var API_ROOT = SYSTEM_URL + "/api";
 var GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json";
 

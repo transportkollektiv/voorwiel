@@ -42,7 +42,7 @@
         class="mb-0"
         v-html="$t('message.app.unvalidated-message')"
       />
-      <gbfs-view url="" />
+      <gbfs-view />
       <router-view></router-view>
       <div class="rent-buttonarea">
         <v-btn fab dark x-small v-if="hasSupport" :to="{name: 'support'}" color="red" class="support-button">
