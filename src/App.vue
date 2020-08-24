@@ -10,7 +10,7 @@
       <v-toolbar-items>
         <About />
 
-        <v-btn text dark v-if="!user" to="login" color="success">
+        <v-btn text dark v-if="!user" :to="{name: 'login'}" color="success">
           <span class="hidden-xs-only">{{ $t('message.app.login') }}</span>
           <v-icon right>{{ mdi.login }}</v-icon>
         </v-btn>
@@ -45,10 +45,10 @@
       <gbfs-view url="" />
       <router-view></router-view>
       <div class="rent-buttonarea">
-        <v-btn fab dark x-small v-if="hasSupport" to="support" color="red" class="support-button">
+        <v-btn fab dark x-small v-if="hasSupport" :to="{name: 'support'}" color="red" class="support-button">
           <v-icon>{{ mdi.helpCircleOutline }}</v-icon>
         </v-btn>
-        <v-btn rounded x-large color="success" class="login-button" v-if="!user" to="login">
+        <v-btn rounded x-large color="success" class="login-button" v-if="!user" :to="{name: 'login'}">
           <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
         <RentButton v-if="user" class="rent-button" />

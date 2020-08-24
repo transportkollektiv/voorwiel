@@ -3,7 +3,7 @@
     rounded
     x-large
     color="success"
-    to="rent"
+    :to="{name:'rent'}"
   >
     <v-icon>{{ mdi.bike }}</v-icon>&nbsp;<span>{{ buttonText }}</span>
   </v-btn>

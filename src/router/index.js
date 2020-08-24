@@ -19,9 +19,9 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', component: NoOpComponent },
-    { path: '/login', component: Login },
+    { path: '/login', name: 'login', component: Login },
     { path: '/login/return', component: LoginReturn },
-    { path: '/rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
+    { path: '/rent', name: 'rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
       if (route.query && route.query.id) {
         return { bikeId: route.query.id }
       }
@@ -31,7 +31,9 @@ const router = new VueRouter({
       const { params } = to;
       return { path: '/rent', query: { id: params.id } };
     }},
-    { path: '/support', component: Support },
+    { path: '/v/:id', name: 'vehicle', component: VehicleDetail, props: true },
+    { path: '/s/:id', name: 'station', component: StationDetail, props: true },
+    { path: '/support', name: 'support', component: Support },
     { path: '*', redirect: '/' }
   ],
 });
