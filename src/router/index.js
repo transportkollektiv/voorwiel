@@ -31,8 +31,6 @@ const router = new VueRouter({
       const { params } = to;
       return { path: '/rent', query: { id: params.id } };
     }},
-    { path: '/v/:id', name: 'vehicle', component: VehicleDetail, props: true },
-    { path: '/s/:id', name: 'station', component: StationDetail, props: true },
     { path: '/support', name: 'support', component: Support },
     { path: '*', redirect: '/' }
   ],
