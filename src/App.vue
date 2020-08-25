@@ -110,7 +110,7 @@
     position: fixed;
     bottom: 2rem;
     text-align: center;
-    z-index: 200;
+    z-index: 205;
   }
   .rent-button,
   .login-button {
