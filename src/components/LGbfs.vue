@@ -65,6 +65,8 @@
       this.parentContainer.addLayer(this);
       this.mapObject.on('error', (ev) => this.$emit('error', ev));
       forwardEvent(this.mapObject, this, 'data', ['stations', 'stationStatus', 'freeBikeStatus', 'vehicleTypes']);
+      forwardEvent(this.mapObject, this, 'bikeClick', ['bike']);
+      forwardEvent(this.mapObject, this, 'stationClick', ['station', 'status']);
     },
     beforeDestroy() {
       this.parentContainer.removeLayer(this);
