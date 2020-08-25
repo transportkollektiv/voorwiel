@@ -1,9 +1,3 @@
-<template>
-  <div style="display: none">
-    <slot v-if="ready"></slot>
-  </div>
-</template>
-
 <script>
   import LGBFS from '@stadtulm/leaflet-gbfs';
   import { findRealParent } from 'vue2-leaflet';
@@ -50,28 +44,40 @@
     },
   };
 
+  // generator for:
+  // this.mapObject.on('stationClick', (ev) => this.$emit('stationClick', { station: ev.station, status: ev.status }));
+  const forwardEvent = (mapObject, c, name, params) => {
+    mapObject.on(name, (ev) => {
+      let data = {};
+      for (var p of params) {
+        data[p] = ev[p];
+      }
+      c.$emit(name, data);
+    });
+  };
+
   export default {
     name: 'LGbfs',
     props,
-    data: () => ({
-      ready: false
-    }),
     mounted() {
       this.mapObject = new LGBFS(this.$props);
-      this.ready = true;
       this.parentContainer = findRealParent(this.$parent);
       this.parentContainer.addLayer(this);
-      this.mapObject.on('error', (function(ev) {
-        this.$emit('error', ev);
-      }).bind(this));
+      this.mapObject.on('error', (ev) => this.$emit('error', ev));
+      forwardEvent(this.mapObject, this, 'data', ['stations', 'stationStatus', 'freeBikeStatus', 'vehicleTypes']);
     },
     beforeDestroy() {
       this.parentContainer.removeLayer(this);
     },
     methods: {
       update() {
-        this.mapObject.update();
+        if (!this.mapObject.isUpdating()) {
+          this.mapObject.update();
+        }
       }
+    },
+    render() {
+      return null;
     }
   };
 </script>

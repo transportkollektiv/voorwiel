@@ -41,7 +41,8 @@ export default new Vuex.Store({
     authToken: null,
     user: undefined,
     rents: [],
-    appError: ''
+    appError: '',
+    gbfs: null
   },
   actions: {
     AUTHENTICATE: function({ commit, dispatch }, authToken) {
@@ -166,6 +167,9 @@ export default new Vuex.Store({
     },
     SET_APPERROR: (state, message) => {
       state.appError = message;
+    },
+    SET_GBFS: (state, data) => {
+      state.gbfs = data;
     }
   },
   getters: {
