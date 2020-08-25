@@ -175,6 +175,15 @@ export default new Vuex.Store({
   getters: {
     isAuthenticated(state) {
       return !!state.authToken;
+    },
+    getGBFSBikeWithDetails: (state) => (id) => {
+      let bike = state.gbfs.freeBikeStatus.data.bikes.find((b) => b.bike_id == id);
+      if (typeof bike === "undefined") return null;
+      if (typeof bike.vehicle_type_id !== "undefined" && typeof state.gbfs.vehicleTypes !== "undefined") {
+        let vehicle_type = state.gbfs.vehicleTypes.data.vehicle_types.find((vt) => vt.vehicle_type_id == bike.vehicle_type_id);
+        return {bike, vehicle_type};
+      }
+      return {bike};
     }
   },
   modules: {},
