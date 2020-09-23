@@ -1,10 +1,10 @@
 <template>
   <div id="attach-sheet">
     <v-bottom-sheet v-model="show" inset eager hide-overlay attach="#attach-sheet" transition="none">
-      <v-sheet height="200px">
-        <v-skeleton-loader type="avatar" v-if="!hasData"></v-skeleton-loader>
-        <span v-if="!hasData">{{ id }}</span>
-        <v-skeleton-loader type="list-item-three-line, card-heading" v-if="!hasData"></v-skeleton-loader>
+      <v-sheet height="160px">
+        <v-card-title v-if="!hasData" class="pb-3">
+          <v-skeleton-loader type="list-item-avatar" width="100%"></v-skeleton-loader>
+        </v-card-title>
 
         <v-card-title v-if="hasData" class="pb-3">
           <v-avatar color="primary" size="48" v-if="!electric">
@@ -20,11 +20,8 @@
             </v-avatar>
           </v-badge>
 
-          <span style="font-weight: normal;" class="ms-4">{{ id }}</span>
+          <span style="font-weight: normal;" class="ms-4">{{ description }}</span>
         </v-card-title>
-        <v-card-subtitle class="ms-16">
-          {{ description }}
-        </v-card-subtitle>
       </v-sheet>
     </v-bottom-sheet>
   </div>
