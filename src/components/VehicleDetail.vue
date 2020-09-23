@@ -21,6 +21,11 @@
           </v-badge>
 
           <span style="font-weight: normal;" class="ms-4">{{ description }}</span>
+
+          <div class="range text-body-2" v-if="hasRange">
+            <v-icon size="24">{{ batteryIcon }}</v-icon>
+            {{ range }} Reichweite
+          </div>
         </v-card-title>
       </v-sheet>
     </v-bottom-sheet>
@@ -31,7 +36,21 @@
   // FIXME: handle gone data while displayed/refresh (works only with state?)
   // FIXME: handle gone data from begin (soft 404)
   import { mapState } from 'vuex';
-  import { mdiBicycle, mdiBicycleBasket, mdiScooter, mdiCar, mdiMoped, mdiBus, mdiFlash } from '@mdi/js'
+  import * as convert from 'convert-units';
+  import {
+    mdiBicycle,
+    mdiBicycleBasket,
+    mdiScooter,
+    mdiCar,
+    mdiMoped,
+    mdiBus,
+    mdiFlash,
+    mdiBatteryHigh,
+    mdiBatteryMedium,
+    mdiBatteryLow,
+    mdiBatteryOutline,
+    mdiBatteryUnknown
+  } from "@mdi/js";
 
   export default {
     props: ['id'],
@@ -57,6 +76,29 @@
         if (this.vehicle_type.form_factor === "moped") return mdiMoped;
         if (this.vehicle_type.form_factor === "other") return mdiBus;
         return mdiBicycle;
+      },
+      batteryIcon() {
+        if (typeof this.vehicle_type === "undefined") return mdiBatteryUnknown;
+        if (typeof this.vehicle_type.max_range_meters === "undefined" || this.vehicle_type.max_range_meters == 0) return mdiBatteryUnknown;
+        let currentCharge = this.bike.current_range_meters / this.vehicle_type.max_range_meters;
+        if (currentCharge >= 0.66) return mdiBatteryHigh;
+        if (currentCharge >= 0.33) return mdiBatteryMedium;
+        if (currentCharge >= 0.1) return mdiBatteryLow;
+        return mdiBatteryOutline;
+      },
+      hasRange() {
+        if (typeof this.bike.current_range_meters === "undefined") return false;
+        if (typeof this.vehicle_type === "undefined") return false;
+        if (typeof this.vehicle_type.max_range_meters === "undefined" || this.vehicle_type.max_range_meters == 0) return false;
+        return true;
+      },
+      range() {
+        if (!this.hasRange) return "?";
+
+        if (this.bike.current_range_meters <= 0) return "keine"; // FIXME: i18n
+
+        let range = convert(this.bike.current_range_meters).from('m').toBest();
+        return `${range.val} ${range.unit}`;
       },
       description() {
         if (typeof this.vehicle_type === "undefined") return "";
@@ -125,5 +167,11 @@
 <style>
   .v-avatar .v-icon {
     border-radius: 0;
+  }
+  .range {
+    flex: 1 1 auto;
+    font-weight: normal;
+    text-align: right;
+
   }
 </style>
