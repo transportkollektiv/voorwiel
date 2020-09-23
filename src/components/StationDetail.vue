@@ -74,9 +74,11 @@
         for (let v of this.station_status.vehicles) {
           if (typeof typeCount[v.vehicle_type_id] === "undefined") {
             typeCount[v.vehicle_type_id] = { id: v.vehicle_type_id, count: 0 };
-            let type = this.vehicle_types[v.vehicle_type_id];
-            typeCount[v.vehicle_type_id].name = type.name;
-            typeCount[v.vehicle_type_id].icon = this.iconForVehicleType(type);
+            let type = this.vehicle_types.find((vt) => vt.vehicle_type_id == v.vehicle_type_id);
+            if (typeof type !== "undefined") {
+              typeCount[v.vehicle_type_id].name = type.name;
+              typeCount[v.vehicle_type_id].icon = this.iconForVehicleType(type);
+            }
           }
           typeCount[v.vehicle_type_id].count += 1;
         }
