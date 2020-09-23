@@ -184,6 +184,20 @@ export default new Vuex.Store({
         return {bike, vehicle_type};
       }
       return {bike};
+    },
+    getGBFSStationWithDetails: (state) => (id) => {
+      let station = state.gbfs.stations.data.stations.find((s) => s.station_id == id);
+      if (typeof station === "undefined") return null;
+      let station_status = state.gbfs.stationStatus.data.stations.find((s) => s.station_id == station.station_id);
+      if (typeof station_status !== "undefined") {
+        if (typeof station_status.vehicle_docks_available !== "undefined" ||
+            typeof station_status.vehicles.find((v) => typeof v.vehicle_type_id !== "undefined") !== "undefined") {
+          let vehicle_types = state.gbfs.vehicleTypes.data.vehicle_types;
+          return {station, station_status, vehicle_types};
+        }
+        return {station, station_status};
+      }
+      return {station};
     }
   },
   modules: {},
