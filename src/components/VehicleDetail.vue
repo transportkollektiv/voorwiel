@@ -24,7 +24,7 @@
 
           <div class="range text-body-2" v-if="hasRange">
             <v-icon size="24">{{ batteryIcon }}</v-icon>
-            {{ range }} Reichweite
+            {{ range }}
           </div>
         </v-card-title>
       </v-sheet>
@@ -95,10 +95,10 @@
       range() {
         if (!this.hasRange) return "?";
 
-        if (this.bike.current_range_meters <= 0) return "keine"; // FIXME: i18n
+        if (this.bike.current_range_meters <= 0) return this.$t('message.detail.no-range');
 
         let range = convert(this.bike.current_range_meters).from('m').toBest();
-        return `${range.val} ${range.unit}`;
+        return this.$t('message.detail.range', {value: range.val, unit: range.unit});
       },
       description() {
         if (typeof this.vehicle_type === "undefined") return "";
@@ -172,6 +172,5 @@
     flex: 1 1 auto;
     font-weight: normal;
     text-align: right;
-
   }
 </style>

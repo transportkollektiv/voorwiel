@@ -34,6 +34,10 @@
       },
       "support": {
         "title": "Report Problem or Improvement"
+      },
+      "detail": {
+        "no-range": "no Range",
+        "range": "Range: {value} {unit}"
       }
     }
   },
@@ -72,6 +76,10 @@
       },
       "support": {
         "title": "Problem oder Verbesserung melden"
+      },
+      "detail": {
+        "no-range": "keine Reichweite",
+        "range": "{value} {unit} Reichweite"
       }
     }
   }
