@@ -18,11 +18,11 @@
                   <v-icon size="16">{{ item.icon }}</v-icon>
                 </v-avatar>
               </v-badge>
-              <v-icon size="16" v-if="!item.electric">{{ item.icon }}</v-icon>
+              <v-icon size="16"  class="me-1" v-if="!item.electric">{{ item.icon }}</v-icon>
                {{ item.count }}
             </li>
             <li v-if="parking">
-              <v-avatar color="blue" size="24" tile>
+              <v-avatar color="blue" size="24" tile class="me-1">
                 <v-icon color="white" size="16">{{ iconParking }}</v-icon>
               </v-avatar> {{ parking }}
             </li>
