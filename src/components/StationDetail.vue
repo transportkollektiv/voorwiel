@@ -13,12 +13,17 @@
         <v-card-text>
           <ul class="vehicle-list">
             <li v-for="item in vehicleTypeCount" :key="item.id" :title="item.name">
-              <v-icon size="16">{{ item.icon }}</v-icon>
+              <v-badge v-if="item.electric" dot overlap color="yellow" class="me-1">
+                <v-avatar tile size="24">
+                  <v-icon size="16">{{ item.icon }}</v-icon>
+                </v-avatar>
+              </v-badge>
+              <v-icon size="16" v-if="!item.electric">{{ item.icon }}</v-icon>
                {{ item.count }}
             </li>
             <li v-if="parking">
               <v-avatar color="blue" size="24" tile>
-                <v-icon color="white" size="16">{{ parkingIcon }}</v-icon>
+                <v-icon color="white" size="16">{{ iconParking }}</v-icon>
               </v-avatar> {{ parking }}
             </li>
           </ul>
@@ -39,7 +44,6 @@
     mdiCar,
     mdiMoped,
     mdiBus,
-    // mdiFlash,
     mdiParking
   } from "@mdi/js";
 
@@ -53,7 +57,7 @@
         station: undefined,
         station_status: undefined,
         vehicle_types: undefined,
-        parkingIcon: mdiParking
+        iconParking: mdiParking,
       }
     },
     computed: {
@@ -69,8 +73,9 @@
         return this.station.capacity;
       },
       vehicleTypeCount() {
-        let typeCount = {};
         if (typeof this.station_status === "undefined") return [];
+
+        let typeCount = {};
         for (let v of this.station_status.vehicles) {
           if (typeof typeCount[v.vehicle_type_id] === "undefined") {
             typeCount[v.vehicle_type_id] = { id: v.vehicle_type_id, count: 0 };
@@ -78,6 +83,7 @@
             if (typeof type !== "undefined") {
               typeCount[v.vehicle_type_id].name = type.name;
               typeCount[v.vehicle_type_id].icon = this.iconForVehicleType(type);
+              typeCount[v.vehicle_type_id].electric = this.vehicleTypeElectric(type);
             }
           }
           typeCount[v.vehicle_type_id].count += 1;
@@ -115,6 +121,13 @@
         if (type.form_factor === "moped") return mdiMoped;
         if (type.form_factor === "other") return mdiBus;
         return mdiBicycle;
+      },
+      vehicleTypeElectric(type) {
+        if (type.propulsion_type === "electric" ||
+          type.propulsion_type === "electric_assist") {
+          return true;
+        }
+        return false;
       },
     },
     mounted() {
