@@ -18,7 +18,7 @@ const getCurrentPosition = (options) => {
       (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options)
     )
   }
-  return Promise.resolve();
+  return Promise.reject();
 }
 
 const unpackErrorMessage = (err) => {
@@ -86,57 +86,45 @@ export default new Vuex.Store({
     LOGOUT: function({ commit }) {
       commit("CLEAR_USER");
     },
-    START_RENT: function({ dispatch }, bikeNumber) {
-      return getCurrentPosition({
-          timeout: 3000,
-          enableHighAccuracy: true,
-          maximumAge: 20000
-        }).then(
-          (location) => dispatch("START_RENT_INTERNAL", bikeNumber, location),
-          () => dispatch("START_RENT_INTERNAL", bikeNumber)
-        );
-    },
-    START_RENT_INTERNAL: function({ dispatch, state }, bikeNumber, location) {
-      let data = {bike: bikeNumber};
+    START_RENT: async function({ dispatch, state }, bikeNumber) {
+      let location;
+      try {
+        location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
+      } catch (_ignore) { /* */ }
+
+      let data = { bike: bikeNumber };
       if (location && location.coords && location.coords.accuracy < 20) {
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
-      return axiosWithAuth.call(this, state)
-        .post('/rent', data)
-        .then(
-          response => {
-            dispatch("UPDATE_RENTS")
-            return response.data;
-          },
-          err => unpackErrorMessage(err)
-        );
+
+      try {
+        let response = await axiosWithAuth.call(this, state).post('/rent', data);
+        dispatch("UPDATE_RENTS");
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
     },
-    END_RENT: function({ dispatch }, rentId) {
-      return getCurrentPosition({
-          timeout: 3000,
-          enableHighAccuracy: true,
-          maximumAge: 20000
-        }).then(
-          (location) => dispatch("END_RENT_INTERNAL", rentId, location),
-          () => dispatch("END_RENT_INTERNAL", rentId)
-        );
-    },
-    END_RENT_INTERNAL: function({ dispatch, state }, rentId, location) {
+    END_RENT: async function({ dispatch, state }, rentId) {
+      let location;
+      try {
+        location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
+      } catch(_ignore) { /* */ }
+
       let data = {};
       if (location && location.coords && location.coords.accuracy < 50) {
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
-      return axiosWithAuth.call(this, state)
-        .post(`/rent/${rentId}/finish`, data)
-        .then(
-          response => {
-            dispatch("UPDATE_RENTS")
-            return response.data;
-          },
-          err => unpackErrorMessage(err)
-        );
+
+      try {
+        let response = await axiosWithAuth.call(this, state).post(`/rent/${rentId}/finish`, data);
+        dispatch("UPDATE_RENTS");
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
     },
     UPDATE_RENTS: function({ commit, state, getters }) {
       if (!getters.isAuthenticated) { return; }
