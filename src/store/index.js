@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import config from '../config';
 
 Vue.use(Vuex);
 
 const axiosWithAuth = function (state) {
-  let appConfig = this._vm.$appConfig;
   return axios.create({
-    baseURL: appConfig.API_ROOT,
+    baseURL: config.API_ROOT,
     headers: { 'Authorization': `Token ${state.authToken}` }
   })
 }
