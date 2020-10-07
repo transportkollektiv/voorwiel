@@ -155,7 +155,7 @@
           this.loadDetailFromGbfs();
         }
       },
-      gbfs(data) {
+      gbfs() {
         this.loadDetailFromGbfs();
       }
     }
