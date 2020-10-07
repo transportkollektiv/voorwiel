@@ -93,7 +93,7 @@
 
         return Object.values(typeCount);
       },
-      ...mapState(['rents', 'gbfs'])
+      ...mapState(['gbfs'])
     },
     methods: {
       loadDetailFromGbfs() {
@@ -155,11 +155,7 @@
           this.loadDetailFromGbfs();
         }
       },
-      rents(data) {
-        console.log('new rents', data);
-      },
       gbfs(data) {
-        console.log('new gbfs', data);
         this.loadDetailFromGbfs();
       }
     }
