@@ -15,7 +15,15 @@ const axiosWithAuth = function (state) {
 const getCurrentPosition = (options) => {
   if (navigator.geolocation) {
     return new Promise(
-      (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options)
+      (resolve, reject) => {
+        let timeout = options.timeout || 5000;
+        let rejected = false;
+        let pt = setTimeout(() => { rejected = true; reject(); }, timeout);
+        navigator.geolocation.getCurrentPosition(
+          (pos) => { clearTimeout(pt); if (!rejected) resolve(pos); },
+          (err) => { clearTimeout(pt); if (!rejected) reject(err); },
+          options);
+      }
     )
   }
   return Promise.reject();
