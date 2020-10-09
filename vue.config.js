@@ -36,12 +36,17 @@ module.exports = {
       alias: {
         'leaflet$': 'leaflet/dist/leaflet-src.esm.js'
       }
-    },
-    plugins: [
-      new FaviconsWebpackPlugin({
+    }
+  },
+
+  chainWebpack: config => {
+    config
+      .plugin('FaviconsWebpackPlugin')
+      .use(FaviconsWebpackPlugin, [{
         logo: './src/assets/icon.png',
         prefix: 'img/icons/',
         inject: false,
+        devMode: 'webapp',
         favicons: {
           icons: {
             appleStartup: false,
@@ -49,7 +54,6 @@ module.exports = {
             yandex: false
           }
         }
-      })
-    ]
+      }]);
   }
 };
