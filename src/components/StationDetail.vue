@@ -19,7 +19,7 @@
                 </v-avatar>
               </v-badge>
               <v-icon size="16"  class="me-1" v-if="!item.electric">{{ item.icon }}</v-icon>
-               {{ item.count }}
+               {{ item.count }} {{ item.maximum ? '/ ' + item.maximum : '' }}
             </li>
             <li v-if="parking">
               <v-avatar color="blue" size="24" tile class="me-1">
@@ -86,8 +86,15 @@
           }
           typeCount[v.vehicle_type_id].count += 1;
         }
-
-        // FIXME if vehicle_docks_available -> define maximum
+        if (typeof this.station_status.vehicle_docks_available !== "undefined") {
+          for (let o of this.station_status.vehicle_docks_available) {
+            for (let type of o.vehicle_type_ids) {
+              if (typeCount[type] !== "undefined") {
+                typeCount[type].maximum = o.count;
+              }
+            }
+          }
+        }
 
         return Object.values(typeCount);
       },
