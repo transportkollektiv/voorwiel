@@ -34,8 +34,6 @@
 </template>
 
 <script>
-  // FIXME: handle gone data while displayed/refresh (works only with state?)
-  // FIXME: handle gone data from begin (soft 404)
   import { mapState } from 'vuex';
   import {
     mdiBicycle,
@@ -102,7 +100,6 @@
         let station = this.$store.getters.getGBFSStationWithDetails(this.id);
         if (station !== null) {
           this.hasData = true;
-          console.log(station);
           this.station = station.station;
           this.station_status = station.station_status;
           this.vehicle_types = station.vehicle_types;

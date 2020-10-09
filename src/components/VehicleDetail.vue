@@ -33,8 +33,6 @@
 </template>
 
 <script>
-  // FIXME: handle gone data while displayed/refresh (works only with state?)
-  // FIXME: handle gone data from begin (soft 404)
   import { mapState } from 'vuex';
   import * as convert from 'convert-units';
   import {
