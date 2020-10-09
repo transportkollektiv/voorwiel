@@ -100,24 +100,22 @@
       startRent() {
         this.loading = true;
         this.rentError = '';
-        this.$store.dispatch("START_RENT", this.bikenumber).then(() => {
-          this.$refs.rentBikeForm.reset()
-          this.loading = false;
-        }).catch((err) => {
-          this.rentError = err;
-          this.loading = false;
-        });
+        this.$store.dispatch("START_RENT", this.bikenumber)
+          .then(() => this.$refs.rentBikeForm.reset(),
+                (err) => this.rentError = err)
+          .finally(() => this.loading = false);
       },
       endRent(rentId) {
         this.rentError = '';
         this.loadingRents.push(rentId);
-        this.$store.dispatch("END_RENT", rentId).catch(err => {
-          this.rentError = err;
-          let index = this.loadingRents.indexOf(rentId);
-          if (index >= 0) {
-            this.loadingRents.splice(index, 1);
-          }
-        });
+        this.$store.dispatch("END_RENT", rentId)
+          .catch(err => {
+            this.rentError = err;
+            let index = this.loadingRents.indexOf(rentId);
+            if (index >= 0) {
+              this.loadingRents.splice(index, 1);
+            }
+          });
       }
     },
     mounted() {
