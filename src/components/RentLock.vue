@@ -5,6 +5,12 @@
       <span class="rent-unlock-key" >{{ unlock_key }}</span>
       <v-progress-circular indeterminate size="16" width="2" v-if="loading"></v-progress-circular>
     </template>
+    <template v-else-if="rent.bike.lock_type === 'EL'">
+      <v-btn color="accent" rounded outlined elevation="0" @click="unlock()" v-bind:loading="loading">
+        <v-icon>{{ mdi.lockOpenVariant }}</v-icon>&nbsp;
+        <span>{{ $t('message.rent.unlock') }}</span>
+      </v-btn>
+    </template>
     <template v-else>
       <small>{{ $t('message.lock.not-supported') }}</small>
     </template>
