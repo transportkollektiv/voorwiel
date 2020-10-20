@@ -46,7 +46,9 @@
       >
         <v-list-item-content>
           <v-list-item-title>{{ $t('message.rent.bikenumber') }}: {{rent.bike.bike_number}}</v-list-item-title>
-          <v-list-item-subtitle v-if="rent.bike.lock">{{ $t('message.rent.unlockcode') }}: <span class="rent-unlock-key">{{rent.bike.lock.unlock_key}}</span></v-list-item-subtitle>
+          <v-list-item-subtitle v-if="rent.bike.lock_type">
+            <RentLock :rent="rent" />
+          </v-list-item-subtitle>
           <v-list-item-subtitle>{{ $t('message.rent.renting-for') }} <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
           <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
             {{ $t('message.rent.finish-rent') }}
@@ -61,9 +63,10 @@
   import { mapState } from 'vuex';
   import { mdiLock, mdiLockOpenVariant } from '@mdi/js'
   import TickingTime from "./TickingTime.vue";
+  import RentLock from "./RentLock.vue";
 
   export default {
-    components: {TickingTime},
+    components: { TickingTime, RentLock },
     props: ['bikeId'],
     data() {
       return {
