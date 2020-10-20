@@ -31,7 +31,7 @@
             </v-col>
             <v-col cols="6" md="6" class="py-0 text-right">
               <v-btn class="mt-2" color="success" v-bind:disabled="!valid" :loading="loading" @click="startRent">
-                {{ $t('message.rent.to-rent') }}
+                {{ $t('message.rent.rent') }}
               </v-btn>
             </v-col>
           </v-row>
