@@ -2,9 +2,9 @@
   <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-form v-model="valid" ref="rentBikeForm" @submit.prevent="startRent">
-        <v-container class="pt-6 pb-0">
+        <v-container class="pb-0">
           <v-row v-if="rentError">
-            <v-col col="12" md="12">
+            <v-col col="12" md="12" class="py-0">
              <v-alert
                 dense
                 outlined
@@ -15,7 +15,7 @@
               </v-alert>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row class="pt-5">
             <v-col cols="6" md="6" class="py-0 pr-0">
               <v-text-field
                   type="text"
