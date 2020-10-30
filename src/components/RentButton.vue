@@ -5,7 +5,7 @@
     color="success"
     :to="{name:'rent'}"
   >
-    <v-icon>{{ mdi.bike }}</v-icon>&nbsp;<span>{{ buttonText }}</span>
+    <v-icon>{{ mdi.bike }}</v-icon><span class="pl-2">{{ buttonText }}</span>
   </v-btn>
 </template>
 

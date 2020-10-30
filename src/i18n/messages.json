@@ -14,6 +14,9 @@
         "rent": "Rent",
         "renting-for": "Renting for"
       },
+      "lock": {
+        "not-supported": "Lock cannot be unlocked this time"
+      },
       "rentbutton": {
         "rent-bike": "Rent Bike",
         "rent-or-return-bike": "Rent or Return Bike"
@@ -53,12 +56,15 @@
         "unlock": "Entsperren",
         "bikenumber": "Radnummer",
         "finish-rent": "Leihe beenden",
-        "rent": "Ausleihe",
+        "rent": "Ausleihen",
         "renting-for": "Ausleihe läuft"
       },
       "rentbutton": {
         "rent-bike": "Rad ausleihen",
         "rent-or-return-bike": "Ausleihen oder Zurückgeben"
+      },
+      "lock": {
+        "not-supported": "Schlosstyp wird noch nicht unterstützt"
       },
       "login": {
         "login-with": "Einloggen mit",

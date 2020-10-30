@@ -50,7 +50,8 @@ export default new Vuex.Store({
     user: undefined,
     rents: [],
     appError: '',
-    gbfs: null
+    gbfs: null,
+    lock: {},
   },
   actions: {
     AUTHENTICATE: function({ commit, dispatch }, authToken) {
@@ -115,7 +116,7 @@ export default new Vuex.Store({
         throw unpackErrorMessage(err);
       }
     },
-    END_RENT: async function({ dispatch, state }, rentId) {
+    END_RENT: async function({ dispatch, commit, state }, rentId) {
       let location;
       try {
         location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
@@ -128,8 +129,10 @@ export default new Vuex.Store({
       }
 
       try {
-        let response = await axiosWithAuth.call(this, state).post(`/rent/${rentId}/finish`, data);
+        let finish_url = state.rents.find((el) => el.id == rentId).finish_url;
+        let response = await axiosWithAuth.call(this, state).post(finish_url, data);
         dispatch("UPDATE_RENTS");
+        commit("REMOVE_LOCK", rentId);
         return response.data;
       } catch (err) {
         throw unpackErrorMessage(err);
@@ -142,6 +145,20 @@ export default new Vuex.Store({
         .then(response => {
           commit('SET_RENTS', response.data)
         })
+    },
+    RENT_UNLOCK: async function({ commit, state }, rentId) {
+      try {
+        let unlock_url = state.rents.find((el) => el.id == rentId).unlock_url;
+        let response = await axiosWithAuth.call(this, state).post(unlock_url);
+        if (response.data.success) {
+          commit("SET_LOCK", { rentId: rentId, data: response.data.data });
+          return response.data.data;
+        } else {
+          throw { response };
+        }
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
     }
   },
   mutations: {
@@ -149,6 +166,7 @@ export default new Vuex.Store({
       state.authToken = null;
       state.user = undefined;
       state.rents = [];
+      state.lock = [];
       localStorage.removeItem(LS_AUTH_TOKEN_KEY);
     },
     SET_USER: (state, { user }) => {
@@ -160,6 +178,14 @@ export default new Vuex.Store({
     },
     SET_RENTS: (state, rents) => {
       state.rents = rents;
+    },
+    SET_LOCK: (state, { rentId, data }) => {
+      Vue.set(state.lock, rentId, data);
+    },
+    REMOVE_LOCK: (state, rentId) => {
+      if (Object.prototype.hasOwnProperty.call(state.lock, rentId)) {
+        delete state.lock[rentId];
+      }
     },
     SET_APPERROR: (state, message) => {
       state.appError = message;

@@ -19,9 +19,9 @@
 
         let startDate = new Date(this.datetime);
         let diff = Math.floor((this.now - startDate.getTime())/1000);
-        let hours = Math.floor(diff / 3600);
-        let minutes = Math.floor((diff - hours*3600)/60);
-        let seconds = diff - (hours*3600 + minutes*60);
+        let hours = Math.max(0, Math.floor(diff / 3600));
+        let minutes = Math.max(0, Math.floor((diff - hours*3600)/60));
+        let seconds = Math.max(0, diff - (hours*3600 + minutes*60));
         return `${leadingZero(hours)}:${leadingZero(minutes)}:${leadingZero(seconds)}`;
       }
     },
