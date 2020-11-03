@@ -110,7 +110,11 @@
     position: fixed;
     bottom: 2rem;
     text-align: center;
-    z-index: 200;
+  }
+  /* bad hack, goes away when we restructure the navigation */
+  #attach-sheet + .rent-buttonarea .rent-button,
+  #attach-sheet + .rent-buttonarea .login-button {
+    z-index: 300;
   }
   .rent-button,
   .login-button {

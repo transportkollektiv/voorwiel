@@ -1,7 +1,15 @@
 <template>
   <l-map :zoom="zoom" :center="center" style="z-index: 0;">
     <l-tile-layer :url="url" :attribution="attribution" />
-    <l-gbfs :gbfsURL="gbfsURL" :bikeMarkerColor="this.$vuetify.theme.currentTheme.primary" ref="gbfsLayer" v-on:error="handleGBFSError" />
+    <l-gbfs :gbfsURL="gbfsURL"
+            :bikeMarkerColor="this.$vuetify.theme.currentTheme.primary"
+            :showStationPopup="false"
+            :showBikePopup="false"
+            ref="gbfsLayer"
+            v-on:error="handleGBFSError"
+            v-on:data="handleGBFSData"
+            v-on:bikeClick="handleBikeClick"
+            v-on:stationClick="handleStationClick" />
     <l-locate-control :options="locateOptions" />
   </l-map>
 </template>
@@ -47,6 +55,15 @@
     methods: {
       handleGBFSError() {
         this.$store.commit('SET_APPERROR', this.$t('message.gbfsview.error'));
+      },
+      handleGBFSData(d) {
+        this.$store.commit('SET_GBFS', d);
+      },
+      handleBikeClick(d) {
+        this.$router.push('/v/' + d.bike.bike_id)
+      },
+      handleStationClick(d) {
+        this.$router.push('/s/' + d.station.station_id)
       }
     }
   };

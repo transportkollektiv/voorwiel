@@ -9,6 +9,8 @@ import Login from '../components/Login';
 import LoginReturn from '../components/LoginReturn';
 import Rent from '../components/Rent';
 import Support from '../components/Support';
+import VehicleDetail from '../components/VehicleDetail';
+import StationDetail from '../components/StationDetail';
 
 const NoOpComponent = Vue.component('no-op', {
   functional: true,
@@ -31,6 +33,8 @@ const router = new VueRouter({
       const { params } = to;
       return { path: '/rent', query: { id: params.id } };
     }},
+    { path: '/v/:id', name: 'vehicle', component: VehicleDetail, props: true },
+    { path: '/s/:id', name: 'station', component: StationDetail, props: true },
     { path: '/support', name: 'support', component: Support },
     { path: '*', redirect: '/' }
   ],
