@@ -6,7 +6,7 @@ var SYSTEM_URL = "http://localhost:8000";
 var API_ROOT = SYSTEM_URL + "/api";
 var GBFS_URL = SYSTEM_URL + "/gbfs/gbfs.json";
 
-var DEFAULT_LOCATION = [48.3984, 9.9908];
+var DEFAULT_LOCATION = [53.5823813, 9.7137465];
 var DEFAULT_ZOOM = 15;
 
 var I18N_MESSAGE_OVERRIDE = {};
