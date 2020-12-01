@@ -50,6 +50,15 @@
         fetch(url)
           .then(r => r.json())
           .then(data => {
+            // Adding Costum Login Button
+            let costum_login = {
+              "name": "Costum Login",
+              "provider": "AZV",
+              "auth_url" : "http://localhost:8000/admin/login/?next=localhost:8080"
+            };
+            // Add this entry to the list of displayed buttons
+            data.push(costum_login);
+
             this.providers = data;
             this.loading = false;
           })
