@@ -71,6 +71,7 @@ export default new Vuex.Store({
         .get('/user')
         .then(
           response => {
+            console.log(response.data);
             commit("SET_USER", { user: response.data });
           },
           err => {
@@ -163,11 +164,19 @@ export default new Vuex.Store({
   },
   mutations: {
     CLEAR_USER: (state) => {
-      state.authToken = null;
-      state.user = undefined;
-      state.rents = [];
-      state.lock = [];
-      localStorage.removeItem(LS_AUTH_TOKEN_KEY);
+      
+      if (state.user.username === "costum_login")
+      {
+        console.log("Im logged in as costum_user") 
+      }
+      else
+      {  
+        state.authToken = null;
+        state.user = undefined;
+        state.rents = [];
+        state.lock = [];
+        localStorage.removeItem(LS_AUTH_TOKEN_KEY);
+      }
     },
     SET_USER: (state, { user }) => {
       state.user = user;

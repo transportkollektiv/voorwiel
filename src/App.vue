@@ -91,6 +91,7 @@
     },
     methods: {
       logout() {
+        
         this.$store.dispatch("LOGOUT");
       }
     },
