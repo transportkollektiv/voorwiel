@@ -18,6 +18,10 @@
               </v-btn>
             </v-list-item-content>
           </v-list-item>
+          <v-btn block :to="{name: 'customLogin'}">
+                {{ "Custom Login" }}
+                <!-- <v-icon v-if="provider.icon" right dark>{{ provider.icon }}</v-icon> -->
+              </v-btn>
         </v-list>
       </v-card-actions>
     </v-card>
@@ -50,15 +54,6 @@
         fetch(url)
           .then(r => r.json())
           .then(data => {
-            // Adding Costum Login Button
-            let costum_login = {
-              "name": "Costum Login",
-              "provider": "AZV",
-              "auth_url" : "http://localhost:8000/admin/login/?next=localhost:8080"
-            };
-            // Add this entry to the list of displayed buttons
-            data.push(costum_login);
-
             this.providers = data;
             this.loading = false;
           })

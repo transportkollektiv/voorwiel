@@ -23,7 +23,9 @@
       },
       "login": {
         "login-with": "Login with",
-        "configerror": "Cannot load login configuration"
+        "configerror": "Cannot load login configuration",
+        "username" : "Username",
+        "password" : "Password"
       },
       "about": {
         "title": "About",
@@ -68,7 +70,9 @@
       },
       "login": {
         "login-with": "Einloggen mit",
-        "configerror": "Laden der Login-Konfiguration fehlgeschlagen"
+        "configerror": "Laden der Login-Konfiguration fehlgeschlagen",
+        "username" : "Benutzername",
+        "password" : "Passwort"
       },
       "about": {
         "title": "Über",
