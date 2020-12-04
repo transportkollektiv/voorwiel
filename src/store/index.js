@@ -126,9 +126,40 @@ export default new Vuex.Store({
 
       let data = {};
       if (location && location.coords && location.coords.accuracy < 50) {
+
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
+ 
+      console.log(Vue.prototype.$selectedReturnLocation)
+      
+      // TODO delete
+      let lat = 0.0;
+      let lng = 0.0;
+      switch(Vue.prototype.$selectedReturnLocation)
+      {
+        case "Altstadt" :  
+          lat = 53.583435
+          lng = 9.698574
+        break;
+        case "Fock-Straße":
+          lat = 53.580897
+          lng = 9.703375999999999 
+        break;
+        case "Bahnhof": 
+        lat = 53.581697
+        lng = 9.703375999999999 
+        break;
+        default : 
+          console.log("No location selected")
+          lat = 53.581697
+          lng = 9.703675999999999 
+        break;
+      }
+
+      data['lat'] = lat ;
+      data['lng'] = lng;
+    
 
       try {
         let finish_url = state.rents.find((el) => el.id == rentId).finish_url;

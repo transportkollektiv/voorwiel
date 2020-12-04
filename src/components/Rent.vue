@@ -50,6 +50,18 @@
             <RentLock :rent="rent" />
           </v-list-item-subtitle>
           <v-list-item-subtitle>{{ $t('message.rent.renting-for') }} <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
+          <v-row class="pt-5">
+            <v-col cols="6" md="6" class="py-0 pr-0">
+              <div id="app">
+                <select class="form-control" @change="changeReturnLocation($event)">
+                  <option value="" selected disabled>Choose</option>
+                  <option v-for="location in choosableLocations" :value="location.id" :key="location.id">{{ location.name }}</option>
+                </select>
+                <br><br>
+                <p><span>Selected return location: {{ selectedReturnLocation  }}</span></p>
+              </div>
+            </v-col>
+          </v-row>
           <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
             {{ $t('message.rent.finish-rent') }}
           </v-btn>
@@ -64,6 +76,9 @@
   import { mdiLock, mdiLockOpenVariant } from '@mdi/js'
   import TickingTime from "./TickingTime.vue";
   import RentLock from "./RentLock.vue";
+
+  //TODO delete later
+  import Vue from 'vue'
 
   export default {
     components: { TickingTime, RentLock },
@@ -88,7 +103,14 @@
         mdi: {
           lock: mdiLock,
           lockOpenVariant: mdiLockOpenVariant
-        }
+        },
+        // TODO delete later
+        choosableLocations :[
+          {name : "Altstadt", id: 1},
+          {name : "Fock-Straße", id: 2},
+          {name : "Bahnhof", id: 3}
+        ],
+        selectedReturnLocation : null
       }
     },
     computed: {
@@ -106,6 +128,7 @@
       endRent(rentId) {
         this.rentError = '';
         this.loadingRents.push(rentId);
+        Vue.prototype.$selectedReturnLocation = this.selectedReturnLocation
         this.$store.dispatch("END_RENT", rentId)
           .catch(err => {
             this.rentError = err;
@@ -114,7 +137,12 @@
               this.loadingRents.splice(index, 1);
             }
           });
-      }
+      },
+      // TODO delete later
+      changeReturnLocation (event) {
+        this.selectedReturnLocation = event.target.options[event.target.options.selectedIndex].text
+        console.log(this.selectedReturnLocation)
+        }
     },
     mounted() {
       this.bikenumber = this.bikeId;
