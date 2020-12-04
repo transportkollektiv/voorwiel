@@ -72,7 +72,6 @@ import axios from 'axios';
     methods: {
       authenticate() {        
         let params = new URLSearchParams(location.search);
-        console.log(params)
         if (params.get('redirect')) {
           sessionStorage.setItem('redirect', params.get('redirect'));
         }

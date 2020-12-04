@@ -13,7 +13,7 @@ const axiosWithAuth = function (state) {
 }
 
 const getCurrentPosition = (options) => {
-  if (navigator.geolocation) {
+  if (navigator.geolocation) {    
     return new Promise(
       (resolve, reject) => {
         let timeout = options.timeout || 5000;
@@ -25,7 +25,8 @@ const getCurrentPosition = (options) => {
           options);
       }
     )
-  }
+  } 
+
   return Promise.reject();
 }
 
@@ -164,52 +165,11 @@ export default new Vuex.Store({
   },
   mutations: {
     CLEAR_USER: (state) => {
-
-      if (state.user.username === "costum_login")
-      {
-        // TODO clean up
-        // Invalidate the logged-in user in cykel
-        // TODO implement the cykel logout
-        console.log(state);
-        console.log(state.authToken)
-        console.log(localStorage)
-/*        const headers = {
-          Cookie: ""  
-        }
-        fetch('https://jsonplaceholder.typicode.com/todos', {
-        method: 'POST',
-        body: JSON.stringify(todo),
-        headers: 
-        })
-        .then(response => response.json())
-        .then(json => {
-            console.log(json);
-        });
-
-        fetch("http://localhost:8000/admin/logout/")
-        .then(async response => {
-          const data = await response.text();
-          console.log(data)
-          // check for error response
-          /*if (!response.ok) {
-            // get error message from body or default to response statusText
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          console.log("There was an error, during logout!");
-                });*/
-      }
-      
-      {  
         state.authToken = null;
         state.user = undefined;
         state.rents = [];
         state.lock = [];
         localStorage.removeItem(LS_AUTH_TOKEN_KEY);
-      }
     },
     SET_USER: (state, { user }) => {
       state.user = user;
