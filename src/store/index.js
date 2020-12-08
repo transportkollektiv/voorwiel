@@ -131,34 +131,8 @@ export default new Vuex.Store({
         data['lng'] = location.coords.longitude;
       }
  
-      console.log(Vue.prototype.$selectedReturnLocation)
-      
-      // TODO delete
-      let lat = 0.0;
-      let lng = 0.0;
-      switch(Vue.prototype.$selectedReturnLocation)
-      {
-        case "Altstadt" :  
-          lat = 53.583435
-          lng = 9.698574
-        break;
-        case "Fock-Straße":
-          lat = 53.580897
-          lng = 9.703375999999999 
-        break;
-        case "Bahnhof": 
-        lat = 53.581697
-        lng = 9.703375999999999 
-        break;
-        default : 
-          console.log("No location selected")
-          lat = 53.581697
-          lng = 9.703675999999999 
-        break;
-      }
-
-      data['lat'] = lat ;
-      data['lng'] = lng;
+      data['lat'] = Vue.prototype.$returnLat;
+      data['lng'] = Vue.prototype.$returnLng;
     
 
       try {

@@ -55,10 +55,10 @@
               <div id="app">
                 <select class="form-control" @change="changeReturnLocation($event)">
                   <option value="" selected disabled>Choose</option>
-                  <option v-for="location in choosableLocations" :value="location.id" :key="location.id">{{ location.name }}</option>
+                  <option v-for="station in availableStations" :value="station.id" :key="station.id">{{ station.name }}</option>
                 </select>
                 <br><br>
-                <p><span>Selected return location: {{ selectedReturnLocation  }}</span></p>
+                <p><span>Selected return location: {{ selectedStation  }}</span></p>
               </div>
             </v-col>
           </v-row>
@@ -77,8 +77,10 @@
   import TickingTime from "./TickingTime.vue";
   import RentLock from "./RentLock.vue";
 
+
   //TODO delete later
   import Vue from 'vue'
+  import axios from 'axios';
 
   export default {
     components: { TickingTime, RentLock },
@@ -104,17 +106,17 @@
           lock: mdiLock,
           lockOpenVariant: mdiLockOpenVariant
         },
-        // TODO delete later
-        choosableLocations :[
-          {name : "Altstadt", id: 1},
-          {name : "Fock-Straße", id: 2},
-          {name : "Bahnhof", id: 3}
-        ],
-        selectedReturnLocation : null
+        availableStations :[],
+        selectedStation : null,
+        lng: null,
+        lat: null
       }
     },
     computed: {
       ...mapState(['rents'])
+    },
+    created() {
+      this.fetchStations();
     },
     methods: {
       startRent() {
@@ -128,7 +130,8 @@
       endRent(rentId) {
         this.rentError = '';
         this.loadingRents.push(rentId);
-        Vue.prototype.$selectedReturnLocation = this.selectedReturnLocation
+        Vue.prototype.$returnLng = this.lng
+        Vue.prototype.$returnLat = this.lat
         this.$store.dispatch("END_RENT", rentId)
           .catch(err => {
             this.rentError = err;
@@ -138,11 +141,33 @@
             }
           });
       },
-      // TODO delete later
       changeReturnLocation (event) {
-        this.selectedReturnLocation = event.target.options[event.target.options.selectedIndex].text
-        console.log(this.selectedReturnLocation)
+        this.selectedStation = event.target.options[event.target.options.selectedIndex].text
+    
+        for (var  index in this.availableStations) 
+        {
+          if (this.availableStations[index].name === this.selectedStation)
+          {
+            this.lng = this.availableStations[index].location.lng;
+            this.lat = this.availableStations[index].location.lat;
+            break;
+          }
         }
+      }, 
+      fetchStations() {
+        
+        let url = this.$appConfig.API_ROOT + '/stations/locations';
+        axios.post(url)
+        .then( response => response.data)
+        .then( data => {
+          console.log(data)
+          this.availableStations = data
+        })          
+        .catch( 
+          console.log("Error")
+          // TODO Fehlerbehandlung einfügen
+        )
+      }
     },
     mounted() {
       this.bikenumber = this.bikeId;
