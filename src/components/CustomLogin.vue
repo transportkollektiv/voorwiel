@@ -83,7 +83,6 @@ export default {
         sessionStorage.setItem("redirect", params.get("redirect"));
       }
       try {
-        // TODO relative path
         let auth_url = this.$appConfig.API_ROOT + '/auth/token';
 
         axios
