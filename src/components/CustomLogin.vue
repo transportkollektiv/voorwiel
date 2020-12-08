@@ -84,7 +84,7 @@ export default {
       }
       try {
         // TODO relative path
-        let auth_url = "http://localhost:8000/api-token-auth/";
+        let auth_url = this.$appConfig.API_ROOT + '/auth/token';
 
         axios
           .post(auth_url, {
