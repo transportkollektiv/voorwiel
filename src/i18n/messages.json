@@ -12,7 +12,11 @@
         "bikenumber": "Bike number",
         "finish-rent": "Finish rent",
         "rent": "Rent",
-        "renting-for": "Renting for"
+        "renting-for": "Renting for",
+        "no-location" : "Please select a return location",
+        "choosable-locations": "Locations",
+        "selected-location" : "Return Location"
+
       },
       "lock": {
         "not-supported": "Lock cannot be unlocked this time"
@@ -59,7 +63,11 @@
         "bikenumber": "Radnummer",
         "finish-rent": "Leihe beenden",
         "rent": "Ausleihen",
-        "renting-for": "Ausleihe läuft"
+        "renting-for": "Ausleihe läuft",
+        "no-location" : "Bitte wählen Sie einen Abgabeort aus.",
+        "choosable-locations": "Abgabeorte",
+        "selected-location" : "Abgabeort"
+
       },
       "rentbutton": {
         "rent-bike": "Rad ausleihen",

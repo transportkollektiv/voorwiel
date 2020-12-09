@@ -53,13 +53,13 @@
           <v-row class="pt-5">
             <v-col cols="6" md="6" class="py-0 pr-0">
               <div id="app">
-                <select class="form-control" @change="changeReturnLocation($event)">
-                  <option value="" selected disabled>Choose</option>
+                <select class="form-control" @change="changeReturnLocation($event)" @click=fetchStations()>
+                  <option value="" selected disabled> {{ $t('message.rent.choosable-locations')}} </option>
                   <option v-for="station in availableStations" :value="station.id" :key="station.id">{{ station.name }}</option>
                 </select>
                 <br><br>
-                <p v-if="selectedStation != null" ><span>Selected return location: {{ selectedStation  }}</span></p>
-                <p v-else><span>Please select a return location</span></p>
+                <p v-if="selectedStation != null" ><span>{{ $t('message.rent.selected-location')}}: {{ selectedStation  }}</span></p>
+                <p v-else><span> {{$t('message.rent.no-location') }} </span></p>
               </div>
             </v-col>
           </v-row>
@@ -152,6 +152,7 @@
         }
       },
       changeReturnLocation (event) {
+
         this.selectedStation = event.target.options[event.target.options.selectedIndex].text
     
         for (var  index in this.availableStations) 
@@ -170,7 +171,6 @@
         axios.get(url)
         .then( response => response.data)
         .then( data => {
-          console.log(data)
           this.availableStations = data
         })          
         .catch( (error) => {
