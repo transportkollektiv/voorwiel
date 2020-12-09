@@ -45,7 +45,8 @@
                   v-bind:disabled="!valid"
                   :loading="loading"
                   @click="authenticate()"
-                >{{ "Login" }}
+                >
+                  {{ $t("message.app.login") }}
                 </v-btn>
               </v-col>
             </v-row>
