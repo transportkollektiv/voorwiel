@@ -57,7 +57,7 @@
       </v-card-actions>
     </v-card>
     <v-container test color: red>
-  <h2 v-if ="wrongPW">Falsches Passwort </h2>
+  <h2 v-if ="wrongPW"> "$t('message.login.failed-login')" </h2>
              </v-container>
   </v-dialog>
 </template>
@@ -83,7 +83,7 @@ export default {
         sessionStorage.setItem("redirect", params.get("redirect"));
       }
       try {
-        let auth_url = this.$appConfig.API_ROOT + '/auth/token';
+        let auth_url = this.$appConfig.API_ROOT + "/auth/token";
 
         axios
           .post(auth_url, {
@@ -93,10 +93,11 @@ export default {
           .then((response) => {
             location.href = "/login/return/?token=" + response.data.token;
           })
-          .catch(
-            console.log("Error im ersten Catch"),
-           this.wrongPW = true
-          );
+          .catch((error) => {
+            if (error.response) {
+              this.wrongPW = true;
+            }
+          });
       } catch (err) {
         console.err("Error im zweiten Catch: \n" + err);
       }
