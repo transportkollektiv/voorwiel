@@ -143,7 +143,7 @@
             }
           });
 
-        // check if end rent returned without an error if so, reset the choosen location and station to null
+        // check if end rent returned without an error, if so set the choosen location and station to null
         if (this.rentError === '')
         {
           this.selectedStation = null
@@ -166,7 +166,6 @@
         }
       }, 
       fetchStations() {
-        
         let url = this.$appConfig.API_ROOT + '/stations/locations';
         axios.get(url)
         .then( response => response.data)
@@ -174,8 +173,12 @@
           this.availableStations = data
         })          
         .catch( (error) => {
-          console.log("Error ", error)
-          // TODO check response from server ...  if error disable bike renting
+            console.log(error)
+            if (error.response)
+            {
+              // TODO check response from server ... maybe give user a visual queue when the request failed
+
+            }
           }
         )
       }
