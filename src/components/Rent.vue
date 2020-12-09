@@ -58,11 +58,12 @@
                   <option v-for="station in availableStations" :value="station.id" :key="station.id">{{ station.name }}</option>
                 </select>
                 <br><br>
-                <p><span>Selected return location: {{ selectedStation  }}</span></p>
+                <p v-if="selectedStation != null" ><span>Selected return location: {{ selectedStation  }}</span></p>
+                <p v-else><span>Please select a return location</span></p>
               </div>
             </v-col>
           </v-row>
-          <v-btn color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
+          <v-btn v-if="selectedStation != null" color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
             {{ $t('message.rent.finish-rent') }}
           </v-btn>
         </v-list-item-content>
@@ -132,6 +133,7 @@
         this.loadingRents.push(rentId);
         Vue.prototype.$returnLng = this.lng
         Vue.prototype.$returnLat = this.lat
+        
         this.$store.dispatch("END_RENT", rentId)
           .catch(err => {
             this.rentError = err;
@@ -140,6 +142,15 @@
               this.loadingRents.splice(index, 1);
             }
           });
+
+        // check if end rent returned without an error if so, reset the choosen location and station to null
+        if (this.rentError === '')
+        {
+          
+          this.selectedStation = null
+          this.lng = null
+          this.lat = null
+        }
       },
       changeReturnLocation (event) {
         this.selectedStation = event.target.options[event.target.options.selectedIndex].text
@@ -163,9 +174,10 @@
           console.log(data)
           this.availableStations = data
         })          
-        .catch( 
-          console.log("Error")
+        .catch( (error) => {
+          console.log("Error ", error)
           // TODO check response from server ...  if error disable bike renting
+          }
         )
       }
     },
