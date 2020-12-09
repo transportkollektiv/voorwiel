@@ -15,7 +15,8 @@
         "renting-for": "Renting for",
         "no-location" : "Please select a return location",
         "choosable-locations": "Locations",
-        "selected-location" : "Return Location"
+        "selected-location" : "Return Location",
+        "choose-locations" : "Choose a location"
 
       },
       "lock": {
@@ -66,7 +67,9 @@
         "renting-for": "Ausleihe läuft",
         "no-location" : "Bitte wählen Sie einen Abgabeort aus.",
         "choosable-locations": "Abgabeorte",
-        "selected-location" : "Abgabeort"
+        "selected-location" : "Abgabeort",
+        "choose-locations" : "Wähle einen Rückgabeort"
+
 
       },
       "rentbutton": {

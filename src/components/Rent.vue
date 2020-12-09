@@ -55,7 +55,7 @@
               <div id="app">
                 <label for="select-location"> {{ $t('message.rent.selected-location')}}: </label>
                 <select class="form-control" @change="changeReturnLocation($event)" @click=fetchStations()>
-                  <option value="" selected disabled> {{ $t('message.rent.choosable-locations')}} </option>
+                  <option value="" selected disabled> {{ $t('message.rent.choose-locations')}} </option>
                   <option v-for="station in availableStations" :value="station.id" :key="station.id">{{ station.name }}</option>
                 </select>
                 <br><br>
