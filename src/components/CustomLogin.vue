@@ -56,8 +56,8 @@
          
       </v-card-actions>
     </v-card>
-    <v-container test color: red>
-  <h2 v-if ="wrongPW"> "$t('message.login.failed-login')" </h2>
+    <v-container v-if ="wrongPW" color: red>
+  <h2 v-if ="wrongPW"> {{$t('message.login.failed-login')}} </h2>
              </v-container>
   </v-dialog>
 </template>
