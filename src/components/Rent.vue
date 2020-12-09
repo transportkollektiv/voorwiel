@@ -146,7 +146,6 @@
         // check if end rent returned without an error if so, reset the choosen location and station to null
         if (this.rentError === '')
         {
-          
           this.selectedStation = null
           this.lng = null
           this.lat = null
