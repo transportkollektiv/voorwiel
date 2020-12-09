@@ -157,7 +157,7 @@
       fetchStations() {
         
         let url = this.$appConfig.API_ROOT + '/stations/locations';
-        axios.post(url)
+        axios.get(url)
         .then( response => response.data)
         .then( data => {
           console.log(data)
@@ -165,7 +165,7 @@
         })          
         .catch( 
           console.log("Error")
-          // TODO Fehlerbehandlung einfügen
+          // TODO check response from server ...  if error disable bike renting
         )
       }
     },

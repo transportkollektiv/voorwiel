@@ -130,7 +130,7 @@ export default new Vuex.Store({
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
- 
+      // TODO make configurable 
       data['lat'] = Vue.prototype.$returnLat;
       data['lng'] = Vue.prototype.$returnLng;
     
