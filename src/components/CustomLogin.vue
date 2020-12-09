@@ -1,6 +1,6 @@
 
 <template>
-  <v-dialog v-model="show" max-width="500">
+  <v-dialog v-model="show" max-width="400">
     <v-card>
       <v-card-title class="text-h5 grey lighten-2" primary-title>
         {{ $t("message.login.login-with") }}
@@ -38,15 +38,14 @@
               </v-col>
             </v-row>
             <v-row class="pt-5">
-              <v-col cols="6" md="6" class="py-0 text-right">
+              <v-col cols="1" md="1" class="py-0 text-right">
                 <v-btn
                   class="mt-2"
                   color="success"
                   v-bind:disabled="!valid"
                   :loading="loading"
                   @click="authenticate()"
-                >
-                  {{ "Login" }}
+                >{{ "Login" }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -57,7 +56,7 @@
       </v-card-actions>
     </v-card>
     <v-container v-if ="wrongPW" color: red>
-  <h2 v-if ="wrongPW"> {{$t('message.login.failed-login')}} </h2>
+  <h4 v-if ="wrongPW"> {{$t('message.login.failed-login')}} </h4>
              </v-container>
   </v-dialog>
 </template>
