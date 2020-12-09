@@ -78,8 +78,6 @@
   import TickingTime from "./TickingTime.vue";
   import RentLock from "./RentLock.vue";
 
-
-  //TODO delete later
   import Vue from 'vue'
   import axios from 'axios';
 
