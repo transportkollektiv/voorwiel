@@ -51,15 +51,15 @@
           </v-list-item-subtitle>
           <v-list-item-subtitle>{{ $t('message.rent.renting-for') }} <ticking-time :datetime="rent.rent_start" /></v-list-item-subtitle>
           <v-row class="pt-5">
-            <v-col cols="6" md="6" class="py-0 pr-0">
+            <v-col cols="12" md="12" class="py-0 pr-0">
               <div id="app">
+                <label for="select-location"> {{ $t('message.rent.selected-location')}}: </label>
                 <select class="form-control" @change="changeReturnLocation($event)" @click=fetchStations()>
                   <option value="" selected disabled> {{ $t('message.rent.choosable-locations')}} </option>
                   <option v-for="station in availableStations" :value="station.id" :key="station.id">{{ station.name }}</option>
                 </select>
                 <br><br>
-                <p v-if="selectedStation != null" ><span>{{ $t('message.rent.selected-location')}}: {{ selectedStation  }}</span></p>
-                <p v-else><span> {{$t('message.rent.no-location') }} </span></p>
+                <p v-if="selectedStation == null"><span style="color:red"> {{$t('message.rent.no-location')}} </span></p>
               </div>
             </v-col>
           </v-row>
@@ -133,6 +133,15 @@
         Vue.prototype.$returnLat = this.lat
         
         this.$store.dispatch("END_RENT", rentId)
+          .then( () => {
+            // set selected location to null if end_rent returned without error
+            if (this.rentError === '')
+            {
+              this.selectedStation = null
+              this.lng = null
+              this.lat = null
+            }
+          })
           .catch(err => {
             this.rentError = err;
             let index = this.loadingRents.indexOf(rentId);
@@ -140,14 +149,6 @@
               this.loadingRents.splice(index, 1);
             }
           });
-
-        // check if end rent returned without an error, if so set the choosen location and station to null
-        if (this.rentError === '')
-        {
-          this.selectedStation = null
-          this.lng = null
-          this.lat = null
-        }
       },
       changeReturnLocation (event) {
 
