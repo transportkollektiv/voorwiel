@@ -126,35 +126,28 @@
           .finally(() => this.loading = false);
       },
       endRent(rentId) {       
-       let coords = this.chosenReturnLocations[rentId];
-       if (coords == null) 
-       {
-          console.log("Found no return location assocaited with id: ", rentId)
-       }
-       else 
-       {
-          console.log(rentId)
-          console.log(coords.lat)
-          console.log(coords.lng)
-          this.rentError = '';
-          this.loadingRents.push(rentId);
+        let coords = this.chosenReturnLocations[rentId];
+        console.log(rentId)
+        console.log(coords.lat)
+        console.log(coords.lng)
+        this.rentError = '';
+        this.loadingRents.push(rentId);
 
-          this.$store.dispatch("END_RENT", {rentId : rentId, lat : coords.lat, lng : coords.lng})
-            .then( () => {
-              // set selected location to null if end_rent returned without error
-              if (this.rentError === '')
-              {
-                delete this.chosenReturnLocations[rentId]
-              }
-            })
-            .catch(err => {
-              this.rentError = err;
-              let index = this.loadingRents.indexOf(rentId);
-              if (index >= 0) {
-                this.loadingRents.splice(index, 1);
-              }
-            });
-       }
+        this.$store.dispatch("END_RENT", {rentId : rentId, lat : coords.lat, lng : coords.lng})
+          .then( () => {
+            // set selected location to null if end_rent returned without error
+            if (this.rentError === '')
+            {
+              delete this.chosenReturnLocations[rentId]
+            }
+          })
+          .catch(err => {
+            this.rentError = err;
+            let index = this.loadingRents.indexOf(rentId);
+            if (index >= 0) {
+              this.loadingRents.splice(index, 1);
+            }
+          });
       },
       changeReturnLocation (event, rentId) {
         let selectedStation = event.target.options[event.target.options.selectedIndex].text
