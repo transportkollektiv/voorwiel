@@ -66,7 +66,6 @@
           <v-btn v-if="chosenReturnLocations[rent.id] != null" color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
             {{ $t('message.rent.finish-rent') }}
           </v-btn>
-
         </v-list-item-content>
       </v-list-item>
     </v-card>
