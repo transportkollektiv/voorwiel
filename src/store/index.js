@@ -118,7 +118,8 @@ export default new Vuex.Store({
         throw unpackErrorMessage(err);
       }
     },
-    END_RENT: async function({ dispatch, commit, state }, rentId) {
+    // TODO change payload back to rentId once on bike location tracking is available 
+    END_RENT: async function({ dispatch, commit, state }, payload) {
       let location;
       try {
         location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
@@ -130,10 +131,12 @@ export default new Vuex.Store({
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
-      // TODO make configurable 
-      data['lat'] = Vue.prototype.$returnLat;
-      data['lng'] = Vue.prototype.$returnLng;
+
+      // TODO build selectable return locations as a configurable feature  
+      data['lat'] = payload.lat;
+      data['lng'] = payload.lng;
     
+      let rentId = payload.rentId;
 
       try {
         let finish_url = state.rents.find((el) => el.id == rentId).finish_url;

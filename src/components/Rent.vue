@@ -54,18 +54,19 @@
             <v-col cols="12" md="12" class="py-0 pr-0">
               <div id="app">
                 <label for="select-location"> {{ $t('message.rent.selected-location')}}: </label>
-                <select class="form-control" @change="changeReturnLocation($event)" @click=fetchStations()>
+                <select class="form-control" @change="changeReturnLocation($event, rent.id)" @click=fetchStations()>
                   <option value="" selected disabled> {{ $t('message.rent.choose-locations')}} </option>
                   <option v-for="station in availableStations" :value="station.id" :key="station.id">{{ station.name }}</option>
                 </select>
                 <br><br>
-                <p v-if="selectedStation == null"><span style="color:red"> {{$t('message.rent.no-location')}} </span></p>
+                <p v-if="chosenReturnLocations[rent.id] == null"><span style="color:red"> {{$t('message.rent.no-location')}} </span></p>
               </div>
             </v-col>
           </v-row>
-          <v-btn v-if="selectedStation != null" color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
+          <v-btn v-if="chosenReturnLocations[rent.id] != null" color="success" @click="endRent(rent.id)" v-bind:loading="loadingRents.includes(rent.id)">
             {{ $t('message.rent.finish-rent') }}
           </v-btn>
+
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -78,7 +79,6 @@
   import TickingTime from "./TickingTime.vue";
   import RentLock from "./RentLock.vue";
 
-  import Vue from 'vue'
   import axios from 'axios';
 
   export default {
@@ -106,9 +106,8 @@
           lockOpenVariant: mdiLockOpenVariant
         },
         availableStations :[],
-        selectedStation : null,
-        lng: null,
-        lat: null
+        // dictionary which associates rentids with their selected return location
+        chosenReturnLocations : {}
       }
     },
     computed: {
@@ -126,40 +125,50 @@
                 (err) => this.rentError = err)
           .finally(() => this.loading = false);
       },
-      endRent(rentId) {
-        this.rentError = '';
-        this.loadingRents.push(rentId);
-        Vue.prototype.$returnLng = this.lng
-        Vue.prototype.$returnLat = this.lat
-        
-        this.$store.dispatch("END_RENT", rentId)
-          .then( () => {
-            // set selected location to null if end_rent returned without error
-            if (this.rentError === '')
-            {
-              this.selectedStation = null
-              this.lng = null
-              this.lat = null
-            }
-          })
-          .catch(err => {
-            this.rentError = err;
-            let index = this.loadingRents.indexOf(rentId);
-            if (index >= 0) {
-              this.loadingRents.splice(index, 1);
-            }
-          });
-      },
-      changeReturnLocation (event) {
+      endRent(rentId) {       
+       let coords = this.chosenReturnLocations[rentId];
+       if (coords == null) 
+       {
+          console.log("Found no return location assocaited with id: ", rentId)
+       }
+       else 
+       {
+          console.log(rentId)
+          console.log(coords.lat)
+          console.log(coords.lng)
+          this.rentError = '';
+          this.loadingRents.push(rentId);
 
-        this.selectedStation = event.target.options[event.target.options.selectedIndex].text
+          this.$store.dispatch("END_RENT", {rentId : rentId, lat : coords.lat, lng : coords.lng})
+            .then( () => {
+              // set selected location to null if end_rent returned without error
+              if (this.rentError === '')
+              {
+                delete this.chosenReturnLocations[rentId]
+              }
+            })
+            .catch(err => {
+              this.rentError = err;
+              let index = this.loadingRents.indexOf(rentId);
+              if (index >= 0) {
+                this.loadingRents.splice(index, 1);
+              }
+            });
+       }
+      },
+      changeReturnLocation (event, rentId) {
+        let selectedStation = event.target.options[event.target.options.selectedIndex].text
     
         for (var  index in this.availableStations) 
         {
-          if (this.availableStations[index].name === this.selectedStation)
+          if (this.availableStations[index].name === selectedStation)
           {
-            this.lng = this.availableStations[index].location.lng;
-            this.lat = this.availableStations[index].location.lat;
+            // END REMOVE
+            this.chosenReturnLocations[rentId] = {
+              lng : this.availableStations[index].location.lng,
+              lat : this.availableStations[index].location.lat,
+              location: event.target.options[event.target.options.selectedIndex].text
+            }
             break;
           }
         }
