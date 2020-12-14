@@ -30,7 +30,8 @@
         "login-with": "Login with",
         "configerror": "Cannot load login configuration",
         "username" : "Username",
-        "password" : "Password"
+        "password" : "Password",
+        "failed-login" : "Wrong Credentials"
       },
       "about": {
         "title": "About",
@@ -83,7 +84,8 @@
         "login-with": "Einloggen mit",
         "configerror": "Laden der Login-Konfiguration fehlgeschlagen",
         "username" : "Benutzername",
-        "password" : "Passwort"
+        "password" : "Passwort",
+        "failed-login" : "Falsche Anmeldedaten"
       },
       "about": {
         "title": "Über",
