@@ -60,14 +60,13 @@
                 <label class="dropdownLabel" for="select-location">
                   {{ $t("message.rent.selected-location") }}:
                 </label>
-                <select 
-                
-                  class="form-control"
+                <select
+                  class="dropdown-item"
                   @change="changeReturnLocation($event, rent.id)"
                   @click="fetchStations()"
                 >
                   <option value="" selected disabled>
-                    {{ $t("message.rent.choose-locations") }} &#11167;
+                    {{ $t("message.rent.choose-locations") }}
                   </option>
                   <option
                     v-for="station in availableStations"
@@ -312,8 +311,9 @@ export default {
   font-size: 20px;
   font-weight: normal;
 }
-.form-control {
+.dropdown-item{
   /*width: 100%;*/
+  -webkit-appearance: auto;
   font-family: monospace;
   font-size: 18px;
   font-weight: normal;
