@@ -65,7 +65,7 @@
         "finish-rent": "Leihe beenden",
         "rent": "Ausleihen",
         "renting-for": "Ausleihe läuft",
-        "no-location" : "Bitte wählen Sie einen Abgabeort aus.",
+        "no-location" : "Bitte wählen Sie einen Abgabeort",
         "choosable-locations": "Abgabeorte",
         "selected-location" : "Abgabeort",
         "choose-locations" : "Wähle einen Rückgabeort"
