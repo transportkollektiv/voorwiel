@@ -95,19 +95,6 @@
           >
             {{ $t("message.rent.finish-rent") }}
           </v-btn>
-          <!--
-          <div>
-            <ejs-dropdownbutton :items="items" iconCss="ddb-icons e-message"
-              >Message</ejs-dropdownbutton
-            >
-            <ejs-dropdownbutton
-              :items="items"
-              iconCss="ddb-icons e-message"
-              iconPosition="Top"
-              >Message</ejs-dropdownbutton
-            >
-          </div>
-          -->
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -122,40 +109,17 @@ import RentLock from "./RentLock.vue";
 
 import axios from "axios";
 
-//import Vue from "vue";
-//import { DropDownButtonPlugin } from "@syncfusion/ej2-vue-splitbuttons";
-//import { enableRipple } from "@syncfusion/ej2-base";
-
-//enableRipple(true);
-//Vue.use(DropDownButtonPlugin);
-
 export default {
   components: { TickingTime, RentLock },
   props: ["bikeId"],
   data() {
     return {
-      /*
-      items: [
-        {
-          text: "Edit",
-        },
-        {
-          text: "Delete",
-        },
-        {
-          text: "Mark as Read",
-        },
-        {
-          text: "Like Message",
-        },
-      ],
-      */
+    
       show: true,
       valid: false,
       loading: false,
       bikenumber: "",
       rentError: "",
-      emptyStationError: "",
       loadingRents: [],
 
       bikenumberrules: [
@@ -272,35 +236,6 @@ export default {
 </script>
 
 <style>
-/*
-@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
-@font-face {
-  font-family: "e-db-icons";
-  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj0jSRoAAAEoAAAAVmNtYXDnFudgAAABkAAAADpnbHlmSrKTCAAAAdgAAAC4aGVhZBKtK8cAAADQAAAANmhoZWEHmQNtAAAArAAAACRobXR4D7gAAAAAAYAAAAAQbG9jYQB4ADoAAAHMAAAACm1heHABEAAYAAABCAAAACBuYW1lH00mDAAAApAAAAJJcG9zdIwkSr0AAATcAAAATQABAAADUv9qAFoEAAAA//4D6gABAAAAAAAAAAAAAAAAAAAABAABAAAAAQAAGc/PS18PPPUACwPoAAAAANfSc3wAAAAA19JzfAAAAAAD6gPqAAAACAACAAAAAAAAAAEAAAAEAAwAAgAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQPuAZAABQAAAnoCvAAAAIwCegK8AAAB4AAxAQIAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wPnBQNS/2oAWgPqAJYAAAABAAAAAAAABAAAAAPoAAAD6AAAA+gAAAAAAAIAAAADAAAAFAADAAEAAAAUAAQAJgAAAAQABAABAADnBf//AADnA///AAAAAQAEAAAAAQACAAMAAAAAAAAAHAA6AFwAAAACAAAAAAPqA2UABgAKAAA3IREjCQEjBRcBIQID6AL+Dv4NAQEY3QG4/I+IAsL+GAHonroBcwAAAAIAAAAAA8YD6gAFAAoAADchESMJASUHCQImA6AD/jL+MQEEywGWAZb+agICX/4+AcLXsv6cAWQBZAAAAAEAAAAAA+oD6gALAAATCQEXCQE3CQEnCQECATP+zcIBMgEzwf7OATLB/s3+zgMp/s3+zsIBM/7NwgEyATPB/s4BMgAAAAASAN4AAQAAAAAAAAABAAAAAQAAAAAAAQAKAAEAAQAAAAAAAgAHAAsAAQAAAAAAAwAKABIAAQAAAAAABAAKABwAAQAAAAAABQALACYAAQAAAAAABgAKADEAAQAAAAAACgAsADsAAQAAAAAACwASAGcAAwABBAkAAAACAHkAAwABBAkAAQAUAHsAAwABBAkAAgAOAI8AAwABBAkAAwAUAJ0AAwABBAkABAAUALEAAwABBAkABQAWAMUAAwABBAkABgAUANsAAwABBAkACgBYAO8AAwABBAkACwAkAUcgZS1kYi1pY29uc1JlZ3VsYXJlLWRiLWljb25zZS1kYi1pY29uc1ZlcnNpb24gMS4wZS1kYi1pY29uc0ZvbnQgZ2VuZXJhdGVkIHVzaW5nIFN5bmNmdXNpb24gTWV0cm8gU3R1ZGlvd3d3LnN5bmNmdXNpb24uY29tACAAZQAtAGQAYgAtAGkAYwBvAG4AcwBSAGUAZwB1AGwAYQByAGUALQBkAGIALQBpAGMAbwBuAHMAZQAtAGQAYgAtAGkAYwBvAG4AcwBWAGUAcgBzAGkAbwBuACAAMQAuADAAZQAtAGQAYgAtAGkAYwBvAG4AcwBGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIAB1AHMAaQBuAGcAIABTAHkAbgBjAGYAdQBzAGkAbwBuACAATQBlAHQAcgBvACAAUwB0AHUAZABpAG8AdwB3AHcALgBzAHkAbgBjAGYAdQBzAGkAbwBuAC4AYwBvAG0AAAAAAgAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAQIBAwEEAQUADG1lc3NhZ2UtbWFpbAtyZWFkLXVucmVhZAZkZWxldGUAAAAAAA==)
-    format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-.ddb-icons {
-  font-family: "e-db-icons" !important;
-  speak: none;
-  font-size: 55px;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.e-message::before {
-  content: "\e703";
-}
-*/
 .rent-unlock-key {
   font-family: monospace;
   font-size: 20px;
@@ -312,7 +247,6 @@ export default {
   font-weight: normal;
 }
 .dropdown-item{
-  /*width: 100%;*/
   -webkit-appearance: auto;
   font-family: monospace;
   font-size: 18px;
