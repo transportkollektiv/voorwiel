@@ -87,8 +87,7 @@ export default {
   props: ["bikeId"],
   data() {
     return {
-      // TODO move to system variables
-      trackerAvailable: false ,
+      trackerAvailable: this.$appConfig.TRACKER_AVAILABLE ,
       show: true,
       valid: false,
       loading: false,
