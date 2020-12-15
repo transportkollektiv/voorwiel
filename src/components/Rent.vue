@@ -54,47 +54,20 @@
             >{{ $t("message.rent.renting-for") }}
             <ticking-time :datetime="rent.rent_start"
           /></v-list-item-subtitle>
-          <v-row class="pt-5">
-            <v-col cols="12" md="12" class="py-0 pr-0">
-              <div id="app" class="dropdown">
-                <label class="dropdownLabel" for="select-location">
-                  {{ $t("message.rent.selected-location") }}:
-                </label>
-                <select
-                  class="dropdown-item"
-                  @change="changeReturnLocation($event, rent.id)"
-                  @click="fetchStations()"
-                >
-                  <option value="" selected disabled>
-                    {{ $t("message.rent.choose-locations") }}
-                  </option>
-                  <option
-                    v-for="station in availableStations"
-                    :value="station.id"
-                    :key="station.id"
-                  >
-                    {{ station.name }}
-                  </option>
-                </select>
-                <br /><br />
-              </div>
-            </v-col>
-          </v-row>
-          <v-row v-if="chosenReturnLocations[rent.id] == null">
-            <v-col col="12" md="12" class="py-0">
-              <v-alert dense outlined type="error" class="my-0">
-                {{ $t("message.rent.no-location") }}
-              </v-alert>
-            </v-col>
-          </v-row>
-          <v-btn
-            v-if="chosenReturnLocations[rent.id] != null"
-            color="success"
-            @click="endRent(rent.id)"
-            v-bind:loading="loadingRents.includes(rent.id)"
-          >
-            {{ $t("message.rent.finish-rent") }}
-          </v-btn>
+          <!-- return bikes if tracker not available  -->
+          <v-container v-if="!trackerAvailable">
+            <rent-selectable-return-location :rentId="rent.id"> </rent-selectable-return-location>
+          </v-container>
+          <!-- returning bikes when tracker available -->
+          <v-container v-else>
+            <v-btn
+              color="success"
+              @click="endRent(rent.id)"
+              v-bind:loading="loadingRents.includes(rent.id)"
+            >
+              {{ $t("message.rent.finish-rent") }}
+            </v-btn>
+          </v-container>
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -107,14 +80,15 @@ import { mdiLock, mdiLockOpenVariant } from "@mdi/js";
 import TickingTime from "./TickingTime.vue";
 import RentLock from "./RentLock.vue";
 
-import axios from "axios";
+import RentSelectableReturnLocation from "./RentSelectableReturnLocation.vue";
 
 export default {
-  components: { TickingTime, RentLock },
+  components: { TickingTime, RentLock, RentSelectableReturnLocation },
   props: ["bikeId"],
   data() {
     return {
-    
+      // TODO move to system variables
+      trackerAvailable: false ,
       show: true,
       valid: false,
       loading: false,
@@ -133,17 +107,11 @@ export default {
       mdi: {
         lock: mdiLock,
         lockOpenVariant: mdiLockOpenVariant,
-      },
-      availableStations: [],
-      // dictionary which associates rentids with their selected return location
-      chosenReturnLocations: {},
+      }
     };
   },
   computed: {
     ...mapState(["rents"]),
-  },
-  created() {
-    this.fetchStations();
   },
   methods: {
     startRent() {
@@ -158,62 +126,16 @@ export default {
         .finally(() => (this.loading = false));
     },
     endRent(rentId) {
-      let coords = this.chosenReturnLocations[rentId];
-      console.log(rentId);
-      console.log(coords.lat);
-      console.log(coords.lng);
       this.rentError = "";
       this.loadingRents.push(rentId);
 
       this.$store
-        .dispatch("END_RENT", {
-          rentId: rentId,
-          lat: coords.lat,
-          lng: coords.lng,
-        })
-        .then(() => {
-          // set selected location to null if end_rent returned without error
-          if (this.rentError === "") {
-            delete this.chosenReturnLocations[rentId];
-          }
-        })
+        .dispatch("END_RENT", rentId)
         .catch((err) => {
           this.rentError = err;
           let index = this.loadingRents.indexOf(rentId);
           if (index >= 0) {
             this.loadingRents.splice(index, 1);
-          }
-        });
-    },
-    changeReturnLocation(event, rentId) {
-      let selectedStation =
-        event.target.options[event.target.options.selectedIndex].text;
-
-      for (var index in this.availableStations) {
-        if (this.availableStations[index].name === selectedStation) {
-          // END REMOVE
-          this.chosenReturnLocations[rentId] = {
-            lng: this.availableStations[index].location.lng,
-            lat: this.availableStations[index].location.lat,
-            location:
-              event.target.options[event.target.options.selectedIndex].text,
-          };
-          break;
-        }
-      }
-    },
-    fetchStations() {
-      let url = this.$appConfig.API_ROOT + "/stations/locations";
-      axios
-        .get(url)
-        .then((response) => response.data)
-        .then((data) => {
-          this.availableStations = data;
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response) {
-            // TODO check response from server ... maybe give user a visual queue when the request failed
           }
         });
     },
@@ -246,7 +168,7 @@ export default {
   font-size: 20px;
   font-weight: normal;
 }
-.dropdown-item{
+.dropdown-item {
   -webkit-appearance: auto;
   font-family: monospace;
   font-size: 18px;

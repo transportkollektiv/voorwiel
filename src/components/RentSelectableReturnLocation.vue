@@ -91,12 +91,8 @@ export default {
         lat: this.chosenReturnLocation["lat"],
         lng: this.chosenReturnLocation["lng"],
       };
-      console.log(rentId);
-      console.log(coords.lat);
-      console.log(coords.lng);
-      
 
-      this.$store
+this.$store
         .dispatch("END_RENT_NO_TRACKER", { rentId: rentId, lat: coords.lat, lng: coords.lng })
         .then(() => {
           // set selected location to null if end_rent returned without error
@@ -105,8 +101,8 @@ export default {
           }
         })
         .catch((err) => {
-          // TODO delete or do something useful
-          console.log("Wupppss", err);
+          // TODO do sth useful with the error
+          console.log(err);
         });
     },
   },

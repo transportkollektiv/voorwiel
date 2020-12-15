@@ -117,9 +117,25 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
+    }, 
+    END_RENT_NO_TRACKER: async function({dispatch, commit, state}, payload) {
+      let data = {};
+      data['lat'] = payload.lat;
+      data['lng'] = payload.lng;
+    
+      let rentId = payload.rentId;
+
+      try {
+        let finish_url = state.rents.find((el) => el.id == rentId).finish_url;
+        let response = await axiosWithAuth.call(this, state).post(finish_url, data);
+        dispatch("UPDATE_RENTS");
+        commit("REMOVE_LOCK", rentId);
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
     },
-    // TODO change payload back to rentId once on bike location tracking is available 
-    END_RENT: async function({ dispatch, commit, state }, payload) {
+    END_RENT: async function({ dispatch, commit, state }, rentId) {
       let location;
       try {
         location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
@@ -131,12 +147,6 @@ export default new Vuex.Store({
         data['lat'] = location.coords.latitude;
         data['lng'] = location.coords.longitude;
       }
-
-      // TODO build selectable return locations as a configurable feature  
-      data['lat'] = payload.lat;
-      data['lng'] = payload.lng;
-    
-      let rentId = payload.rentId;
 
       try {
         let finish_url = state.rents.find((el) => el.id == rentId).finish_url;
