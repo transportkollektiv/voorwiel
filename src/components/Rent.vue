@@ -54,8 +54,8 @@
             >{{ $t("message.rent.renting-for") }}
             <ticking-time :datetime="rent.rent_start"
           /></v-list-item-subtitle>
-          <!-- return bikes if tracker not available  -->
-          <v-container v-if="!trackerAvailable">
+          <!-- return bikes on end station (i.e. if tracker is not available)  -->
+          <v-container v-if="endStationSelect">
             <rent-selectable-return-location :rentId="rent.id"> </rent-selectable-return-location>
           </v-container>
           <!-- returning bikes when tracker available -->
@@ -87,7 +87,7 @@ export default {
   props: ["bikeId"],
   data() {
     return {
-      trackerAvailable: this.$appConfig.TRACKER_AVAILABLE ,
+      endStationSelect: this.$appConfig.END_STATION_SELECT ,
       show: true,
       valid: false,
       loading: false,

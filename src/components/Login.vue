@@ -18,10 +18,6 @@
               </v-btn>
             </v-list-item-content>
           </v-list-item>
-          <v-btn block :to="{name: 'customLogin'}">
-                {{ "Custom Login" }}
-                <!-- <v-icon v-if="provider.icon" right dark>{{ provider.icon }}</v-icon> -->
-              </v-btn>
         </v-list>
       </v-card-actions>
     </v-card>
@@ -29,6 +25,7 @@
 </template>
 
 <script>
+
   export default {
     data() {
       return {
@@ -39,6 +36,7 @@
     },
     created() {
       this.fetchProviders();
+
     },
     methods: {
       authenticate(provider) {
@@ -56,6 +54,10 @@
           .then(data => {
             this.providers = data;
             this.loading = false;
+            // redirect to custom login if no providers are specified
+            if (this.providers.length === 0) {
+              this.$router.push({ name: 'customLogin'});
+            }
           })
           .catch(() => {
             this.$store.commit('SET_APPERROR', this.$t('message.login.configerror'));
