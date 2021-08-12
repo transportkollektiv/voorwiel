@@ -52,6 +52,10 @@
           .then(data => {
             this.providers = data;
             this.loading = false;
+            // redirect to custom login if no providers are specified
+            if (this.providers.length === 0) {
+              this.$router.push({ name: 'customLogin'});
+            }
           })
           .catch(() => {
             this.$store.commit('SET_APPERROR', this.$t('message.login.configerror'));

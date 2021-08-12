@@ -116,17 +116,15 @@ export default new Vuex.Store({
         throw unpackErrorMessage(err);
       }
     },
-    END_RENT: async function({ dispatch, commit, state }, rentId) {
-      let location;
-      try {
-        location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
-      } catch(_ignore) { /* */ }
-
+    END_RENT: async function({dispatch, commit, state}, payload) {
       let data = {};
-      if (location && location.coords && location.coords.accuracy < 50) {
-        data['lat'] = location.coords.latitude;
-        data['lng'] = location.coords.longitude;
+      if(payload.lat) {
+        data['lat'] = payload.lat;
       }
+      if(payload.lon) {
+        data['lng'] = payload.lon;
+      }
+      let rentId = payload.rentId;
 
       try {
         let finish_url = state.rents.find((el) => el.id == rentId).finish_url;
@@ -137,6 +135,20 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
+    },
+    END_RENT_WITH_TRACKING: async function({ dispatch }, rentId) {
+      let location;
+      try {
+        location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
+      } catch(_ignore) { /* */ }
+
+      let lat, lon;
+      if (location && location.coords && location.coords.accuracy < 50) {
+        lat = location.coords.latitude;
+        lon = location.coords.longitude;
+      }
+
+      dispatch("END_RENT", { rentId: rentId, lat: lat, lon: lon })
     },
     UPDATE_RENTS: function({ commit, state, getters }) {
       if (!getters.isAuthenticated) { return; }
@@ -163,11 +175,11 @@ export default new Vuex.Store({
   },
   mutations: {
     CLEAR_USER: (state) => {
-      state.authToken = null;
-      state.user = undefined;
-      state.rents = [];
-      state.lock = [];
-      localStorage.removeItem(LS_AUTH_TOKEN_KEY);
+        state.authToken = null;
+        state.user = undefined;
+        state.rents = [];
+        state.lock = [];
+        localStorage.removeItem(LS_AUTH_TOKEN_KEY);
     },
     SET_USER: (state, { user }) => {
       state.user = user;
@@ -220,6 +232,9 @@ export default new Vuex.Store({
         return {station, station_status};
       }
       return {station};
+    },
+    getGBFSStationsWithDetails: (state) => () => {
+      return state.gbfs.stations.data.stations;
     }
   },
   modules: {},

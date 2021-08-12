@@ -12,6 +12,8 @@ import Support from '../components/Support';
 import VehicleDetail from '../components/VehicleDetail';
 import StationDetail from '../components/StationDetail';
 
+import CustomLogin from '../components/CustomLogin';
+
 const NoOpComponent = Vue.component('no-op', {
   functional: true,
   render () { return null; }
@@ -22,6 +24,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: NoOpComponent },
     { path: '/login', name: 'login', component: Login },
+    { path: '/login/custom', name: 'customLogin', component: CustomLogin },
     { path: '/login/return', component: LoginReturn },
     { path: '/rent', name: 'rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
       if (route.query && route.query.id) {
