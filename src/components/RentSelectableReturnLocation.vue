@@ -16,8 +16,8 @@
             </option>
             <option
               v-for="station in availableStations"
-              :value="station.id"
-              :key="station.id"
+              :value="station.station_id"
+              :key="station.station_id"
             >
               {{ station.name }}
             </option>
@@ -44,77 +44,62 @@
 </template>
 
 <script>
-import axios from "axios";
+  import { mapState } from 'vuex';
 
-export default {
-  name: "rent-selectable-return-location",
-  // type check values passed to rentId
-  props: { rentId: Number },
-  data() {
-    return {
-      availableStations: [],
-      chosenReturnLocation: null,
-    };
-  },
-  methods: {
-    fetchStations() {
-      let url = this.$appConfig.API_ROOT + "/stations/locations";
-      axios
-        .get(url)
-        .then((response) => response.data)
-        .then((data) => {
-          this.availableStations = data;
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response) {
-            // TODO check response from server ... maybe give user a visual queue when the request failed
-          }
-        });
+  export default {
+    name: "rent-selectable-return-location",
+    // type check values passed to rentId
+    props: {rentId: Number},
+    data() {
+      return {
+        availableStations: [],
+        chosenReturnLocation: null,
+      };
     },
-    changeReturnLocation(event) {
-      let selectedStation = event.target.options[event.target.options.selectedIndex].text;
+    computed: {
+    ...mapState(['gbfs'])
+    },
+    methods: {
+      fetchStations() {
+          this.availableStations = this.$store.getters.getGBFSStationsWithDetails();
+      },
+      changeReturnLocation(event) {
+        let selectedStation = this.availableStations.find((s) => s.station_id == event.target.value);
+        this.chosenReturnLocation = {
+          lon: selectedStation.lon,
+          lat: selectedStation.lat,
+        };
+      },
+      endRent(rentId) {
+        let coords = {
+          lat: this.chosenReturnLocation["lat"],
+          lon: this.chosenReturnLocation["lon"],
+        };
 
-      for (var index in this.availableStations) {
-        if (this.availableStations[index].name === selectedStation) {
-          this.chosenReturnLocation = {
-            lng: this.availableStations[index].location.lng,
-            lat: this.availableStations[index].location.lat,
-            location: event.target.options[event.target.options.selectedIndex].text,
-          };
-          break;
-        }
+        this.$store
+          .dispatch("END_RENT_NO_TRACKER", { rentId: rentId, lat: coords.lat, lon: coords.lon })
+          .then(() => {
+            // set selected location to null if end_rent returned without error
+            if (this.rentError === "") {
+              this.chosenReturnLocation = null;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+    },
+    mounted() {
+      if (this.gbfs !== null) {
+        this.fetchStations();
       }
     },
-    endRent(rentId) {
-      let coords = {
-        lat: this.chosenReturnLocation["lat"],
-        lng: this.chosenReturnLocation["lng"],
-      };
-
-this.$store
-        .dispatch("END_RENT_NO_TRACKER", { rentId: rentId, lat: coords.lat, lng: coords.lng })
-        .then(() => {
-          // set selected location to null if end_rent returned without error
-          if (this.rentError === "") {
-            this.chosenReturnLocation = null;
-          }
-        })
-        .catch((err) => {
-          // TODO do sth useful with the error
-          console.log(err);
-        });
+    beforeDestroy() {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
     },
-  },
-  created() {
-    this.fetchStations();
-  },
-  beforeDestroy() {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-  },
-};
+  };
 </script>
 
 <style scoped>

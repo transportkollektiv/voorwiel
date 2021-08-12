@@ -13,7 +13,7 @@ const axiosWithAuth = function (state) {
 }
 
 const getCurrentPosition = (options) => {
-  if (navigator.geolocation) {    
+  if (navigator.geolocation) {
     return new Promise(
       (resolve, reject) => {
         let timeout = options.timeout || 5000;
@@ -25,7 +25,7 @@ const getCurrentPosition = (options) => {
           options);
       }
     )
-  } 
+  }
 
   return Promise.reject();
 }
@@ -117,12 +117,12 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
-    }, 
+    },
     END_RENT_NO_TRACKER: async function({dispatch, commit, state}, payload) {
       let data = {};
       data['lat'] = payload.lat;
-      data['lng'] = payload.lng;
-    
+      data['lng'] = payload.lon;
+
       let rentId = payload.rentId;
 
       try {
@@ -240,6 +240,9 @@ export default new Vuex.Store({
         return {station, station_status};
       }
       return {station};
+    },
+    getGBFSStationsWithDetails: (state) => () => {
+      return state.gbfs.stations.data.stations;
     }
   },
   modules: {},

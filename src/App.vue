@@ -9,6 +9,7 @@
 
       <v-toolbar-items>
         <About />
+
         <v-btn text dark v-if="!user" :to="{name: 'login'}" color="success">
           <span class="hidden-xs-only">{{ $t('message.app.login') }}</span>
           <v-icon right>{{ mdi.login }}</v-icon>
@@ -90,7 +91,6 @@
     },
     methods: {
       logout() {
-
         this.$store.dispatch("LOGOUT");
       }
     },
