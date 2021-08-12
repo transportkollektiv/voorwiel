@@ -2,12 +2,12 @@
   <v-container class="root-container">
     <v-row class="pt-5">
       <v-col cols="12" md="12" class="py-0 pr-0">
-        <div id="app" class="dropdown">
+        <div id="app" class="select-location">
           <label class="dropdownLabel" for="select-location">
             {{ $t("message.rent.selected-location") }}:
           </label>
           <select
-            class="dropdown-item"
+            class="select-location-item"
             @change="changeReturnLocation($event, rentId)"
             @click="fetchStations()"
           >
@@ -77,7 +77,7 @@
         };
 
         this.$store
-          .dispatch("END_RENT_NO_TRACKER", { rentId: rentId, lat: coords.lat, lon: coords.lon })
+          .dispatch("END_RENT", { rentId: rentId, lat: coords.lat, lon: coords.lon })
           .then(() => {
             // set selected location to null if end_rent returned without error
             if (this.rentError === "") {
@@ -103,7 +103,19 @@
 </script>
 
 <style scoped>
-.root-container {
-  padding: 0px;
-}
+  .root-container {
+     padding: 0px;
+   }
+  .select-location {
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: normal;
+  }
+  .select-location-item {
+    -webkit-appearance: auto;
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: normal;
+    padding: 1.5%;
+  }
 </style>

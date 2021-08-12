@@ -25,7 +25,6 @@
 </template>
 
 <script>
-
   export default {
     data() {
       return {
@@ -36,7 +35,6 @@
     },
     created() {
       this.fetchProviders();
-
     },
     methods: {
       authenticate(provider) {
