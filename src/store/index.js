@@ -171,6 +171,14 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
+    },
+    START_RESERVATION: async function({ state }, payload) {
+      try {
+        let response = await axiosWithAuth.call(this, state).post('/reservation', payload);
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
     }
   },
   mutations: {

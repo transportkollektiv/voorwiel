@@ -11,6 +11,7 @@ import Rent from '../components/Rent';
 import Support from '../components/Support';
 import VehicleDetail from '../components/VehicleDetail';
 import StationDetail from '../components/StationDetail';
+import Reservation from '../components/Reservation';
 
 import CustomLogin from '../components/CustomLogin';
 
@@ -39,6 +40,7 @@ const router = new VueRouter({
     { path: '/v/:id', name: 'vehicle', component: VehicleDetail, props: true },
     { path: '/s/:id', name: 'station', component: StationDetail, props: true },
     { path: '/support', name: 'support', component: Support },
+    { path: '/reservation', name: 'reservation', component: Reservation },
     { path: '*', redirect: '/' }
   ],
 });

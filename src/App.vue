@@ -51,7 +51,10 @@
         <v-btn rounded x-large color="success" class="login-button" v-if="!user" :to="{name: 'login'}">
           <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
-        <RentButton v-if="user" class="rent-button" />
+        <v-row class="button-row" justify="center">
+          <RentButton v-if="user" class="rent-button" />
+          <ReservationButton v-if="user" class="rent-button" />
+        </v-row>
       </div>
       <AppError />
     </v-main>
@@ -64,13 +67,14 @@
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
+  import ReservationButton from './components/ReservationButton';
   import AppError from './components/AppError';
 
   const blank = (v) => !(typeof v !== 'undefined' && v !== '');
 
   export default {
     name: 'App',
-    components: {About, GbfsView, RentButton, AppError},
+    components: {About, GbfsView, RentButton, ReservationButton, AppError},
     data: function() {
       return {
         name: this.$appConfig.NAME,
@@ -105,8 +109,8 @@
 
 <style>
   .support-button,
-  .rent-button,
-  .login-button {
+  .login-button,
+  .button-row {
     position: fixed;
     bottom: 2rem;
     text-align: center;
