@@ -51,7 +51,7 @@
         <v-btn rounded x-large color="success" class="login-button" v-if="!user" :to="{name: 'login'}">
           <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
-        <v-row class="button-row" justify="center">
+        <v-row class="button-row">
           <RentButton v-if="user" class="rent-button" />
           <ReservationButton v-if="user" class="rent-button" />
         </v-row>
@@ -122,10 +122,13 @@
   }
   .rent-button,
   .login-button {
-    left: 50%;
     transform: translateX(-50%);
+    margin: 0 auto 0 auto;
   }
   .support-button {
     left: 1rem;
+  }
+  .button-row {
+    width: 100%;
   }
 </style>

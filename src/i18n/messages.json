@@ -49,6 +49,16 @@
       "detail": {
         "no-range": "no Range",
         "range": "Range: {value} {unit}"
+      },
+      "reservationbutton": {
+        "reservation": "Reservations"
+      },
+      "reservation": {
+        "title": "New reservation",
+        "startDate": "Start",
+        "endDate": "End",
+        "station": "Station",
+        "create": "Create Reservation"
       }
     }
   },
@@ -103,6 +113,16 @@
       "detail": {
         "no-range": "keine Reichweite",
         "range": "{value} {unit} Reichweite"
+      },
+      "reservationbutton": {
+        "reservation": "Reservierung"
+      },
+      "reservation": {
+        "title": "Neue Reservierung",
+        "startDate": "Start",
+        "endDate": "Ende",
+        "station": "Station",
+        "create": "Reservierung erstellen"
       }
     }
   }

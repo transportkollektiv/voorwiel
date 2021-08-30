@@ -23,7 +23,7 @@
     },
     computed: {
       buttonText() {
-        return 'Reservierungen';
+        return this.$t('message.reservationbutton.reservation');
       },
 
       ...mapState(['rents'])
