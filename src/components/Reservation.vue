@@ -9,61 +9,21 @@
           <v-container class="pb-0">
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                <v-menu
-                    v-model="menu1"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="400px"
-                    min-width="auto"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="computedStartDateFormatted"
-                        :label="$t('message.reservation.startDate')"
-                        persistent-hint
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker
-                        v-model="startDate"
-                        no-title
-                        @input="menu1 = false"
-                    ></v-date-picker>
-                </v-menu>
+                Start Zeit
+                <date-time-picker-dialog
+                  :placeholder="startPlaceholder"
+                  @newDateTime="startDateTime=$event"
+                ></date-time-picker-dialog>
               </v-col>
               <v-col cols="1" md="1" class="py-0 text-right"> </v-col>
             </v-row>
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                <v-menu
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="400px"
-                    min-width="auto"
-                    >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                        v-model="computedEndDateFormatted"
-                        :label="$t('message.reservation.endDate')"
-                        persistent-hint
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                        ></v-text-field>
-                    </template>
-                    <v-date-picker
-                        v-model="endDate"
-                        no-title
-                        @input="menu2 = false"
-                    ></v-date-picker>
-                </v-menu>
+                End Zeit
+                <date-time-picker-dialog
+                  :placeholder="endPlaceholder"
+                  @newDateTime="endDateTime=$event"
+                ></date-time-picker-dialog>
               </v-col>
             </v-row>
             <v-row class="pt-5">
@@ -105,50 +65,36 @@
 </template>
 
 <script>
-import { DateTimePickerDialog } from "./DateTimePickerDialog.vue";
+import DateTimePickerDialog from "./DateTimePickerDialog.vue";
 export default {
+  components: { DateTimePickerDialog },
   data() {
     return {
       show: true,
       loading: false,
       valid: false,
-      startTime: "",
       endTime: "",
       station: "",
-      startDate: null,
-      endDate: null,
-      startDateFormatted: null,
-      endDateFormatted: null,
-      menu1: false,
-      menu2: false,
+      startPlaceholder: "Startzeit",
+      endPlaceholder: "Endzeit",
+      startDateTime: "",
+      endDateTime: "",
     };
-  },
-  computed: {
-      computedStartDateFormatted() {
-          return this.formatDate(this.startDate)
-      },
-      computedEndDateFormatted() {
-          return this.formatDate(this.endDate)
-      }
   },
   methods: {
     startReservation() {
-        let payload = {
-            startDate: this.startDate,
-            endDate: this.endTime,
-            startStationId: this.station
-        }
-        this.$store.dispatch("START_RESERVATION", payload).then(
-            () => {
-                this.$router.push("/");
-            }
-        )},
-
-    formatDate (date) {
-        if (!date) return null
-
-        const [year, month, day] = date.split('-')
-        return `${day}.${month}.${year}`
+      let payload = {
+          startDate: this.startDateTime[0],
+          startTime: this.startDateTime[1],
+          endDate: this.endDateTime[0],
+          endTime: this.endDateTime[1],
+          startStationId: this.station
+      }
+      this.$store.dispatch("START_RESERVATION", payload).then(
+          () => {
+              this.$router.push("/");
+          }
+      )
     },
   },
   watch: {
@@ -156,10 +102,6 @@ export default {
       if (current === false) {
         this.$router.push("/");
       }
-    },
-    date () {
-        this.startDateFormatted = this.formatDate(this.startDate)
-        this.endDateFormatted = this.formatDate(this.endDate)
     },
   },
 };
