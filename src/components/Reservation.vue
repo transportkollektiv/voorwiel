@@ -5,7 +5,7 @@
         {{ $t("message.reservation.title") }}
       </v-card-title>
       <v-card-actions>
-        <v-form v-model="valid" ref="reservationForm" @submit.prevent="startRent">
+        <v-form v-model="valid" ref="reservationForm">
           <v-container class="pb-0">
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
@@ -28,16 +28,14 @@
             </v-row>
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                <v-text-field
-                  type="text"
+                <v-select
+                  :items="availableStations"
                   :label="$t('message.reservation.station')"
+                  item-text="name"
+                  item-value="station_id"
                   v-model="station"
-                  outlined
                   required
-                  autofocus
-                  inputmode="text"
-                  pattern="[0-9a-zA-Z]*"
-                ></v-text-field>
+                ></v-select>
               </v-col>
               <v-col cols="1" md="1" class="py-0 text-right">
               </v-col>
@@ -47,7 +45,7 @@
                 <v-btn
                   class="mt-2"
                   color="success"
-                  v-bind:disabled="!valid"
+                  :disabled="!valid"
                   :loading="loading"
                   @click="startReservation()"
                 >
@@ -56,15 +54,14 @@
               </v-col>
             </v-row>
           </v-container>
-          
         </v-form>
-         
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import DateTimePickerDialog from "./DateTimePickerDialog.vue";
 export default {
   components: { DateTimePickerDialog },
@@ -73,22 +70,23 @@ export default {
       show: true,
       loading: false,
       valid: false,
-      endTime: "",
-      station: "",
+      availableStations: [],
+      station: null,
       startPlaceholder: "Startzeit",
       endPlaceholder: "Endzeit",
       startDateTime: "",
       endDateTime: "",
     };
   },
+  computed: {
+    ...mapState(['gbfs'])
+  },
   methods: {
     startReservation() {
       let payload = {
-          startDate: this.startDateTime[0],
-          startTime: this.startDateTime[1],
-          endDate: this.endDateTime[0],
-          endTime: this.endDateTime[1],
-          startStationId: this.station
+          startDate: this.startDateTime,
+          endDate: this.endDateTime,
+          startStationId: this.station,
       }
       this.$store.dispatch("START_RESERVATION", payload).then(
           () => {
@@ -96,6 +94,14 @@ export default {
           }
       )
     },
+    fetchStations() {
+      this.availableStations = this.$store.getters.getGBFSStationsWithDetails();
+    }
+  },
+  mounted() {
+    if (this.gbfs !== null) {
+      this.fetchStations();
+    }
   },
   watch: {
     show(current) {

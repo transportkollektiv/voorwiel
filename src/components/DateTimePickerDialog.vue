@@ -76,7 +76,7 @@
 </template>
 <script>
 export default {
-    props: [ 'placeholder' ],
+    props: [ 'placeholder', 'minDate' ],
     data() {
         return {
             dialogStep: 1,
@@ -98,7 +98,7 @@ export default {
             this.selectedDate = this.date
             this.selectedTime = this.time
             this.modal = false
-            this.$emit('newDateTime', [this.selectedDate, this.selectedTime])
+            this.$emit('newDateTime', `${this.selectedDate}T${this.selectedTime}`)
             this.dialogStep = 1
         },
 
