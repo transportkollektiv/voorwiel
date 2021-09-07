@@ -243,6 +243,12 @@ export default new Vuex.Store({
     },
     getGBFSStationsWithDetails: (state) => () => {
       return state.gbfs.stations.data.stations;
+    },
+    getGBFSVehicleTypesForReservation: (state) => () => {
+      return state.gbfs.vehicleTypes.data.vehicle_types.filter(vehicleType => vehicleType.allow_reservation === true);
+    },
+    getGBFSVehicleTypesForSpontaneousRent: (state) => () => {
+      return state.gbfs.vehicleTypes.data.vehicle_types.filter(vehicleType => vehicleType.allow_spontaneous_rent === true);
     }
   },
   modules: {},

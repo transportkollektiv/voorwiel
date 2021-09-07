@@ -52,8 +52,8 @@
           <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
         <v-row class="button-row">
-          <RentButton v-if="user" class="rent-button" />
-          <ReservationButton v-if="user" class="rent-button" />
+          <RentButton v-if="user && this.fetchVehicleTypesForSpontaneousRent().length > 0" class="rent-button" />
+          <ReservationButton v-if="user && this.fetchVehicleTypesForReservation().length > 0" class="rent-button" />
         </v-row>
       </div>
       <AppError />
@@ -91,11 +91,26 @@
         let env = this.$appConfig.ENV;
         return require('@/assets/logo' + (env != 'production' ? '.' + env : '') + '.png');
       },
-      ...mapState(['user'])
+      ...mapState(['user']),
+      ...mapState(['gbfs'])
     },
     methods: {
       logout() {
         this.$store.dispatch("LOGOUT");
+      },
+      fetchVehicleTypesForReservation() {
+        if (this.gbfs !== null) {
+          return this.$store.getters.getGBFSVehicleTypesForReservation();
+        } else {
+          return [];
+        }
+      },
+      fetchVehicleTypesForSpontaneousRent() {
+        if (this.gbfs !== null) {
+          return this.$store.getters.getGBFSVehicleTypesForSpontaneousRent();
+        } else {
+          return [];
+        }
       }
     },
     watch: {

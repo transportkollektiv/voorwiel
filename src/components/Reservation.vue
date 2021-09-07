@@ -26,6 +26,20 @@
                 ></date-time-picker-dialog>
               </v-col>
             </v-row>
+            <v-row v-if="vehicleTypes.length > 1" class="pt-5">
+              <v-col cols="12" md="12" class="py-0 pr-0">
+                <v-select
+                  :items="vehicleTypes"
+                  :label="$t('message.reservation.vehicleType')"
+                  item-text="name"
+                  item-value="vehicle_type_id"
+                  v-model="vehicleType"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col cols="1" md="1" class="py-0 text-right">
+              </v-col>
+            </v-row>
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
                 <v-select
@@ -71,7 +85,9 @@ export default {
       loading: false,
       valid: false,
       availableStations: [],
+      vehicleTypes: [],
       station: null,
+      vehicleType: null,
       startPlaceholder: "Startzeit",
       endPlaceholder: "Endzeit",
       startDateTime: "",
@@ -87,6 +103,7 @@ export default {
           startDate: this.startDateTime,
           endDate: this.endDateTime,
           startStationId: this.station,
+          vehicleTypeId: this.vehicleType,
       }
       this.$store.dispatch("START_RESERVATION", payload).then(
           () => {
@@ -96,11 +113,18 @@ export default {
     },
     fetchStations() {
       this.availableStations = this.$store.getters.getGBFSStationsWithDetails();
-    }
+    },
+    fetchVehicleTypes() {
+      this.vehicleTypes = this.$store.getters.getGBFSVehicleTypesForReservation();
+      if(this.vehicleTypes.length > 0) {
+        this.vehicleType = this.vehicleTypes[0].vehicle_type_id;
+      }
+    },
   },
   mounted() {
     if (this.gbfs !== null) {
       this.fetchStations();
+      this.fetchVehicleTypes();
     }
   },
   watch: {
