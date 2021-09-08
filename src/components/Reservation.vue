@@ -1,5 +1,16 @@
 <template>
   <v-dialog v-model="show" max-width="400">
+    <template  v-slot:activator="{ on, attrs }">
+      <v-btn
+        rounded
+        x-medium
+        color="success"
+        v-bind="attrs"
+        v-on="on"
+      >
+        Neue Reservierung
+     </v-btn>
+    </template>
     <v-card>
       <v-card-title class="text-h5 grey lighten-2" primary-title>
         {{ $t("message.reservation.title") }}
@@ -67,7 +78,7 @@ export default {
   components: { DateTimePickerDialog },
   data() {
     return {
-      show: true,
+      show: false,
       loading: false,
       valid: false,
       availableStations: [],
@@ -89,8 +100,9 @@ export default {
           startStationId: this.station,
       }
       this.$store.dispatch("START_RESERVATION", payload).then(
-          () => {
-              this.$router.push("/");
+          (data) => {
+            this.$emit('newReservation', data)
+            this.show = false;
           }
       )
     },
@@ -102,13 +114,6 @@ export default {
     if (this.gbfs !== null) {
       this.fetchStations();
     }
-  },
-  watch: {
-    show(current) {
-      if (current === false) {
-        this.$router.push("/");
-      }
-    },
   },
 };
 </script>

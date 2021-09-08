@@ -1,7 +1,7 @@
 <template>
   <v-btn
     rounded
-    x-large
+    x-medium
     color="success"
     :to="{name:'reservation'}"
   >
@@ -26,7 +26,7 @@
         return this.$t('message.reservationbutton.reservation');
       },
 
-      ...mapState(['rents'])
+      ...mapState(['reservation'])
     },
   };
 </script>

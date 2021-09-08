@@ -38,7 +38,7 @@
                     color="primary"
                     @click="dialogStep = 2"
                 >
-                    Continue
+                    Weiter
                 </v-btn>
                 
             </v-stepper-content>
@@ -63,12 +63,12 @@
                     color="primary"
                     @click="closeDialog"
                 >
-                    Continue
+                    Weiter
                 </v-btn>
                 <v-btn 
                     text
                     @click="dialogStep = 1">
-                    Back
+                    Zurück
                 </v-btn>
             </v-stepper-content>
         </v-stepper>
@@ -85,7 +85,6 @@ export default {
             modal: false,
             selectedDate: null,
             selectedTime: null,
-            dateTimeFormatted: "test",
         }
     },
     computed: {

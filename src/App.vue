@@ -53,6 +53,12 @@
         </v-btn>
         <v-row class="button-row">
           <RentButton v-if="user" class="rent-button" />
+          <v-btn
+            rounded
+            x-large
+            color="success"
+            :to="{name:'reservationview'}"
+          >Meine Reservierungen</v-btn>
           <ReservationButton v-if="user" class="rent-button" />
         </v-row>
       </div>
