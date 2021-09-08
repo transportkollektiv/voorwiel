@@ -57,6 +57,7 @@
         "title": "New reservation",
         "startDate": "Start",
         "endDate": "End",
+        "vehicleType": "Vehicle Type",
         "station": "Station",
         "create": "Create Reservation"
       }
@@ -121,6 +122,7 @@
         "title": "Neue Reservierung",
         "startDate": "Start",
         "endDate": "Ende",
+        "vehicleType": "Fahrzeugtyp",
         "station": "Station",
         "create": "Reservierung erstellen"
       }

@@ -52,15 +52,15 @@
           <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
         </v-btn>
         <v-row class="button-row">
-          <RentButton v-if="user" class="rent-button" />
+          <RentButton v-if="user && this.fetchVehicleTypesForSpontaneousRent().length > 0" class="rent-button" />
           <v-btn
             rounded
             x-large
             color="success"
             :to="{name:'reservationview'}"
+            v-if="user && this.fetchVehicleTypesForReservation().length > 0"
           >Meine Reservierungen</v-btn>
-          <ReservationButton v-if="user" class="rent-button" />
-        </v-row>
+          </v-row>
       </div>
       <AppError />
     </v-main>
@@ -73,14 +73,13 @@
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
-  import ReservationButton from './components/ReservationButton';
   import AppError from './components/AppError';
 
   const blank = (v) => !(typeof v !== 'undefined' && v !== '');
 
   export default {
     name: 'App',
-    components: {About, GbfsView, RentButton, ReservationButton, AppError},
+    components: {About, GbfsView, RentButton, AppError},
     data: function() {
       return {
         name: this.$appConfig.NAME,
@@ -97,11 +96,26 @@
         let env = this.$appConfig.ENV;
         return require('@/assets/logo' + (env != 'production' ? '.' + env : '') + '.png');
       },
-      ...mapState(['user'])
+      ...mapState(['user']),
+      ...mapState(['gbfs'])
     },
     methods: {
       logout() {
         this.$store.dispatch("LOGOUT");
+      },
+      fetchVehicleTypesForReservation() {
+        if (this.gbfs !== null) {
+          return this.$store.getters.getGBFSVehicleTypesForReservation();
+        } else {
+          return [];
+        }
+      },
+      fetchVehicleTypesForSpontaneousRent() {
+        if (this.gbfs !== null) {
+          return this.$store.getters.getGBFSVehicleTypesForSpontaneousRent();
+        } else {
+          return [];
+        }
       }
     },
     watch: {
