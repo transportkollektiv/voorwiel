@@ -1,32 +1,30 @@
 <template>
   <v-btn
     rounded
-    x-medium
+    x-large
     color="success"
-    :to="{name:'reservation'}"
+    :to="{name:'reservationview'}"
   >
-    <v-icon>{{ mdi.bike }}</v-icon><span class="pl-2">{{ buttonText }}</span>
+    <v-icon>{{ mdi.calendar }}</v-icon><span class="pl-2">{{ buttonText }}</span>
   </v-btn>
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import { mdiBike } from '@mdi/js'
+  import { mdiCalendar } from '@mdi/js'
 
   export default {
     data() {
       return {
         mdi: {
-          bike: mdiBike
+          calendar: mdiCalendar
         }
       }
     },
     computed: {
       buttonText() {
-        return this.$t('message.reservationbutton.reservation');
+        // return 'this.$t('message.reservationbutton.reservation');'
+        return 'Meine Reservierungen!'
       },
-
-      ...mapState(['reservation'])
     },
   };
 </script>

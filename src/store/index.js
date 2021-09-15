@@ -195,7 +195,15 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
-    }
+    },
+    GET_ALLOWED_RESERVATION_DATES: async function({ state }, payload) {
+      try {
+        let response = await axiosWithAuth.call(this, state).post(`/reservationdates/alloweddates`, payload);
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
   },
   mutations: {
     CLEAR_USER: (state) => {

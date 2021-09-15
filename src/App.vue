@@ -53,13 +53,7 @@
         </v-btn>
         <v-row class="button-row">
           <RentButton v-if="user && this.fetchVehicleTypesForSpontaneousRent().length > 0" class="rent-button" />
-          <v-btn
-            rounded
-            x-large
-            color="success"
-            :to="{name:'reservationview'}"
-            v-if="user && this.fetchVehicleTypesForReservation().length > 0"
-          >Meine Reservierungen</v-btn>
+          <ReservationButton v-if="user && this.fetchVehicleTypesForReservation().length > 0" class="rent-button"/>
           </v-row>
       </div>
       <AppError />
@@ -73,13 +67,14 @@
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
+  import ReservationButton from './components/ReservationButton';
   import AppError from './components/AppError';
 
   const blank = (v) => !(typeof v !== 'undefined' && v !== '');
 
   export default {
     name: 'App',
-    components: {About, GbfsView, RentButton, AppError},
+    components: {About, GbfsView, RentButton, AppError, ReservationButton},
     data: function() {
       return {
         name: this.$appConfig.NAME,

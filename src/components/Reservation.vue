@@ -20,8 +20,24 @@
           <v-container class="pb-0">
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
+                <v-select
+                  :items="availableStations"
+                  :label="$t('message.reservation.station')"
+                  item-text="name"
+                  item-value="station_id"
+                  v-model="station"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col cols="1" md="1" class="py-0 text-right">
+              </v-col>
+            </v-row>
+
+            <v-row class="pt-5">
+              <v-col cols="12" md="12" class="py-0 pr-0">
                 Start Zeit
                 <date-time-picker-dialog
+                  :minDate="currentDate"
                   :placeholder="startPlaceholder"
                   @newDateTime="startDateTime=$event"
                 ></date-time-picker-dialog>
@@ -32,6 +48,7 @@
               <v-col cols="12" md="12" class="py-0 pr-0">
                 End Zeit
                 <date-time-picker-dialog
+                  :minDate="startDateTime"
                   :placeholder="endPlaceholder"
                   @newDateTime="endDateTime=$event"
                 ></date-time-picker-dialog>
@@ -45,20 +62,6 @@
                   item-text="name"
                   item-value="vehicle_type_id"
                   v-model="vehicleType"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col cols="1" md="1" class="py-0 text-right">
-              </v-col>
-            </v-row>
-            <v-row class="pt-5">
-              <v-col cols="12" md="12" class="py-0 pr-0">
-                <v-select
-                  :items="availableStations"
-                  :label="$t('message.reservation.station')"
-                  item-text="name"
-                  item-value="station_id"
-                  v-model="station"
                   required
                 ></v-select>
               </v-col>
@@ -95,6 +98,7 @@ export default {
       show: false,
       loading: false,
       valid: false,
+      currentDate: new Date().toISOString().slice(0,10),
       availableStations: [],
       vehicleTypes: [],
       station: null,
@@ -103,6 +107,7 @@ export default {
       endPlaceholder: "Endzeit",
       startDateTime: "",
       endDateTime: "",
+      allowedDates: [],
     };
   },
   computed: {
@@ -118,7 +123,7 @@ export default {
       }
       this.$store.dispatch("START_RESERVATION", payload).then(
           (data) => {
-            this.$emit('newReservation', data)
+            this.$emit('newReservation', data);
             this.show = false;
           }
       )
@@ -132,12 +137,32 @@ export default {
         this.vehicleType = this.vehicleTypes[0].vehicle_type_id;
       }
     },
+    fetchAllowedDates(data) {
+      const first = Date.now()
+      this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", data).then(
+        (data) => {
+          console.log(data)
+          const second = Date.now()
+          console.log(second-first)
+        }
+      )
+    }
   },
   mounted() {
     if (this.gbfs !== null) {
       this.fetchStations();
       this.fetchVehicleTypes();
     }
+  },
+  watch: {
+    station(current) {
+      if (current !== null) {
+        let payload = {
+          station: current
+        }
+        this.fetchAllowedDates(payload);
+      }
+    },
   },
 };
 </script>

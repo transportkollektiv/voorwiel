@@ -30,6 +30,8 @@
                     <v-row justify="center">
                         <v-date-picker
                             v-model="date"
+                            :min="minDate"
+                            :allowed-dates="[Date.now()]"
                         ></v-date-picker>
                     </v-row>
                 </template>

@@ -7,13 +7,12 @@
       <v-card-actions>
         <v-container>
           <v-row justify="end">
-            <reservation/>
+            <reservation
+            @newReservation="addReservation($event)"/>
           </v-row>
-
           <v-list-item v-for="reservation in reservations" :key="reservation.id">
             <v-list-item-content>
               <v-divider class="mx-4"/>
-
               <v-container>
                 <v-row>
                   <v-col cols="10">
@@ -24,14 +23,17 @@
                       </v-row>
                       <v-row>
                         <v-col>Ende: {{formatDate(reservation.event.end)}}</v-col>
-                        <v-col>Fahrrad: {{reservation.bike}}</v-col>
+                        <v-col v-if="reservation.bike">
+                          Fahrradnummer: {{reservation.bike.bike_number}}
+                          <RentLock :rent="createMockUpRent(reservation)" />
+                          </v-col>
                       </v-row>
                     </v-container>
                   </v-col>
                   <v-col cols="1" align-self=center>
                     <reservation-delete-dialog
                       :reservation="reservation"
-                      @deleted="deleteFromList($event)"/>
+                      @deleted="getReservations()"/>
                   </v-col>
                 </v-row>
               </v-container>
@@ -46,8 +48,10 @@
 <script>
 import Reservation from "./Reservation.vue";
 import ReservationDeleteDialog from "./ReservationDeleteDialog.vue";
+import RentLock from "./RentLock.vue";
+
 export default {
-  components: { Reservation, ReservationDeleteDialog },
+  components: { Reservation, ReservationDeleteDialog, RentLock },
   data() {
     return {
       show: true,
@@ -63,20 +67,14 @@ export default {
           }
       )
     },
+    addReservation(reservation) {
+      this.reservations.push(reservation)
+      this.reservations.sort((a,b) => this.compareReservations(a,b))
+    },
     formatDate(dateString) {
       if (!dateString) return null
       const date = new Date(dateString)
       return date.toLocaleString().slice(0, -3) + ' Uhr'
-    },
-    deleteFromList(reservation_id) {
-      let index = null
-      for (let i = 0; i < this.reservations; i++) {
-        if(this.reservations[i].id == reservation_id) {
-          index = i
-          break
-        }
-      }
-      if (index) this.reservations.splice(index,1)
     },
     filterReservations(reservationList) {
       const today = Date.now()
@@ -87,13 +85,20 @@ export default {
           relevantReservation.push(reservationList[i])
         }
       }
-      return relevantReservation.sort((a,b) => this.compare(a,b))
+      return relevantReservation.sort((a,b) => this.compareReservations(a,b))
     },
-    compare(a, b) {
+    compareReservations(a, b) {
       const aTime = (new Date (a.event.start)).getTime()
       const bTime = (new Date (b.event.start)).getTime()
       return aTime - bTime
     },
+
+    createMockUpRent(reservation) {
+      return {
+        id: reservation.rent,
+        bike: reservation.bike
+      }
+    }
 
   },
   mounted() {

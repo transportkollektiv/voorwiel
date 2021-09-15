@@ -29,14 +29,13 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                color="primary"
-                text
+                color="red"
+                dark
                 @click="deleteReservation(reservation.id)"
                 >
                 Löschen
                 </v-btn>
                 <v-btn
-                color="primary"
                 text
                 @click="modal = false"
                 >
