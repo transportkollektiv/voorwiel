@@ -31,14 +31,15 @@
                         <v-date-picker
                             v-model="date"
                             :min="minDate"
-                            :allowed-dates="[Date.now()]"
+                            :picker-date.sync="currentMonthYear"
+                            :allowed-dates="allowedDates"
                         ></v-date-picker>
                     </v-row>
                 </template>
 
                 <v-btn
                     color="primary"
-                    @click="dialogStep = 2"
+                    @click="dialogStep = 2; getAllowedTimesForDay()"
                 >
                     Weiter
                 </v-btn>
@@ -57,6 +58,9 @@
                         <v-time-picker
                             v-model="time"
                             format="24hr"
+                            :allowed-minutes="allowedMinutes"
+                            :min="minTime"
+                            :max="maxTime"
                         ></v-time-picker>
                     </v-row>
                 </template>
@@ -87,6 +91,10 @@ export default {
             modal: false,
             selectedDate: null,
             selectedTime: null,
+            currentMonthYear: null,
+            allowedDays: [],
+            minTime: "00:00",
+            maxTime: "20:40",
         }
     },
     computed: {
@@ -110,6 +118,37 @@ export default {
             const [year, month, day] = date.split('-')
             return `${day}.${month}.${year}, ${hour}:${minute} Uhr`
         },
+
+        getAllowedDatesForMonth(year, month) {
+            const params = { year: year, month: month}
+            this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", params).then(
+                (data) => {
+                    this.allowedDays = data.allowedDays;
+                }
+            )
+        },
+
+        getAllowedTimesForDay() {
+            this.$store.dispatch("GET_ALLOWED_RESERVATION_TIMES", this.date).then(
+                (data) => {
+                    this.minTime = data.minTime;
+                    this.maxTime = data.maxTime;
+                }
+            )
+        },
+
+        allowedDates(val) {
+            return this.allowedDays.includes(val)
+        },
+
+        allowedMinutes: v => v % 5 === 0,
+
     },
+    watch: {
+        currentMonthYear(val) {
+            const yearMonth = val.split('-')
+            this.getAllowedDatesForMonth(yearMonth[0], yearMonth[1])
+        }
+    }
 };
 </script>

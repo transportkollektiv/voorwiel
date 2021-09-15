@@ -137,32 +137,13 @@ export default {
         this.vehicleType = this.vehicleTypes[0].vehicle_type_id;
       }
     },
-    fetchAllowedDates(data) {
-      const first = Date.now()
-      this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", data).then(
-        (data) => {
-          console.log(data)
-          const second = Date.now()
-          console.log(second-first)
-        }
-      )
-    }
+    
   },
   mounted() {
     if (this.gbfs !== null) {
       this.fetchStations();
       this.fetchVehicleTypes();
     }
-  },
-  watch: {
-    station(current) {
-      if (current !== null) {
-        let payload = {
-          station: current
-        }
-        this.fetchAllowedDates(payload);
-      }
-    },
   },
 };
 </script>
