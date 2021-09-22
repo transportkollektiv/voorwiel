@@ -18,11 +18,11 @@
                   <v-col cols="10">
                     <v-container>
                       <v-row>
-                        <v-col>Start: {{formatDate(reservation.event.start)}}</v-col>
+                        <v-col cols="7">Start: {{formatDate(reservation.event.start)}}</v-col>
                         <v-col>Ort: {{reservation.start_location.station_name}}</v-col>
                       </v-row>
                       <v-row>
-                        <v-col>Ende: {{formatDate(reservation.event.end)}}</v-col>
+                        <v-col cols="7">Ende: {{formatDate(reservation.event.end)}}</v-col>
                         <v-col v-if="reservation.bike">
                           Fahrradnummer: {{reservation.bike.bike_number}}
                           <RentLock :rent="createMockUpRent(reservation)" />

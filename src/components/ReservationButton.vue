@@ -23,7 +23,7 @@
     computed: {
       buttonText() {
         // return 'this.$t('message.reservationbutton.reservation');'
-        return 'Meine Reservierungen!'
+        return 'Meine Reservierungen'
       },
     },
   };

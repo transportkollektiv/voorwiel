@@ -58,9 +58,11 @@
                         <v-time-picker
                             v-model="time"
                             format="24hr"
+                            :allowed-hours="allowedHours"
                             :allowed-minutes="allowedMinutes"
                             :min="minTime"
                             :max="maxTime"
+                            @click:hour="updateHour"
                         ></v-time-picker>
                     </v-row>
                 </template>
@@ -73,7 +75,7 @@
                 </v-btn>
                 <v-btn 
                     text
-                    @click="dialogStep = 1">
+                    @click="dialogStep = 1; time=null">
                     Zurück
                 </v-btn>
             </v-stepper-content>
@@ -91,10 +93,13 @@ export default {
             modal: false,
             selectedDate: null,
             selectedTime: null,
+            selectedHour: null,
             currentMonthYear: null,
             allowedDays: [],
             minTime: "00:00",
-            maxTime: "20:40",
+            maxTime: "23:59",
+            rangeStart: "00:01",
+            rangeEnd: "00:01",
         }
     },
     computed: {
@@ -106,9 +111,14 @@ export default {
         closeDialog() {
             this.selectedDate = this.date
             this.selectedTime = this.time
-            this.modal = false
             this.$emit('newDateTime', `${this.selectedDate}T${this.selectedTime}`)
+            this.modal = false
             this.dialogStep = 1
+        },
+
+        resetForm() {
+            this.selectedDate = null
+            this.selectedTime = null
         },
 
         formatDateTime (date, time) {
@@ -133,22 +143,65 @@ export default {
                 (data) => {
                     this.minTime = data.minTime;
                     this.maxTime = data.maxTime;
+                    if ('forbiddenRange' in data) {
+                        this.rangeStart = data.forbiddenRange.start
+                        this.rangeEnd = data.forbiddenRange.end
+                    }
                 }
             )
+        },
+
+        updateHour(value) {
+            if (value < 10) {
+                this.selectedHour = `0${value}`
+            } else {
+                this.selectedHour = value
+            }
         },
 
         allowedDates(val) {
             return this.allowedDays.includes(val)
         },
 
-        allowedMinutes: v => v % 5 === 0,
+        allowedHours(value) {
+            if (value < 10) {
+                value = `0${value}`
+            }
+            let timeForStart = `${value}:00:00`
+            let timeForEnd = `${value}:59:00`
+            if (timeForStart >= this.rangeStart && timeForEnd <= this.rangeEnd) {
+                return false
+            }
+            return true
+        },
+
+        allowedMinutes(val) {
+            if (val % 5 != 0) {
+                return false
+            }
+            let timeToCheck = `${this.selectedHour}:`
+            if (val < 10) {
+                timeToCheck = timeToCheck.concat(`0${val}:00`)
+            } else {
+                timeToCheck = timeToCheck.concat(`${val}:00`)
+            }
+
+            if (timeToCheck >= this.rangeStart && timeToCheck <= this.rangeEnd ) {
+                return false
+            } else {
+                return true
+            }
+        }
 
     },
     watch: {
         currentMonthYear(val) {
             const yearMonth = val.split('-')
             this.getAllowedDatesForMonth(yearMonth[0], yearMonth[1])
-        }
-    }
+        },
+    },
+    // mounted() {
+    //     this.bus.$on('resetForm', this.resetForm)
+    // }
 };
 </script>

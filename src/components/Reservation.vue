@@ -98,6 +98,7 @@ export default {
       show: false,
       loading: false,
       valid: false,
+      //bus: new Vue(),
       currentDate: new Date().toISOString().slice(0,10),
       availableStations: [],
       vehicleTypes: [],
@@ -145,5 +146,14 @@ export default {
       this.fetchVehicleTypes();
     }
   },
+  watch: {
+    show (val) {
+      if(val == false) {
+        this.station = null
+        this.vehicleType = null
+        //this.bus.$emit('resetForm')
+      }
+    }
+  }
 };
 </script>
