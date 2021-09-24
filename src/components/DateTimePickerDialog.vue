@@ -25,7 +25,7 @@
                 Datum auswählen
             </v-stepper-step>
             <v-stepper-content step="1">
-                
+
                 <template>
                     <v-row justify="center">
                         <v-date-picker
@@ -43,7 +43,7 @@
                 >
                     Weiter
                 </v-btn>
-                
+
             </v-stepper-content>
 
             <v-stepper-step
@@ -52,7 +52,7 @@
                 Zeit auswählen
             </v-stepper-step>
             <v-stepper-content step="2">
-                
+
                 <template>
                     <v-row justify="center">
                         <v-time-picker
@@ -73,7 +73,7 @@
                 >
                     Weiter
                 </v-btn>
-                <v-btn 
+                <v-btn
                     text
                     @click="dialogStep = 1; time=null">
                     Zurück
@@ -84,7 +84,7 @@
 </template>
 <script>
 export default {
-    props: [ 'placeholder', 'minDate' ],
+    props: [ 'placeholder', 'minDate', 'vehicleTypeId', 'stationId' ],
     data() {
         return {
             dialogStep: 1,
@@ -130,7 +130,7 @@ export default {
         },
 
         getAllowedDatesForMonth(year, month) {
-            const params = { year: year, month: month}
+            const params = { year: year, month: month, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
             this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", params).then(
                 (data) => {
                     this.allowedDays = data.allowedDays;
