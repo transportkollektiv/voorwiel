@@ -139,7 +139,8 @@ export default {
         },
 
         getAllowedTimesForDay() {
-            this.$store.dispatch("GET_ALLOWED_RESERVATION_TIMES", this.date).then(
+            const params = { date: this.date, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
+            this.$store.dispatch("GET_ALLOWED_RESERVATION_TIMES", params).then(
                 (data) => {
                     this.minTime = data.minTime;
                     this.maxTime = data.maxTime;
