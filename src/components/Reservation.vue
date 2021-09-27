@@ -40,6 +40,7 @@
                   :minDate="currentDate"
                   :placeholder="startPlaceholder"
                   @newDateTime="startDateTime=$event"
+                  ref="startDateTimePicker"
                 ></date-time-picker-dialog>
               </v-col>
               <v-col cols="1" md="1" class="py-0 text-right"> </v-col>
@@ -51,6 +52,7 @@
                   :minDate="startDateTime"
                   :placeholder="endPlaceholder"
                   @newDateTime="endDateTime=$event"
+                  ref="endDateTimePicker"
                 ></date-time-picker-dialog>
               </v-col>
             </v-row>
@@ -92,13 +94,14 @@
 import { mapState } from 'vuex';
 import DateTimePickerDialog from "./DateTimePickerDialog.vue";
 export default {
-  components: { DateTimePickerDialog },
+  components: { 
+    DateTimePickerDialog,
+  },
   data() {
     return {
       show: false,
       loading: false,
       valid: false,
-      //bus: new Vue(),
       currentDate: new Date().toISOString().slice(0,10),
       availableStations: [],
       vehicleTypes: [],
@@ -151,7 +154,8 @@ export default {
       if(val == false) {
         this.station = null
         this.vehicleType = null
-        //this.bus.$emit('resetForm')
+        this.$refs.startDateTimePicker.resetForm()
+        this.$refs.endDateTimePicker.resetForm()
       }
     }
   }

@@ -200,8 +200,5 @@ export default {
             this.getAllowedDatesForMonth(yearMonth[0], yearMonth[1])
         },
     },
-    // mounted() {
-    //     this.bus.$on('resetForm', this.resetForm)
-    // }
 };
 </script>
