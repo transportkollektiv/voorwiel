@@ -16,13 +16,14 @@
         {{ $t("message.reservation.title") }}
       </v-card-title>
       <v-card-actions>
-        <v-form v-model="valid" ref="reservationForm">
+        <v-form v-model="valid">
           <v-container class="pb-0">
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
                 <v-select
                   :items="availableStations"
                   :label="$t('message.reservation.station')"
+                  :rules="[v => !!v || 'Station ist notwendig']"
                   item-text="name"
                   item-value="station_id"
                   v-model="station"
@@ -40,6 +41,7 @@
                   :minDate="currentDate"
                   :placeholder="startPlaceholder"
                   @newDateTime="startDateTime=$event"
+                  @formValid="startFormValid=$event"
                   ref="startDateTimePicker"
                 ></date-time-picker-dialog>
               </v-col>
@@ -52,6 +54,7 @@
                   :minDate="startDateTime"
                   :placeholder="endPlaceholder"
                   @newDateTime="endDateTime=$event"
+                  @formValid="endFormValid=$event"
                   ref="endDateTimePicker"
                 ></date-time-picker-dialog>
               </v-col>
@@ -75,7 +78,7 @@
                 <v-btn
                   class="mt-2"
                   color="success"
-                  :disabled="!valid"
+                  :disabled="sendButtonDisabled"
                   :loading="loading"
                   @click="startReservation()"
                 >
@@ -111,11 +114,20 @@ export default {
       endPlaceholder: "Endzeit",
       startDateTime: "",
       endDateTime: "",
+      startFormValid: false,
+      endFormValid: false,
       allowedDates: [],
     };
   },
   computed: {
-    ...mapState(['gbfs'])
+    ...mapState(['gbfs']),
+    sendButtonDisabled() {
+      if (this.valid && this.startFormValid && this.endFormValid) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     startReservation() {
