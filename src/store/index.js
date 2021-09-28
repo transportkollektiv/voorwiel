@@ -204,9 +204,9 @@ export default new Vuex.Store({
         throw unpackErrorMessage(err);
       }
     },
-    GET_ALLOWED_RESERVATION_TIMES: async function({ state }, selectedDate) {
+    GET_ALLOWED_RESERVATION_TIMES: async function({ state }, requestParams) {
       try {
-        let response = await axiosWithAuth.call(this, state).get(`/reservationdates/allowedtimes`,{ params: { date: selectedDate }});
+        let response = await axiosWithAuth.call(this, state).get(`/reservationdates/allowedtimes`,{ params: requestParams});
         return response.data;
       } catch (err) {
         throw unpackErrorMessage(err);

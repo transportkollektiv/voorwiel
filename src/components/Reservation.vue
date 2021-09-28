@@ -40,6 +40,8 @@
                 <date-time-picker-dialog
                   :minDate="currentDate"
                   :placeholder="startPlaceholder"
+                  :vehicleTypeId="this.vehicleType"
+                  :stationId="this.station"
                   @newDateTime="startDateTime=$event"
                   @formValid="startFormValid=$event"
                   ref="startDateTimePicker"
@@ -53,6 +55,8 @@
                 <date-time-picker-dialog
                   :minDate="startDateTime"
                   :placeholder="endPlaceholder"
+                  :vehicleTypeId="this.vehicleType"
+                  :stationId="this.station"
                   @newDateTime="endDateTime=$event"
                   @formValid="endFormValid=$event"
                   ref="endDateTimePicker"
@@ -153,7 +157,7 @@ export default {
         this.vehicleType = this.vehicleTypes[0].vehicle_type_id;
       }
     },
-    
+
   },
   mounted() {
     if (this.gbfs !== null) {

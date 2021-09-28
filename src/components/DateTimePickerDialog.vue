@@ -1,11 +1,11 @@
 <template>
-<v-form v-model="valid">
-    <v-dialog
-        ref="dialog"
-        v-model="modal"
-        :return-value.sync="date"
-        width="400px"
-    >
+    <v-form v-model="valid">
+        <v-dialog
+            ref="dialog"
+            v-model="modal"
+            :return-value.sync="date"
+            width="400px"
+        >
         
             <template v-slot:activator="{ on, attrs }">
             <v-text-field
@@ -86,12 +86,12 @@
                 </v-stepper-content>
             </v-stepper>
         
-    </v-dialog>
+        </v-dialog>
     </v-form>
 </template>
 <script>
 export default {
-    props: [ 'placeholder', 'minDate' ],
+    props: [ 'placeholder', 'minDate', 'vehicleTypeId', 'stationId' ],
     data() {
         return {
             valid: false,
@@ -142,7 +142,7 @@ export default {
         },
 
         getAllowedDatesForMonth(year, month) {
-            const params = { year: year, month: month}
+            const params = { year: year, month: month, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
             this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", params).then(
                 (data) => {
                     this.allowedDays = data.allowedDays;
@@ -154,7 +154,8 @@ export default {
             if(this.date == null) {
                 return
             }
-            this.$store.dispatch("GET_ALLOWED_RESERVATION_TIMES", this.date).then(
+            const params = { date: this.date, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
+            this.$store.dispatch("GET_ALLOWED_RESERVATION_TIMES", params).then(
                 (data) => {
                     this.minTime = data.minTime;
                     this.maxTime = data.maxTime;
