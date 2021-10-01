@@ -44,18 +44,16 @@
       />
       <gbfs-view />
       <router-view></router-view>
-      <div class="rent-buttonarea">
-        <v-btn fab dark x-small v-if="hasSupport" :to="{name: 'support'}" color="red" class="support-button">
-          <v-icon>{{ mdi.helpCircleOutline }}</v-icon>
-        </v-btn>
-        <v-btn rounded x-large color="success" class="login-button" v-if="!user" :to="{name: 'login'}">
-          <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
-        </v-btn>
         <v-row class="button-row">
-          <RentButton v-if="user && this.fetchVehicleTypesForSpontaneousRent().length > 0" class="rent-button" />
-          <ReservationButton v-if="user && this.fetchVehicleTypesForReservation().length > 0" class="rent-button"/>
-          </v-row>
-      </div>
+          <v-btn fab dark x-small v-if="hasSupport" :to="{name: 'support'}" color="red" class="btn">
+            <v-icon>{{ mdi.helpCircleOutline }}</v-icon>
+          </v-btn>
+          <v-btn rounded x-large color="success" class="btn" v-if="!user" :to="{name: 'login'}">
+            <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
+          </v-btn>
+          <RentButton v-if="user && this.fetchVehicleTypesForSpontaneousRent().length > 0" class="btn" />
+          <ReservationButton v-if="user && this.fetchVehicleTypesForReservation().length > 0" class="btn"/>
+        </v-row>
       <AppError />
     </v-main>
   </v-app>
@@ -123,27 +121,13 @@
 
 
 <style>
-  .support-button,
-  .login-button,
   .button-row {
+    justify-content: space-around;
     position: fixed;
     bottom: 2rem;
-    text-align: center;
-  }
-  /* bad hack, goes away when we restructure the navigation */
-  #attach-sheet + .rent-buttonarea .rent-button,
-  #attach-sheet + .rent-buttonarea .login-button {
-    z-index: 300;
-  }
-  .rent-button,
-  .login-button {
-    transform: translateX(-50%);
-    margin: 0 auto 0 auto;
-  }
-  .support-button {
-    left: 1rem;
-  }
-  .button-row {
     width: 100%;
+  }
+  .btn {
+    margin-top: 10px;
   }
 </style>
