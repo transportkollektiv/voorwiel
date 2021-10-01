@@ -15,7 +15,7 @@
       <v-card-title class="text-h5 grey lighten-2" primary-title>
         {{ $t("message.reservation.title") }}
       </v-card-title>
-      <v-card-actions>
+      <v-card-text>
         <v-form v-model="valid">
           <v-container class="pb-0">
             <v-row class="pt-5">
@@ -58,7 +58,7 @@
                   :vehicleTypeId="this.vehicleType"
                   :stationId="this.station"
                   @newDateTime="endDateTime=$event"
-                  @formValid="endFormValid=$event"
+                  @formValid="endFormValid=$event;"
                   ref="endDateTimePicker"
                 ></date-time-picker-dialog>
               </v-col>
@@ -77,21 +77,19 @@
               <v-col cols="1" md="1" class="py-0 text-right">
               </v-col>
             </v-row>
-            <v-row class="pt-5">
-              <v-col cols="1" md="1" class="py-0 text-right">
-                <v-btn
-                  class="mt-2"
-                  color="success"
-                  :disabled="sendButtonDisabled"
-                  :loading="loading"
-                  @click="startReservation()"
-                >
-                  {{ $t("message.reservation.create") }}
-                </v-btn>
-              </v-col>
-            </v-row>
           </v-container>
         </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          class="mt-2"
+          color="success"
+          :disabled="sendButtonDisabled"
+          :loading="loading"
+          @click="startReservation()"
+        >
+          {{ $t("message.reservation.create") }}
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -6,71 +6,84 @@
             :return-value.sync="date"
             width="400px"
         >
-        <v-stepper
-            :complete="dialogStep > 1"
-            vertical
-        >
-            <v-stepper-step
-                :complete="dialogStep > 1"
-                step="1">
-                Datum auswählen
-            </v-stepper-step>
-            <v-stepper-content step="1">
+            <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+                v-model="computedDateTimeFormatted"
+                :placeholder="placeholder"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                required
+            ></v-text-field>
+            </template>
+            <v-stepper
+                v-model="dialogStep"
+                vertical
+            >
+                <v-stepper-step
+                    :complete="dialogStep > 1"
+                    step="1">
+                    Datum auswählen
+                </v-stepper-step>
+                <v-stepper-content step="1">
 
-                <template>
-                    <v-row justify="center">
-                        <v-date-picker
-                            v-model="date"
-                            :min="minDate"
-                            :picker-date.sync="currentMonthYear"
-                            :allowed-dates="allowedDates"
-                        ></v-date-picker>
-                    </v-row>
-                </template>
+                    <template>
+                        <v-row justify="center">
+                            <v-date-picker
+                                v-model="date"
+                                :min="minDate"
+                                :picker-date.sync="currentMonthYear"
+                                :allowed-dates="allowedDates"
+                            ></v-date-picker>
+                        </v-row>
+                    </template>
 
-                <v-btn
-                    color="primary"
-                    @click="dialogStep = 2; getForbiddenTimesForDay()"
-                >
-                    Weiter
-                </v-btn>
+                    <v-btn
+                        :disabled="!date"
+                        color="primary"
+                        @click="dialogStep = 2; getForbiddenTimesForDay()"
+                    >
+                        Weiter
+                    </v-btn>
 
-            </v-stepper-content>
+                </v-stepper-content>
 
-            <v-stepper-step
-                :complete="dialogStep > 2"
-                step="2">
-                Zeit auswählen
-            </v-stepper-step>
-            <v-stepper-content step="2">
+                <v-stepper-step
+                    :complete="dialogStep > 2"
+                    step="2">
+                    Zeit auswählen
+                </v-stepper-step>
+                <v-stepper-content step="2">
 
-                <template>
-                    <v-row justify="center">
-                        <v-time-picker
-                            v-if="modal"
-                            v-model="time"
-                            format="24hr"
-                            :allowed-hours="allowedHours"
-                            :allowed-minutes="allowedMinutes"
-                            @click:hour="updateHour"
-                        ></v-time-picker>
-                    </v-row>
-                </template>
+                    <template>
+                        <v-row justify="center">
+                            <v-time-picker
+                                v-if="modal"
+                                v-model="time"
+                                format="24hr"
+                                :allowed-hours="allowedHours"
+                                :allowed-minutes="allowedMinutes"
+                                @click:hour="updateHour"
+                            ></v-time-picker>
+                        </v-row>
+                    </template>
 
-                <v-btn
-                    color="primary"
-                    @click="closeDialog"
-                >
-                    Weiter
-                </v-btn>
-                <v-btn
-                    text
-                    @click="dialogStep = 1; time=null">
-                    Zurück
-                </v-btn>
-            </v-stepper-content>
-        </v-stepper>
-    </v-dialog>
+                    <v-btn
+                        :disabled="!time"
+                        color="primary"
+                        @click="closeDialog"
+                    >
+                        Weiter
+                    </v-btn>
+                    <v-btn
+                        text
+                        @click="dialogStep = 1; time=null">
+                        Zurück
+                    </v-btn>
+                </v-stepper-content>
+            </v-stepper>
+        </v-dialog>
+    </v-form>
 </template>
 <script>
 export default {
@@ -156,7 +169,6 @@ export default {
             }
             let timeForStart = `${value}:00:00`
             let timeForEnd = `${value}:59:00`
-            console.log('allowed hours')
             for (let forbiddenRange in this.forbiddenRanges) {
               console.log('Forbidden Range Start: ' + forbiddenRange.start)
               console.log('Forbidden Range End: ' + forbiddenRange.end)
@@ -194,6 +206,11 @@ export default {
         },
         valid (val) {
             this.$emit('formValid', val)
+        },
+        modal (val) {
+            if(!val) {
+                this.dialogStep = 1
+            }
         }
     },
 };
