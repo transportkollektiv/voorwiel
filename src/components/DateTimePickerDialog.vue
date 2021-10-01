@@ -11,7 +11,7 @@
                 v-model="computedDateTimeFormatted"
                 v-bind="attrs"
                 v-on="on"
-                :disabled="stationId == null"
+                :disabled="stationId == null || vehicleTypeId == null"
                 :label="placeholder"
                 :rules="[v => !!v || 'Datum und Zeit notwendig!']"
                 required

@@ -34,6 +34,22 @@
               </v-col>
             </v-row>
 
+            <v-row v-if="vehicleTypes.length > 1" class="pt-5">
+              <v-col cols="12" md="12" class="py-0 pr-0">
+                <v-select
+                  :items="vehicleTypes"
+                  :label="$t('message.reservation.vehicleType')"
+                  item-text="name"
+                  item-value="vehicle_type_id"
+                  v-model="vehicleType"
+                  required
+                  clearable
+                ></v-select>
+              </v-col>
+              <v-col cols="1" md="1" class="py-0 text-right">
+              </v-col>
+            </v-row>
+
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
                 <date-time-picker-dialog
@@ -48,6 +64,7 @@
               </v-col>
               <v-col cols="1" md="1" class="py-0 text-right"> </v-col>
             </v-row>
+
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
                 <date-time-picker-dialog
@@ -59,20 +76,6 @@
                   @formValid="endFormValid=$event;"
                   ref="endDateTimePicker"
                 ></date-time-picker-dialog>
-              </v-col>
-            </v-row>
-            <v-row v-if="vehicleTypes.length > 1" class="pt-5">
-              <v-col cols="12" md="12" class="py-0 pr-0">
-                <v-select
-                  :items="vehicleTypes"
-                  :label="$t('message.reservation.vehicleType')"
-                  item-text="name"
-                  item-value="vehicle_type_id"
-                  v-model="vehicleType"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col cols="1" md="1" class="py-0 text-right">
               </v-col>
             </v-row>
           </v-container>
