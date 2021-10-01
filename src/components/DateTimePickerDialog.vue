@@ -9,11 +9,14 @@
             <template v-slot:activator="{ on, attrs }">
             <v-text-field
                 v-model="computedDateTimeFormatted"
-                :placeholder="placeholder"
-                readonly
                 v-bind="attrs"
                 v-on="on"
+                :disabled="stationId == null"
+                :label="placeholder"
+                :rules="[v => !!v || 'Datum und Zeit notwendig!']"
                 required
+                readonly
+                clearable
             ></v-text-field>
             </template>
             <v-stepper
@@ -142,11 +145,10 @@ export default {
         },
 
         getForbiddenTimesForDay() {
-            console.log('Get forbidden times');
             const params = { date: this.date, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
             this.$store.dispatch("GET_FORBIDDEN_RESERVATION_TIMES", params).then(
                 (data) => {
-                    this.forbiddenRanges = data.forbiddenRanges;
+                    this.forbiddenRanges = data;
                 }
             )
         },
@@ -169,13 +171,12 @@ export default {
             }
             let timeForStart = `${value}:00:00`
             let timeForEnd = `${value}:59:00`
-            for (let forbiddenRange in this.forbiddenRanges) {
-              console.log('Forbidden Range Start: ' + forbiddenRange.start)
-              console.log('Forbidden Range End: ' + forbiddenRange.end)
-              if (timeForStart >= forbiddenRange.start && timeForEnd <= forbiddenRange.end) {
-                return false
-              }
+            for (let index in this.forbiddenRanges) {
+                if (timeForStart >= this.forbiddenRanges[index].start && timeForEnd <= this.forbiddenRanges[index].end) {
+                    return false
+                }
             }
+            
             return true
         },
 
@@ -190,8 +191,8 @@ export default {
                 timeToCheck = timeToCheck.concat(`${val}:00`)
             }
 
-            for (let forbiddenRange in this.forbiddenRanges) {
-              if (timeToCheck >= forbiddenRange.start && timeToCheck <= forbiddenRange.end) {
+            for (let index in this.forbiddenRanges) {
+              if (timeToCheck >= this.forbiddenRanges[index].start && timeToCheck <= this.forbiddenRanges[index].end) {
                 return false
               }
             }

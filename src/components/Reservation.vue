@@ -36,7 +36,6 @@
 
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                Start Zeit
                 <date-time-picker-dialog
                   :minDate="currentDate"
                   :placeholder="startPlaceholder"
@@ -51,7 +50,6 @@
             </v-row>
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                End Zeit
                 <date-time-picker-dialog
                   :minDate="startDateTime"
                   :placeholder="endPlaceholder"
@@ -85,7 +83,6 @@
           class="mt-2"
           color="success"
           :disabled="sendButtonDisabled"
-          :loading="loading"
           @click="startReservation()"
         >
           {{ $t("message.reservation.create") }}
@@ -105,7 +102,6 @@ export default {
   data() {
     return {
       show: false,
-      loading: false,
       valid: false,
       currentDate: new Date().toISOString().slice(0,10),
       availableStations: [],
