@@ -39,7 +39,7 @@
 
                 <v-btn
                     color="primary"
-                    @click="dialogStep = 2; getAllowedTimesForDay()"
+                    @click="dialogStep = 2; getForbiddenTimesForDay()"
                 >
                     Weiter
                 </v-btn>
@@ -60,8 +60,6 @@
                             format="24hr"
                             :allowed-hours="allowedHours"
                             :allowed-minutes="allowedMinutes"
-                            :min="minTime"
-                            :max="maxTime"
                             @click:hour="updateHour"
                         ></v-time-picker>
                     </v-row>
@@ -96,10 +94,7 @@ export default {
             selectedHour: null,
             currentMonthYear: null,
             allowedDays: [],
-            minTime: "00:00",
-            maxTime: "23:59",
-            rangeStart: "00:01",
-            rangeEnd: "00:01",
+            forbiddenRanges: [],
         }
     },
     computed: {
@@ -138,16 +133,12 @@ export default {
             )
         },
 
-        getAllowedTimesForDay() {
+        getForbiddenTimesForDay() {
+            console.log('Get forbidden times');
             const params = { date: this.date, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
-            this.$store.dispatch("GET_ALLOWED_RESERVATION_TIMES", params).then(
+            this.$store.dispatch("GET_FORBIDDEN_RESERVATION_TIMES", params).then(
                 (data) => {
-                    this.minTime = data.minTime;
-                    this.maxTime = data.maxTime;
-                    if ('forbiddenRange' in data) {
-                        this.rangeStart = data.forbiddenRange.start
-                        this.rangeEnd = data.forbiddenRange.end
-                    }
+                    this.forbiddenRanges = data.forbiddenRanges;
                 }
             )
         },
@@ -170,8 +161,13 @@ export default {
             }
             let timeForStart = `${value}:00:00`
             let timeForEnd = `${value}:59:00`
-            if (timeForStart >= this.rangeStart && timeForEnd <= this.rangeEnd) {
+            console.log('allowed hours')
+            for (let forbiddenRange in this.forbiddenRanges) {
+              console.log('Forbidden Range Start: ' + forbiddenRange.start)
+              console.log('Forbidden Range End: ' + forbiddenRange.end)
+              if (timeForStart >= forbiddenRange.start && timeForEnd <= forbiddenRange.end) {
                 return false
+              }
             }
             return true
         },
@@ -187,11 +183,12 @@ export default {
                 timeToCheck = timeToCheck.concat(`${val}:00`)
             }
 
-            if (timeToCheck >= this.rangeStart && timeToCheck <= this.rangeEnd ) {
+            for (let forbiddenRange in this.forbiddenRanges) {
+              if (timeToCheck >= forbiddenRange.start && timeToCheck <= forbiddenRange.end) {
                 return false
-            } else {
-                return true
+              }
             }
+            return true
         }
 
     },
