@@ -17,6 +17,7 @@
                 v-on="on"
                 :rules="[v => !!v || 'Datum und Zeit notwendig!']"
                 required
+                clearable
             ></v-text-field>
             </template>
             
@@ -61,6 +62,7 @@
                     <template>
                         <v-row justify="center">
                             <v-time-picker
+                                v-if="modal"
                                 v-model="time"
                                 format="24hr"
                                 :allowed-hours="allowedHours"
@@ -95,8 +97,6 @@ export default {
     data() {
         return {
             valid: false,
-            dateValid: false,
-            timeValid: false,
             dialogStep: 1,
             date: null,
             time: null,
