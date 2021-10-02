@@ -35,6 +35,7 @@
                             <v-date-picker
                                 v-model="date"
                                 :min="minDate"
+                                :max="maxDate"
                                 :picker-date.sync="currentMonthYear"
                                 :allowed-dates="allowedDates"
                             ></v-date-picker>
@@ -90,7 +91,7 @@
 </template>
 <script>
 export default {
-    props: [ 'placeholder', 'minDate', 'vehicleTypeId', 'stationId' ],
+    props: [ 'placeholder', 'minDate', 'maxDate', 'vehicleTypeId', 'stationId' ],
     data() {
         return {
             valid: false,
@@ -176,7 +177,7 @@ export default {
                     return false
                 }
             }
-            
+
             return true
         },
 

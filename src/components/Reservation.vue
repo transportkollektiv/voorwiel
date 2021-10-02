@@ -57,7 +57,7 @@
                   :placeholder="startPlaceholder"
                   :vehicleTypeId="this.vehicleType"
                   :stationId="this.station"
-                  @newDateTime="startDateTime=$event"
+                  @newDateTime="getMaxReservationDate($event)"
                   @formValid="startFormValid=$event"
                   ref="startDateTimePicker"
                 ></date-time-picker-dialog>
@@ -69,11 +69,12 @@
               <v-col cols="12" md="12" class="py-0 pr-0">
                 <date-time-picker-dialog
                   :minDate="startDateTime"
+                  :maxDate="maxReservationDate"
                   :placeholder="endPlaceholder"
                   :vehicleTypeId="this.vehicleType"
                   :stationId="this.station"
                   @newDateTime="endDateTime=$event"
-                  @formValid="endFormValid=$event;"
+                  @formValid="endFormValid=$event"
                   ref="endDateTimePicker"
                 ></date-time-picker-dialog>
               </v-col>
@@ -99,7 +100,7 @@
 import { mapState } from 'vuex';
 import DateTimePickerDialog from "./DateTimePickerDialog.vue";
 export default {
-  components: { 
+  components: {
     DateTimePickerDialog,
   },
   data() {
@@ -114,6 +115,7 @@ export default {
       startPlaceholder: "Startzeit",
       endPlaceholder: "Endzeit",
       startDateTime: "",
+      maxReservationDate: "",
       endDateTime: "",
       startFormValid: false,
       endFormValid: false,
@@ -154,6 +156,15 @@ export default {
         this.vehicleType = this.vehicleTypes[0].vehicle_type_id;
       }
     },
+    getMaxReservationDate(startDateTime) {
+      this.startDateTime=startDateTime;
+      const params = { startDateTime: this.startDateTime, vehicleTypeId: this.vehicleType, stationId: this.station}
+      return this.$store.dispatch("GET_MAX_RESERVATION_DATE", params).then(
+        (data) => {
+          this.maxReservationDate=data;
+        }
+      )
+    }
 
   },
   mounted() {

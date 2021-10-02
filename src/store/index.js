@@ -212,6 +212,14 @@ export default new Vuex.Store({
         throw unpackErrorMessage(err);
       }
     },
+    GET_MAX_RESERVATION_DATE: async function({ state }, requestParams) {
+      try {
+        let response = await axiosWithAuth.call(this, state).get(`/reservationdates/maxreservationdate`,{ params: requestParams});
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
   },
   mutations: {
     CLEAR_USER: (state) => {
