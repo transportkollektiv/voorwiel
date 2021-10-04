@@ -35,7 +35,7 @@
                             <v-date-picker
                                 v-model="date"
                                 :min="minDate"
-                                :max="maxDate"
+                                :max="computedMaxDate"
                                 :picker-date.sync="currentMonthYear"
                                 :allowed-dates="allowedDates"
                             ></v-date-picker>
@@ -65,6 +65,7 @@
                                 v-if="modal"
                                 v-model="time"
                                 format="24hr"
+                                :max="computedMaxTime"
                                 :allowed-hours="allowedHours"
                                 :allowed-minutes="allowedMinutes"
                                 @click:hour="updateHour"
@@ -110,6 +111,16 @@ export default {
     computed: {
         computedDateTimeFormatted() {
             return this.formatDateTime(this.selectedDate, this.selectedTime)
+        },
+        computedMaxDate() {
+            return (this.maxDate) ? this.maxDate.split('T')[0] : null
+        },
+        computedMaxTime() {
+            if (this.maxDate) {
+                const dateTime = this.maxDate.split('T')
+                return (this.date === dateTime[0]) ? dateTime[1] : null
+            }
+            return null
         }
     },
     methods: {
