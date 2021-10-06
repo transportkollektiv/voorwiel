@@ -65,6 +65,7 @@
                                 v-if="modal"
                                 v-model="time"
                                 format="24hr"
+                                :min="computedMinTime"
                                 :max="computedMaxTime"
                                 :allowed-hours="allowedHours"
                                 :allowed-minutes="allowedMinutes"
@@ -121,6 +122,9 @@ export default {
                 return (this.date === date) ? time : null
             }
             return null
+        },
+        computedMinTime() {
+            return this.minDate.split('T')[1]
         }
     },
     methods: {
