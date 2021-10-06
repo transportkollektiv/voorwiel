@@ -117,8 +117,8 @@ export default {
         },
         computedMaxTime() {
             if (this.maxDate) {
-                const dateTime = this.maxDate.split('T')
-                return (this.date === dateTime[0]) ? dateTime[1] : null
+                const [date, time] = this.maxDate.split('T')
+                return (this.date === date) ? time : null
             }
             return null
         }
@@ -214,13 +214,13 @@ export default {
     },
     watch: {
         currentMonthYear(val) {
-            const yearMonth = val.split('-')
-            this.getAllowedDatesForMonth(yearMonth[0], yearMonth[1])
+            const [year, month] = val.split('-')
+            this.getAllowedDatesForMonth(year, month)
         },
-        valid (val) {
+        valid(val) {
             this.$emit('formValid', val)
         },
-        modal (val) {
+        modal(val) {
             if(!val) {
                 this.dialogStep = 1
             }
