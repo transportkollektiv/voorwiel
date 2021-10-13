@@ -124,7 +124,8 @@ export default {
             return null
         },
         computedMinTime() {
-            return this.minDate.split('T')[1]
+            const [date, time] = this.minDate.split('T')
+            return (this.date === date) ? time : null
         }
     },
     methods: {
@@ -155,6 +156,7 @@ export default {
             const params = { year: year, month: month, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
             this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", params).then(
                 (data) => {
+                    console.log(`Allowed dates for ${year}-${month}:\n\t${data.allowedDays}`)
                     this.allowedDays = data.allowedDays;
                 }
             )
@@ -164,6 +166,7 @@ export default {
             const params = { date: this.date, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
             this.$store.dispatch("GET_FORBIDDEN_RESERVATION_TIMES", params).then(
                 (data) => {
+                    console.log(`Forbidden ranges for ${this.date}:\n\t${data}`)
                     this.forbiddenRanges = data;
                 }
             )
@@ -227,6 +230,11 @@ export default {
         modal(val) {
             if(!val) {
                 this.dialogStep = 1
+            } else {
+                if (this.currentMonthYear) {
+                    const [year, month] = this.currentMonthYear.split('-')
+                    this.getAllowedDatesForMonth(year, month)
+                }
             }
         }
     },

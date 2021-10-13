@@ -43,7 +43,6 @@
                   item-value="vehicle_type_id"
                   v-model="vehicleType"
                   required
-                  clearable
                 ></v-select>
               </v-col>
               <v-col cols="1" md="1" class="py-0 text-right">
@@ -161,6 +160,7 @@ export default {
       const params = { startDateTime: this.startDateTime, vehicleTypeId: this.vehicleType, stationId: this.station}
       return this.$store.dispatch("GET_MAX_RESERVATION_DATE", params).then(
         (data) => {
+          console.log(`Max Reservationdate for ${startDateTime}:\n\t${data}`)
           this.maxReservationDate=data;
         }
       )
