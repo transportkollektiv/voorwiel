@@ -160,7 +160,6 @@ export default {
       const params = { startDateTime: this.startDateTime, vehicleTypeId: this.vehicleType, stationId: this.station}
       return this.$store.dispatch("GET_MAX_RESERVATION_DATE", params).then(
         (data) => {
-          console.log(`Max Reservationdate for ${startDateTime}:\n\t${data}`)
           this.maxReservationDate=data;
         }
       )
