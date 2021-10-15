@@ -51,31 +51,29 @@
 
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                <date-time-picker-dialog
+                <reservation-date-time-picker-dialog
                   :minDate="currentDate"
                   :placeholder="startPlaceholder"
                   :vehicleTypeId="this.vehicleType"
-                  :stationId="this.station"
                   @newDateTime="getMaxReservationDate($event)"
                   @formValid="startFormValid=$event"
                   ref="startDateTimePicker"
-                ></date-time-picker-dialog>
+                ></reservation-date-time-picker-dialog>
               </v-col>
               <v-col cols="1" md="1" class="py-0 text-right"> </v-col>
             </v-row>
 
             <v-row class="pt-5">
               <v-col cols="12" md="12" class="py-0 pr-0">
-                <date-time-picker-dialog
+                <reservation-date-time-picker-dialog
                   :minDate="startDateTime"
                   :maxDate="maxReservationDate"
                   :placeholder="endPlaceholder"
                   :vehicleTypeId="this.vehicleType"
-                  :stationId="this.station"
                   @newDateTime="endDateTime=$event"
                   @formValid="endFormValid=$event"
                   ref="endDateTimePicker"
-                ></date-time-picker-dialog>
+                ></reservation-date-time-picker-dialog>
               </v-col>
             </v-row>
           </v-container>
@@ -97,16 +95,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import DateTimePickerDialog from "./DateTimePickerDialog.vue";
+import ReservationDateTimePickerDialog from "./ReservationDateTimePickerDialog.vue";
 export default {
   components: {
-    DateTimePickerDialog,
+    ReservationDateTimePickerDialog,
   },
   data() {
     return {
       show: false,
       valid: false,
-      currentDate: new Date().toISOString().slice(0,10),
+      currentDate: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000).toISOString(),
       availableStations: [],
       vehicleTypes: [],
       station: null,
@@ -157,7 +155,7 @@ export default {
     },
     getMaxReservationDate(startDateTime) {
       this.startDateTime=startDateTime;
-      const params = { startDateTime: this.startDateTime, vehicleTypeId: this.vehicleType, stationId: this.station}
+      const params = { startDateTime: startDateTime, vehicleTypeId: this.vehicleType }
       return this.$store.dispatch("GET_MAX_RESERVATION_DATE", params).then(
         (data) => {
           this.maxReservationDate=data;
@@ -175,8 +173,6 @@ export default {
   watch: {
     show (val) {
       if(val == false) {
-        this.station = null
-        this.vehicleType = null
         this.$refs.startDateTimePicker.resetForm()
         this.$refs.endDateTimePicker.resetForm()
       }

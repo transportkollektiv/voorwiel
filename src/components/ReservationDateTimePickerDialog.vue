@@ -11,7 +11,7 @@
                 v-model="computedDateTimeFormatted"
                 v-bind="attrs"
                 v-on="on"
-                :disabled="stationId == null || vehicleTypeId == null"
+                :disabled="vehicleTypeId == null"
                 :label="placeholder"
                 :rules="[v => !!v || 'Datum und Zeit notwendig!']"
                 required
@@ -93,7 +93,7 @@
 </template>
 <script>
 export default {
-    props: [ 'placeholder', 'minDate', 'maxDate', 'vehicleTypeId', 'stationId' ],
+    props: [ 'placeholder', 'minDate', 'maxDate', 'vehicleTypeId' ],
     data() {
         return {
             valid: false,
@@ -153,20 +153,18 @@ export default {
         },
 
         getAllowedDatesForMonth(year, month) {
-            const params = { year: year, month: month, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
+            const params = { year: year, month: month, vehicleTypeId: this.vehicleTypeId }
             this.$store.dispatch("GET_ALLOWED_RESERVATION_DATES", params).then(
                 (data) => {
-                    console.log(`Allowed dates for ${year}-${month}:\n\t${data.allowedDays}`)
                     this.allowedDays = data.allowedDays;
                 }
             )
         },
 
         getForbiddenTimesForDay() {
-            const params = { date: this.date, vehicleTypeId: this.vehicleTypeId, stationId: this.stationId}
+            const params = { date: this.date, vehicleTypeId: this.vehicleTypeId }
             this.$store.dispatch("GET_FORBIDDEN_RESERVATION_TIMES", params).then(
                 (data) => {
-                    console.log(`Forbidden ranges for ${this.date}:\n\t${data}`)
                     this.forbiddenRanges = data;
                 }
             )

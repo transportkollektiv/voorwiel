@@ -2,7 +2,7 @@
   <v-dialog v-model="show" max-width="600">
     <v-card>
       <v-card-title class="text-h5 grey lighten-2" primary-title>
-        Deine Reservierungen
+        Meine Reservierungen
       </v-card-title>
       <v-card-actions>
         <v-container>
