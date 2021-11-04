@@ -1,6 +1,6 @@
 # voorwiel
 
-frontend application for [cykel](https://github.com/stadtulm/cykel) - view, login and rent bikes
+frontend application for [cykel](https://github.com/transportkollektiv/cykel) - view, login and rent bikes
 
 
 ## Project setup

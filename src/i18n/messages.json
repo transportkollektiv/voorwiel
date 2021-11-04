@@ -27,7 +27,7 @@
       },
       "about": {
         "title": "About",
-        "html": "Bikesharing, with an <a href='https://github.com/stadtulm'>open source</a> stack.<br/><a href='https://ulm.dev/projects/openbike/'>Explore more about the project</a>."
+        "html": "Bikesharing, with an <a href='https://github.com/transportkollektiv/openbike'>open source</a> stack.<br/><a href='https://ulm.dev/projects/openbike/'>Explore more about the project</a>."
       },
       "apperror": {
         "close": "Close"
@@ -72,7 +72,7 @@
       },
       "about": {
         "title": "Über",
-        "html": "Bikesharing, basierend auf einem <a href='https://github.com/stadtulm'>open source</a> Stack.<br/><a href='https://ulm.dev/projects/openbike/'>Mehr über das Projekt erfahren</a>."
+        "html": "Bikesharing, basierend auf einem <a href='https://github.com/transportkollektiv/openbike'>open source</a> Stack.<br/><a href='https://ulm.dev/projects/openbike/'>Mehr über das Projekt erfahren</a>."
       },
       "apperror": {
         "close": "Schließen"

@@ -13,7 +13,7 @@ var I18N_MESSAGE_OVERRIDE = {
   "en": {
     "message": {
       "about": {
-        "html": "An experimental <a href='https://github.com/stadtulm'>open source</a> bikesharing, currently testing with employees of the City of Ulm.<br /><b>Want to take part?</b> Drop us a line &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
+        "html": "An experimental <a href='https://github.com/transportkollektiv/openbike'>open source</a> bikesharing, currently testing with employees of the City of Ulm.<br /><b>Want to take part?</b> Drop us a line &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
       }
     }
   },
@@ -23,7 +23,7 @@ var I18N_MESSAGE_OVERRIDE = {
         "unvalidated-message": "Sie können noch keine Fahrräder ausleihen, da ihr Account noch nicht freigeschalten wurde. Bitte <a href='mailto:openbike@ulm.dev'>senden Sie uns</a> Ihren rechts oben angezeigten Nutzernamen, um sich freischalten zu lassen."
       },
       "about": {
-        "html": "Ein experimentelles <a href='https://github.com/stadtulm'>open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br /><b>Mitmachen?</b> Melde dich &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
+        "html": "Ein experimentelles <a href='https://github.com/transportkollektiv/openbike'>open source</a> Bikesharing im Test mit Beschäftigten der Stadt Ulm.<br /><b>Mitmachen?</b> Melde dich &rarr; <a href='mailto:openbike@ulm.dev'>openbike@ulm.dev</a>"
       }
     }
   }

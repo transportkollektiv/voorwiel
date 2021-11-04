@@ -19,7 +19,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: stadtulm/voorwiel
+          images: transportkollektiv/voorwiel
           tags: |
             type=sha,prefix=,format=short
           flavor: |
