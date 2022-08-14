@@ -44,15 +44,16 @@
       />
       <gbfs-view />
       <router-view></router-view>
-      <div class="rent-buttonarea">
-        <v-btn fab dark x-small v-if="hasSupport" :to="{name: 'support'}" color="red" class="support-button">
-          <v-icon>{{ mdi.helpCircleOutline }}</v-icon>
-        </v-btn>
-        <v-btn rounded x-large color="success" class="login-button" v-if="!user" :to="{name: 'login'}">
-          <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
-        </v-btn>
-        <RentButton v-if="user" class="rent-button" />
-      </div>
+        <v-row class="button-row">
+          <v-btn fab dark x-small v-if="hasSupport" :to="{name: 'support'}" color="red" class="btn">
+            <v-icon>{{ mdi.helpCircleOutline }}</v-icon>
+          </v-btn>
+          <v-btn rounded x-large color="success" class="btn" v-if="!user" :to="{name: 'login'}">
+            <v-icon>{{ mdi.login }}</v-icon>&nbsp;<span>{{ $t('message.app.login') }}</span>
+          </v-btn>
+          <RentButton v-if="user && this.fetchVehicleTypesForSpontaneousRent().length > 0" class="btn" />
+          <ReservationButton v-if="user && this.fetchVehicleTypesForReservation().length > 0" class="btn"/>
+        </v-row>
       <AppError />
     </v-main>
   </v-app>
@@ -64,13 +65,14 @@
   import About from './components/About';
   import GbfsView from './components/GbfsView';
   import RentButton from './components/RentButton';
+  import ReservationButton from './components/ReservationButton';
   import AppError from './components/AppError';
 
   const blank = (v) => !(typeof v !== 'undefined' && v !== '');
 
   export default {
     name: 'App',
-    components: {About, GbfsView, RentButton, AppError},
+    components: {About, GbfsView, RentButton, AppError, ReservationButton},
     data: function() {
       return {
         name: this.$appConfig.NAME,
@@ -87,11 +89,26 @@
         let env = this.$appConfig.ENV;
         return require('@/assets/logo' + (env != 'production' ? '.' + env : '') + '.png');
       },
-      ...mapState(['user'])
+      ...mapState(['user']),
+      ...mapState(['gbfs'])
     },
     methods: {
       logout() {
         this.$store.dispatch("LOGOUT");
+      },
+      fetchVehicleTypesForReservation() {
+        if (this.gbfs !== null) {
+          return this.$store.getters.getGBFSVehicleTypesForReservation();
+        } else {
+          return [];
+        }
+      },
+      fetchVehicleTypesForSpontaneousRent() {
+        if (this.gbfs !== null) {
+          return this.$store.getters.getGBFSVehicleTypesForSpontaneousRent();
+        } else {
+          return [];
+        }
       }
     },
     watch: {
@@ -104,24 +121,13 @@
 
 
 <style>
-  .support-button,
-  .rent-button,
-  .login-button {
+  .button-row {
+    justify-content: space-around;
     position: fixed;
     bottom: 2rem;
-    text-align: center;
+    width: 100%;
   }
-  /* bad hack, goes away when we restructure the navigation */
-  #attach-sheet + .rent-buttonarea .rent-button,
-  #attach-sheet + .rent-buttonarea .login-button {
-    z-index: 300;
-  }
-  .rent-button,
-  .login-button {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .support-button {
-    left: 1rem;
+  .btn {
+    margin-top: 10px;
   }
 </style>

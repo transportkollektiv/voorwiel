@@ -116,17 +116,15 @@ export default new Vuex.Store({
         throw unpackErrorMessage(err);
       }
     },
-    END_RENT: async function({ dispatch, commit, state }, rentId) {
-      let location;
-      try {
-        location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
-      } catch(_ignore) { /* */ }
-
+    END_RENT: async function({dispatch, commit, state}, payload) {
       let data = {};
-      if (location && location.coords && location.coords.accuracy < 50) {
-        data['lat'] = location.coords.latitude;
-        data['lng'] = location.coords.longitude;
+      if(payload.lat) {
+        data['lat'] = payload.lat;
       }
+      if(payload.lon) {
+        data['lng'] = payload.lon;
+      }
+      let rentId = payload.rentId;
 
       try {
         let finish_url = state.rents.find((el) => el.id == rentId).finish_url;
@@ -137,6 +135,20 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
+    },
+    END_RENT_WITH_TRACKING: async function({ dispatch }, rentId) {
+      let location;
+      try {
+        location = await getCurrentPosition({ timeout: 3000, enableHighAccuracy: true, maximumAge: 20000 });
+      } catch(_ignore) { /* */ }
+
+      let lat, lon;
+      if (location && location.coords && location.coords.accuracy < 50) {
+        lat = location.coords.latitude;
+        lon = location.coords.longitude;
+      }
+
+      dispatch("END_RENT", { rentId: rentId, lat: lat, lon: lon })
     },
     UPDATE_RENTS: function({ commit, state, getters }) {
       if (!getters.isAuthenticated) { return; }
@@ -159,15 +171,63 @@ export default new Vuex.Store({
       } catch (err) {
         throw unpackErrorMessage(err);
       }
-    }
+    },
+    START_RESERVATION: async function({ state }, payload) {
+      try {
+        let response = await axiosWithAuth.call(this, state).post('/reservation', payload);
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
+    GET_RESERVATIONS: async function({ state }) {
+      try {
+        let response = await axiosWithAuth.call(this, state).get('/reservation');
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
+    DELETE_RESERVATION: async function({ state }, reservationId) {
+      try {
+        let response = await axiosWithAuth.call(this, state).delete(`/reservation/${reservationId}`);
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
+    GET_ALLOWED_RESERVATION_DATES: async function({ state }, requestParams) {
+      try {
+        let response = await axiosWithAuth.call(this, state).get(`/reservationdates/alloweddates`,{ params: requestParams});
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
+    GET_FORBIDDEN_RESERVATION_TIMES: async function({ state }, requestParams) {
+      try {
+        let response = await axiosWithAuth.call(this, state).get(`/reservationdates/forbiddentimes`,{ params: requestParams});
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
+    GET_MAX_RESERVATION_DATE: async function({ state }, requestParams) {
+      try {
+        let response = await axiosWithAuth.call(this, state).get(`/reservationdates/maxreservationdate`,{ params: requestParams});
+        return response.data;
+      } catch (err) {
+        throw unpackErrorMessage(err);
+      }
+    },
   },
   mutations: {
     CLEAR_USER: (state) => {
-      state.authToken = null;
-      state.user = undefined;
-      state.rents = [];
-      state.lock = [];
-      localStorage.removeItem(LS_AUTH_TOKEN_KEY);
+        state.authToken = null;
+        state.user = undefined;
+        state.rents = [];
+        state.lock = [];
+        localStorage.removeItem(LS_AUTH_TOKEN_KEY);
     },
     SET_USER: (state, { user }) => {
       state.user = user;
@@ -220,6 +280,15 @@ export default new Vuex.Store({
         return {station, station_status};
       }
       return {station};
+    },
+    getGBFSStationsWithDetails: (state) => () => {
+      return state.gbfs.stations.data.stations;
+    },
+    getGBFSVehicleTypesForReservation: (state) => () => {
+      return state.gbfs.vehicleTypes.data.vehicle_types.filter(vehicleType => vehicleType.allow_reservation === true);
+    },
+    getGBFSVehicleTypesForSpontaneousRent: (state) => () => {
+      return state.gbfs.vehicleTypes.data.vehicle_types.filter(vehicleType => vehicleType.allow_spontaneous_rent === true);
     }
   },
   modules: {},

@@ -3,6 +3,8 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm ci
 COPY . /app/
+ARG environment=production
+ENV NODE_ENV=$environment
 RUN npm run build
 
 FROM nginx

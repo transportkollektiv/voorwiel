@@ -11,6 +11,10 @@ import Rent from '../components/Rent';
 import Support from '../components/Support';
 import VehicleDetail from '../components/VehicleDetail';
 import StationDetail from '../components/StationDetail';
+import Reservation from '../components/Reservation';
+import ReservationList from '../components/ReservationList';
+
+import CustomLogin from '../components/CustomLogin';
 
 const NoOpComponent = Vue.component('no-op', {
   functional: true,
@@ -22,6 +26,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: NoOpComponent },
     { path: '/login', name: 'login', component: Login },
+    { path: '/login/custom', name: 'customLogin', component: CustomLogin },
     { path: '/login/return', component: LoginReturn },
     { path: '/rent', name: 'rent', component: Rent, meta: { requiresAuth: true }, props: (route) => {
       if (route.query && route.query.id) {
@@ -36,6 +41,8 @@ const router = new VueRouter({
     { path: '/v/:id', name: 'vehicle', component: VehicleDetail, props: true },
     { path: '/s/:id', name: 'station', component: StationDetail, props: true },
     { path: '/support', name: 'support', component: Support },
+    { path: '/reservation', name: 'reservation', component: Reservation },
+    { path: '/reservationview', name: 'reservationview', component: ReservationList },
     { path: '*', redirect: '/' }
   ],
 });

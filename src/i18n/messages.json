@@ -12,7 +12,12 @@
         "bikenumber": "Bike number",
         "finish-rent": "Finish rent",
         "rent": "Rent",
-        "renting-for": "Renting for"
+        "renting-for": "Renting for",
+        "no-location" : "Please select a return location",
+        "choosable-locations": "Locations",
+        "selected-location" : "Return Location",
+        "choose-locations" : "Choose a location"
+
       },
       "lock": {
         "not-supported": "Lock cannot be unlocked this time"
@@ -23,7 +28,10 @@
       },
       "login": {
         "login-with": "Login with",
-        "configerror": "Cannot load login configuration"
+        "configerror": "Cannot load login configuration",
+        "username" : "Username",
+        "password" : "Password",
+        "failed-login" : "Wrong Credentials"
       },
       "about": {
         "title": "About",
@@ -41,6 +49,17 @@
       "detail": {
         "no-range": "no Range",
         "range": "Range: {value} {unit}"
+      },
+      "reservationbutton": {
+        "reservation": "Reservations"
+      },
+      "reservation": {
+        "title": "New reservation",
+        "startDate": "Start",
+        "endDate": "End",
+        "vehicleType": "Vehicle Type",
+        "station": "Station",
+        "create": "Create Reservation"
       }
     }
   },
@@ -57,7 +76,13 @@
         "bikenumber": "Radnummer",
         "finish-rent": "Leihe beenden",
         "rent": "Ausleihen",
-        "renting-for": "Ausleihe läuft"
+        "renting-for": "Ausleihe läuft",
+        "no-location" : "Bitte wählen Sie einen Abgabeort",
+        "choosable-locations": "Abgabeorte",
+        "selected-location" : "Abgabeort",
+        "choose-locations" : "Wähle einen Rückgabeort"
+
+
       },
       "rentbutton": {
         "rent-bike": "Rad ausleihen",
@@ -68,7 +93,10 @@
       },
       "login": {
         "login-with": "Einloggen mit",
-        "configerror": "Laden der Login-Konfiguration fehlgeschlagen"
+        "configerror": "Laden der Login-Konfiguration fehlgeschlagen",
+        "username" : "Benutzername",
+        "password" : "Passwort",
+        "failed-login" : "Falsche Anmeldedaten"
       },
       "about": {
         "title": "Über",
@@ -86,6 +114,17 @@
       "detail": {
         "no-range": "keine Reichweite",
         "range": "{value} {unit} Reichweite"
+      },
+      "reservationbutton": {
+        "reservation": "Reservierung"
+      },
+      "reservation": {
+        "title": "Neue Reservierung",
+        "startDate": "Start",
+        "endDate": "Ende",
+        "vehicleType": "Fahrzeugtyp",
+        "station": "Station",
+        "create": "Reservierung erstellen"
       }
     }
   }
